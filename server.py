@@ -5,13 +5,13 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
-from model import connect_to_db
+from model import connect_to_db, db, User
 
 app = Flask(__name__)
 Bootstrap(app)
 
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = "ABC"
+app.secret_key = "AcBbCa"
 
 # Normally, if you use an undefined variable in Jinja2, it fails silently.
 # This is horrible. Fix this so that, instead, it raises an error.
@@ -34,19 +34,21 @@ def card_submission():
 # LEFT OFF HERE
 # *******************************************************
 
-@app.route('/send_card_submission')
-def card_submission():
-	"""Sends user inputted information to calculations.py"""
+#TODO - have user's entered in info display on next page which is dashboards
 
-	name_1 = request.form["card1_name"]
-	debt_1 = request.form["card1_debt"]
-	apr_1 = request.form["card1_apr"]
-	date_1 = request.form["card1_date"]
+# @app.route('/send_card_submission/')
+# def card_submission():
+# 	"""Sends user inputted information to calculations.py"""
+
+# 	name_1 = request.form["card1_name"]
+# 	debt_1 = request.form["card1_debt"]
+# 	apr_1 = request.form["card1_apr"]
+# 	date_1 = request.form["card1_date"]
 
 
-	return render_template("dashboard.html")
+# 	return render_template("dashboard.html")
 
-
+#TODO - have user's entered in info display from send_card_submission
 @app.route('/dashboard')
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
@@ -54,6 +56,9 @@ def dashboard():
 	return render_template("dashboard.html")
 
 
+
+###############################################################
+# Login & Signup #
 
 
 @app.route('/to_login')
@@ -72,30 +77,32 @@ def login():
     print "This is the email", email
     print "This is the password", password
 
- # TODO: DO THIS PART LATER
-    # user = User.query.filter_by(email=email, password=password).first()
+
+    user = User.query.filter_by(email=email, password=password).first()
+
+    print "This is the user", user
     
-    # # If email/password combo is not found?
+    # If email/password combo is not found?
 
-    # if user == None:
-    #     flash( """Hey there! That email and/or password is not in our database. 
-    #         Try again? Or signup!""")
-    #     return redirect('/to_login')
+    if user == None:
+        flash( """Hey there! That email and/or password is not in our database. 
+            Try again? Or signup!""")
+        return redirect('/to_login')
 
-    # if 'user_id' in session:
-    #     print "This is before login", session
-    #     del session['user_id']
-    #     print "This is after del", session
+    if 'user_id' in session:
+        print "This is before login", session
+        del session['user_id']
+        print "This is after del", session
 
-    #     session['user_id'] = user.user_id
-    #     print "This is after login", session
-    #     flash("You are logged in!") 
-    # else:
-    #     session['user_id'] = user.user_id
-    #     flash("You have successfully logged in!")
+        session['user_id'] = user.user_id
+        print "This is after login", session
+        flash("You are logged in!") 
+    else:
+        session['user_id'] = user.user_id
+        flash("You have successfully logged in!")
 
-    # print "*"*30
-    # print "This is our current session", session
+    print "*"*30
+    print "This is our current session", session
     return redirect("/")
 
 @app.route('/logout')
@@ -103,16 +110,14 @@ def logout():
     """Logs a user out of the site."""
 
     print "This should log them out"
-
- # TODO: DO THIS PART LATER 
     
-    # print "This is before logout", session
-    # if session == {}:
-    #     flash("You are not logged in")
-    #     return redirect('/to_login')
-    # del session['user_id']
-    # print "This is after", session
-    # flash("You have successfully logged out.")
+    print "This is before logout", session
+    if session == {}:
+        flash("You are not logged in")
+        return redirect('/to_login')
+    del session['user_id']
+    print "This is after", session
+    flash("You have successfully logged out.")
     return redirect("/")
 
 
@@ -127,28 +132,26 @@ def signup():
     email = request.form["email_input"]
     password = request.form["password_input"]
     
- # TODO: DO THIS PART LATER 
-    # print "This is the email", email
-    # print "This is the password", password
 
-    # user = User.query.filter_by(email=email).first()
-    # # If there is already a user with that email?
+    print "This is the email", email
+    print "This is the password", password
 
-    # if user != None:
-    #     flash("Woah there buddy. That email is taken. Sorry :( ")
-    #     flash("Did you mean to log in instead?")
+    user = User.query.filter_by(email=email).first()
+    # If there is already a user with that email?
 
-    # else:
-    #     new_user = User(email = email,
-    #                 password = password,
-    #                 age = age,
-    #                 zipcode = zipcode)
+    if user != None:
+        flash("Woah there buddy. That email is taken.")
+        flash("Did you mean to log in instead?")
 
-    #     db.session.add(new_user)   
+    else:
+        new_user = User(email = email,
+                    password = password)
 
-    #     db.session.commit()
+        db.session.add(new_user)   
 
-    #     flash("Thank you for signing up for Judgemental Eye!")
+        db.session.commit()
+
+        flash("Thank you for signing up for Ikura!")
 
     return render_template("login.html", email= email, password=password)
 
@@ -165,3 +168,8 @@ if __name__ == "__main__":
     DebugToolbarExtension(app)
 
     app.run()
+
+
+#***************** # Notes # ***********************
+
+# interactive debugger for Flask must never be used on production machines!!

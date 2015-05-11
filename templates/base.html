@@ -29,6 +29,11 @@
       </div><!-- /.container-fluid -->
     </nav>
 
+
+    {% for message in get_flashed_messages() %}
+            <li>{{ message }}</li>
+    {% endfor %}
+
     {% block content %}
     {% endblock %}
 
