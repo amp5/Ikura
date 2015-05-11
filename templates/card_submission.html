@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1> Credit Card Debt </h1>
+
+<p>First, tell me about your credit card debt:</p>
+
+<form action="/dashboard" method="POST">
+    	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card1_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card1_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card1_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card1_date" min="2015-05-10">
+	<br>  
+	<!-- **********************************************************
+	<br>
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card2_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card2_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card2_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card2_date" min="2015-05-10">
+	
+	<br>  
+	**********************************************************
+	<br>
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card3_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card3_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card3_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card3_date" min="2015-05-10">
+	
+	<br>  
+	**********************************************************
+	<br>  
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card4_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card4_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card4_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card4_date" min="2015-05-10">
+	
+	<br>  
+	**********************************************************
+	<br>  
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card5_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card5_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card5_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card5_date" min="2015-05-10">
+	
+	<br>  
+	**********************************************************
+	<br>
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card6_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card6_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card6_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card6_date" min="2015-05-10">
+	
+	<br>  
+	**********************************************************
+	<br> 
+
+ 	 Credit Card Name:
+    	 <!-- insert little 'i' comments here to explain stuff -->
+    <br>
+    	<input type="text" name="card7_name" required>
+    <br>
+    	Amount of Debt:
+    <br>
+    	<input type="number" name="card7_debt" required>
+    <br>
+    	Annual Percentage Rate (APR):
+    <br>
+    	<input type="number" name="card7_apr" required>
+    <br>
+    	<!-- Have this one be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+    	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+    	Date to pay off:
+	  	<input type="date" name="card7_date" min="2015-05-10">
+	<br>   -->
+
+    <br>
+    <br>	
+    	<input type="submit" value="Let's Do This!">
+</form>
+
+
+
+{% endblock %}
+
+<!-- TODO:  -->
+<!-- figure out how to do a max od three years for date? Or is that necessary..... -->
+<!-- Make the different credit card '+' options pop up after someone clicks, "add another credit card" button -->
+<!-- assumption: there can be up to seven cards someone can enter per account. 
+
+Based on Gallup Poll Research:
+http://www.creditcards.com/credit-card-news/ownership-statistics-charts-1276.php 
+
+-->
+
+<!-- For now, have only one credit card info show up. Then start playing with this more in server.py -->

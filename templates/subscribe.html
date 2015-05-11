@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1> Sign Up </h1>
+
+<p>Sign up for your account with Ikura!</p>
+
+<form action="/signup" method="POST">
+    	 Email:
+    <br>
+    	<input type="email" name="email_input" required>
+    <br>
+    	Password:
+    <br>
+    	<input type="password" name="password_input" required>
+    <br>
+    	<input type="submit" value="Sign Up">
+</form>
+
+
+
+{% endblock %}
