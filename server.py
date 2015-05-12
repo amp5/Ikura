@@ -1,11 +1,10 @@
 """Ikura Server"""
 
 from jinja2 import StrictUndefined
-
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
-from model import connect_to_db, db, User
+from model import connect_to_db, db, User, Card
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -21,39 +20,64 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
 	"""This will bring us to the homepage"""
 
-	return render_template("homepage.html")
+	return render_template('homepage.html')
+
 
 @app.route('/card_submission')
 def card_submission():
 	"""Allows user to enter in credit card info"""
 
-	return render_template("card_submission.html")
+	return render_template('card_submission.html')
 
 
-# *******************************************************
-# LEFT OFF HERE
-# *******************************************************
+@app.route('/card_submission_sent', methods=['POST'])
+def card_submission_sent():
+	"""Sends user inputted information to calculations"""
 
-#TODO - have user's entered in info display on next page which is dashboards
+	name_1 = request.form["card1_name"]
+	debt_1 = request.form["card1_debt"]
+	apr_1 = request.form["card1_apr"]
+	date_1 = request.form["card1_date"]
+	user_id = session.get("user_id")
 
-# @app.route('/send_card_submission/')
-# def card_submission():
-# 	"""Sends user inputted information to calculations.py"""
+	print "Name", name_1
+	print "Debt", debt_1
+	print "APR", apr_1
+	print "Date", date_1
+	print "This is the session", session
+	print "user id", user_id
 
-# 	name_1 = request.form["card1_name"]
-# 	debt_1 = request.form["card1_debt"]
-# 	apr_1 = request.form["card1_apr"]
-# 	date_1 = request.form["card1_date"]
+	card = Card.query.filter_by(user_id=user_id).all()
+
+	if card == None:
+		flash("In order to generate a payment plan for you we need some information on your current debts. ")
+		
+	else:
+		new_card = Card(card_name = name_1,
+					card_debt = debt_1,
+					card_apr = apr_1,
+					card_date = date_1, 
+					user_id = user_id)
+		db.session.add(new_card)   
+		db.session.commit()
+		flash("Thank you for entering this information!")
+		flash("Calculating your payment plan!")
+
+	return render_template('dashboard.html', 
+							card_name=name_1, 
+							card_debt=debt_1,
+							card_apr=apr_1,
+							card_date=date_1)
+	# return redirect('/dashboard?name_1=' + name_1 + '&debt_1=' + debt_1)
 
 
-# 	return render_template("dashboard.html")
 
-#TODO - have user's entered in info display from send_card_submission
+
 @app.route('/dashboard')
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
 
-	return render_template("dashboard.html")
+	return render_template('dashboard.html')
 
 
 
@@ -65,7 +89,8 @@ def dashboard():
 def to_login():
     """Takes the user to the login page"""
 
-    return render_template("login.html")
+    return render_template('login.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -103,7 +128,9 @@ def login():
 
     print "*"*30
     print "This is our current session", session
-    return redirect("/")
+    
+    return redirect('/')
+
 
 @app.route('/logout')
 def logout():
@@ -115,15 +142,19 @@ def logout():
     if session == {}:
         flash("You are not logged in")
         return redirect('/to_login')
+    
     del session['user_id']
     print "This is after", session
     flash("You have successfully logged out.")
-    return redirect("/")
+    
+    return redirect('/')
+
 
 
 @app.route('/to_signup')
 def to_signup():
-    return render_template("subscribe.html")
+    return render_template('subscribe.html')
+
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -146,14 +177,11 @@ def signup():
     else:
         new_user = User(email = email,
                     password = password)
-
         db.session.add(new_user)   
-
         db.session.commit()
-
         flash("Thank you for signing up for Ikura!")
 
-    return render_template("login.html", email= email, password=password)
+    return render_template('login.html', email= email, password=password)
 
 
 
@@ -173,3 +201,8 @@ if __name__ == "__main__":
 #***************** # Notes # ***********************
 
 # interactive debugger for Flask must never be used on production machines!!
+
+# TODO:
+# Need to combine subscribe and login to same @app.route. Should be able to
+# have jinja display different messages on same page.
+# Want to make this more succinct.

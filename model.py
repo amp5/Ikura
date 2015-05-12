@@ -23,21 +23,23 @@ class User(db.Model):
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
 # TODO: create this class below and create a table in db for this as well. 
- # class Card(db.Model):
-# """Holds information about a user's credit cards"""
+class Card(db.Model):
+    """Holds information about a user's credit cards"""
 
-    # __tablename__ = "cards"
+    __tablename__ = "Cards"
 
-    # card_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # name = db.Column(db.String(64), nullable=False)
-    # debt = db.Column(db.Integer, nullable=False)
-    # apr = db.Column(db.Integer, nullable=False)
-    # date = db.Column(db.Integer, nullable=True)
+    card_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    card_name = db.Column(db.String(64), nullable=False)
+    card_debt = db.Column(db.Integer, nullable=False)
+    card_apr = db.Column(db.Integer, nullable=False)
+    card_date = db.Column(db.Integer, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
+    # make a user_id
 
-    #     def __repr__(self):
-    #     """Provide helpful card representation when printed."""
+    def __repr__(self):
+        """Provide helpful card representation when printed."""
 
-    #     return "<Card card_id=%s name=%s>" % (self.card_id, self.name)
+        return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
@@ -55,3 +57,6 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
+
+
+
