@@ -40,6 +40,14 @@ class Card(db.Model):
 
         return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
 
+# *************************************************
+# ASK 
+
+# How to best structure this data?
+
+# *************************************************
+
+
 class Value(db.Model):
     """Stores user answers for value question: money, time, sanity"""
 

@@ -8,9 +8,12 @@ from model import connect_to_db, db, User, Card, Value
 
 app = Flask(__name__)
 Bootstrap(app)
-
 app.secret_key = "AcBbCa"
 app.jinja_env.undefined = StrictUndefined
+
+
+###############################################################
+# View Routes #
 
 @app.route('/')
 def homepage():
@@ -74,79 +77,17 @@ def dashboard():
 
 
 ###############################################################
-# Login & Signup #
+# Signup & Login #
 
-
-@app.route('/to_login')
-def to_login():
-    """Takes the user to the login page"""
-
-    return render_template('login.html')
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    """Logs a user into the website"""
-
-    email = request.form["email_input"]
-    password = request.form["password_input"]
-    user = User.query.filter_by(email=email, password=password).first()
-
-    print "Email:", email
-    print "Password:", password
-	print "User:", user
-	print "Session:", session
-    
-
-
-    if user == None:
-        flash( """Hey there! That email and/or password is not in our database. 
-            Try again? Or signup!""")
-        return redirect('/to_login')
-
-    if 'user_id' in session:
-        print "This is before login", session
-        del session['user_id']
-        print "This is after del", session
-
-        session['user_id'] = user.user_id
-        print "This is after login", session
-        flash("You are already logged in!") 
-    else:
-        session['user_id'] = user.user_id
-        flash("You have successfully logged in!")
-
-    print "*"*30
-    print "This is our current session", session
-    
-    return redirect('/')
-
-
-@app.route('/logout')
-def logout():
-    """Logs a user out of the site."""
-    
-    print "This is before logout", session
-    if session == {}:
-        flash("You are not logged in")
-        return redirect('/to_login')
-    
-    del session['user_id']
-    print "This is after", session
-    flash("You have successfully logged out.")
-    
-    return redirect('/')
-
-
-
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	"""Route should direct user to sign up page first. Then route should take inputs
 	and add user into database"""
+	
 	if request.method == 'POST':
 		email = request.form["email_input"]
 		password = request.form["password_input"]
-	    user = User.query.filter_by(email=email).first()
+		user = User.query.filter_by(email=email).first()
 
 		print "Email:", email
 		print "Password:", password
@@ -166,35 +107,62 @@ def signup():
 		return render_template('subscribe.html')
 
 
-# @app.route('/to_signup')
-# def to_signup():
-#     return render_template('subscribe.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	"""Takes user to login in page and logs a user into the website"""
 
 
-# @app.route('/signup', methods=['POST'])
-# def signup():
-#     """Adds a new user to the Users table"""
+	if request.method == 'POST':
+		email = request.form["email_input"]
+		password = request.form["password_input"]
+		user = User.query.filter_by(email=email, password=password).first()
+		
+		print "Email:", email
+		print "Password:", password
+		print "User:", user
+		print "Session:", session
 
-#		email = request.form["email_input"]
-		# password = request.form["password_input"]
-	 #  user = User.query.filter_by(email=email).first()
+		if user == None:
+			flash( """Hey there! That email and/or password is not in our database. 
+			Try again? Or signup!""")
+			return redirect('/login')
 
-		# print "Email:", email
-		# print "Password:", password
-		# print "User:", user
+		if 'user_id' in session:
+			print "This is before login", session
+			del session['user_id']
+			print "This is after del", session
 
-#     if user != None:
-#         flash("Woah there buddy. That email is taken.")
-#         flash("Did you mean to log in instead?")
+			session['user_id'] = user.user_id
+			print "This is after login", session
+			flash("You are already logged in!") 
+		else:
+			session['user_id'] = user.user_id
+			flash("You have successfully logged in!")
+			print "Session:", session
 
-#     else:
-#         new_user = User(email = email,
-#                     password = password)
-#         db.session.add(new_user)   
-#         db.session.commit()
-#         flash("Thank you for signing up for Ikura!")
+		print "*"*30
+		print "This is our current session", session
 
-#     return render_template('login.html', email= email, password=password)
+		return redirect('/')
+	else:
+		return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    """Logs a user out of the site."""
+    
+    print "This is before logout", session
+    if session == {}:
+        flash("You are not logged in")
+        return redirect('/to_login')
+    
+    del session['user_id']
+    print "This is after", session
+    flash("You have successfully logged out.")
+    
+    return redirect('/')
+
 
 
 
