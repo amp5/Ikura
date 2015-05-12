@@ -4,16 +4,12 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
-from model import connect_to_db, db, User, Card
+from model import connect_to_db, db, User, Card, Value
 
 app = Flask(__name__)
 Bootstrap(app)
 
-# Required to use Flask sessions and the debug toolbar
 app.secret_key = "AcBbCa"
-
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
@@ -60,17 +56,13 @@ def card_submission_sent():
 					user_id = user_id)
 		db.session.add(new_card)   
 		db.session.commit()
-		flash("Thank you for entering this information!")
-		flash("Calculating your payment plan!")
+		flash("Thank you for entering this information! We've calculated your payment plan:")
 
 	return render_template('dashboard.html', 
 							card_name=name_1, 
 							card_debt=debt_1,
 							card_apr=apr_1,
 							card_date=date_1)
-	# return redirect('/dashboard?name_1=' + name_1 + '&debt_1=' + debt_1)
-
-
 
 
 @app.route('/dashboard')
@@ -98,16 +90,14 @@ def login():
 
     email = request.form["email_input"]
     password = request.form["password_input"]
-
-    print "This is the email", email
-    print "This is the password", password
-
-
     user = User.query.filter_by(email=email, password=password).first()
 
-    print "This is the user", user
+    print "Email:", email
+    print "Password:", password
+	print "User:", user
+	print "Session:", session
     
-    # If email/password combo is not found?
+
 
     if user == None:
         flash( """Hey there! That email and/or password is not in our database. 
@@ -121,7 +111,7 @@ def login():
 
         session['user_id'] = user.user_id
         print "This is after login", session
-        flash("You are logged in!") 
+        flash("You are already logged in!") 
     else:
         session['user_id'] = user.user_id
         flash("You have successfully logged in!")
@@ -135,8 +125,6 @@ def login():
 @app.route('/logout')
 def logout():
     """Logs a user out of the site."""
-
-    print "This should log them out"
     
     print "This is before logout", session
     if session == {}:
@@ -151,37 +139,62 @@ def logout():
 
 
 
-@app.route('/to_signup')
-def to_signup():
-    return render_template('subscribe.html')
-
-
-@app.route('/signup', methods=['POST'])
+@app.route('/signup')
 def signup():
-    """Adds a new user to the Users table"""
+	"""Route should direct user to sign up page first. Then route should take inputs
+	and add user into database"""
+	if request.method == 'POST':
+		email = request.form["email_input"]
+		password = request.form["password_input"]
+	    user = User.query.filter_by(email=email).first()
 
-    email = request.form["email_input"]
-    password = request.form["password_input"]
-    
+		print "Email:", email
+		print "Password:", password
+		print "User:", user
 
-    print "This is the email", email
-    print "This is the password", password
+		if user != None:
+			flash("Sorry, that email is taken. Did you mean to log in instead?")
 
-    user = User.query.filter_by(email=email).first()
-    # If there is already a user with that email?
+		else:
+			new_user = User(email = email, password = password)
+			db.session.add(new_user)   
+			db.session.commit()
+			flash("Thank you for signing up for Ikura!")
 
-    if user != None:
-        flash("Woah there buddy. That email is taken.")
-        flash("Did you mean to log in instead?")
+		return render_template('login.html', email= email, password=password)
+	else: 
+		return render_template('subscribe.html')
 
-    else:
-        new_user = User(email = email,
-                    password = password)
-        db.session.add(new_user)   
-        db.session.commit()
-        flash("Thank you for signing up for Ikura!")
 
-    return render_template('login.html', email= email, password=password)
+# @app.route('/to_signup')
+# def to_signup():
+#     return render_template('subscribe.html')
+
+
+# @app.route('/signup', methods=['POST'])
+# def signup():
+#     """Adds a new user to the Users table"""
+
+#		email = request.form["email_input"]
+		# password = request.form["password_input"]
+	 #  user = User.query.filter_by(email=email).first()
+
+		# print "Email:", email
+		# print "Password:", password
+		# print "User:", user
+
+#     if user != None:
+#         flash("Woah there buddy. That email is taken.")
+#         flash("Did you mean to log in instead?")
+
+#     else:
+#         new_user = User(email = email,
+#                     password = password)
+#         db.session.add(new_user)   
+#         db.session.commit()
+#         flash("Thank you for signing up for Ikura!")
+
+#     return render_template('login.html', email= email, password=password)
 
 
 

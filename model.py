@@ -22,7 +22,6 @@ class User(db.Model):
 
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
-# TODO: create this class below and create a table in db for this as well. 
 class Card(db.Model):
     """Holds information about a user's credit cards"""
 
@@ -34,7 +33,30 @@ class Card(db.Model):
     card_apr = db.Column(db.Integer, nullable=False)
     card_date = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
-    # make a user_id
+
+
+    def __repr__(self):
+        """Provide helpful card representation when printed."""
+
+        return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
+
+class Value(db.Model):
+    """Stores user answers for value question: money, time, sanity"""
+
+    __tablename__ = "Values"
+
+    # TODO: Make sure you can have boolean values? Ask if this is the best strategy for this.
+
+    value_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    money_high = db.Column()
+    money_low = db.Column()
+    time_1 = db.Column()
+    time_2 = db.Column()
+    time_3 = db.Column()
+    money_low = db.Column()
+    money_low = db.Column()
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
+
 
     def __repr__(self):
         """Provide helpful card representation when printed."""
