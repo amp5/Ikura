@@ -29,6 +29,13 @@ def card_submission():
 	return render_template('card_submission.html')
 
 
+
+# ******************************
+# Help. Method not allowed? It worked yesterday. What am I not seeing?
+# ******************************
+
+
+
 @app.route('/card_submission_sent', methods=['POST'])
 def card_submission_sent():
 	"""Sends user inputted information to calculations"""
