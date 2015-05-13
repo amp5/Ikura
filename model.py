@@ -56,13 +56,13 @@ class Value(db.Model):
     # TODO: Make sure you can have boolean values? Ask if this is the best strategy for this.
 
     value_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    money_high = db.Column()
-    money_low = db.Column()
-    time_1 = db.Column()
-    time_2 = db.Column()
-    time_3 = db.Column()
-    money_low = db.Column()
-    money_low = db.Column()
+    money_high = db.Column(db.BOOLEAN)
+    money_low = db.Column(db.BOOLEAN)
+    time_1 = db.Column(db.BOOLEAN)
+    time_2 = db.Column(db.BOOLEAN)
+    time_3 = db.Column(db.BOOLEAN)
+    money_low = db.Column(db.BOOLEAN)
+    money_low = db.Column(db.BOOLEAN)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
 
 

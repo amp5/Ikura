@@ -22,57 +22,47 @@ def homepage():
 	return render_template('homepage.html')
 
 
-@app.route('/card_submission')
+@app.route('/card_submission', methods=['GET', 'POST'])
 def card_submission():
-	"""Allows user to enter in credit card info"""
+	"""Allows user to enter in credit card info and then sends 
+	   user inuptted info to dashboard"""
 
-	return render_template('card_submission.html')
+	if request.method == 'POST':
+		name = request.form["card1_name"]
+		debt = request.form["card1_debt"]
+		apr = request.form["card1_apr"]
+		date = request.form["card1_date"]
+		user_id = session.get("user_id")
 
+		print "Name", name
+		print "Debt", debt
+		print "APR", apr
+		print "Date", date
+		print "This is the session", session
+		print "user id", user_id
 
+		card = Card.query.filter_by(user_id=user_id).all()
 
-# ******************************
-# Help. Method not allowed? It worked yesterday. What am I not seeing?
-# ******************************
+		if card == None:
+			flash("In order to generate a payment plan for you we need some information on your current debts. ")
+			
+		else:
+			new_card = Card(card_name = name,
+						card_debt = debt,
+						card_apr = apr,
+						card_date = date, 
+						user_id = user_id)
+			db.session.add(new_card)   
+			db.session.commit()
+			flash("Thank you for entering this information! We've calculated your payment plan:")
 
-
-
-@app.route('/card_submission_sent', methods=['POST'])
-def card_submission_sent():
-	"""Sends user inputted information to calculations"""
-
-	name_1 = request.form["card1_name"]
-	debt_1 = request.form["card1_debt"]
-	apr_1 = request.form["card1_apr"]
-	date_1 = request.form["card1_date"]
-	user_id = session.get("user_id")
-
-	print "Name", name_1
-	print "Debt", debt_1
-	print "APR", apr_1
-	print "Date", date_1
-	print "This is the session", session
-	print "user id", user_id
-
-	card = Card.query.filter_by(user_id=user_id).all()
-
-	if card == None:
-		flash("In order to generate a payment plan for you we need some information on your current debts. ")
-		
+		return render_template('dashboard.html', 
+								card_name=name, 
+								card_debt=debt,
+								card_apr=apr,
+								card_date=date)
 	else:
-		new_card = Card(card_name = name_1,
-					card_debt = debt_1,
-					card_apr = apr_1,
-					card_date = date_1, 
-					user_id = user_id)
-		db.session.add(new_card)   
-		db.session.commit()
-		flash("Thank you for entering this information! We've calculated your payment plan:")
-
-	return render_template('dashboard.html', 
-							card_name=name_1, 
-							card_debt=debt_1,
-							card_apr=apr_1,
-							card_date=date_1)
+		return render_template('card_submission.html')
 
 
 @app.route('/dashboard')
@@ -162,7 +152,7 @@ def logout():
     print "This is before logout", session
     if session == {}:
         flash("You are not logged in")
-        return redirect('/to_login')
+        return redirect('/login')
     
     del session['user_id']
     print "This is after", session
