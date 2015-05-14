@@ -1,6 +1,7 @@
 """Models and database functions for Ikura project"""
 
 from flask_sqlalchemy import SQLAlchemy
+import psycopg2
 db = SQLAlchemy()
 
 
@@ -11,7 +12,7 @@ class User(db.Model):
     """Ikura users"""
 
 
-    __tablename__ = "Users"
+    __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(64), nullable=True)
@@ -25,14 +26,19 @@ class User(db.Model):
 class Card(db.Model):
     """Holds information about a user's credit cards"""
 
-    __tablename__ = "Cards"
+    __tablename__ = "cards"
 
     card_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     card_name = db.Column(db.String(64), nullable=False)
-    card_debt = db.Column(db.Integer, nullable=False)
-    card_apr = db.Column(db.Integer, nullable=False)
-    card_date = db.Column(db.Integer, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
+    card_debt = db.Column(db.Float, nullable=False)
+    card_apr = db.Column(db.Float, nullable=False)
+    card_date = db.Column(db.Date, nullable=True)
+    min_payment = db.Column(db.String(64), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user = db.relationship("User", backref="Cards")
+
+    #  if i need to change just one table in db I can drop that
+    # one table and then do db.create_all() in -i model.py and it'll add that new table....
 
 
     def __repr__(self):
@@ -40,30 +46,23 @@ class Card(db.Model):
 
         return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
 
-# *************************************************
-# ASK 
-
-# How to best structure this data?
-
-# *************************************************
-
 
 class Value(db.Model):
     """Stores user answers for value question: money, time, sanity"""
 
-    __tablename__ = "Values"
+    __tablename__ = "values"
 
     # TODO: Make sure you can have boolean values? Ask if this is the best strategy for this.
 
     value_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    money_high = db.Column(db.BOOLEAN)
-    money_low = db.Column(db.BOOLEAN)
+    money_spent_high = db.Column(db.BOOLEAN)
+    money_spent_low = db.Column(db.BOOLEAN)
     time_1 = db.Column(db.BOOLEAN)
     time_2 = db.Column(db.BOOLEAN)
     time_3 = db.Column(db.BOOLEAN)
-    money_low = db.Column(db.BOOLEAN)
-    money_low = db.Column(db.BOOLEAN)
-    user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
+    money_amnt_low = db.Column(db.BOOLEAN)
+    money_amnt_high = db.Column(db.BOOLEAN)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
     def __repr__(self):
@@ -73,11 +72,18 @@ class Value(db.Model):
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
+    # # Configure to use our SQLite database
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ikura.db'
+    # db.app = app
+    # db.init_app(app)
 
-    # Configure to use our SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ikura.db'
+
+    # Configuring PostgreSQL 
+    # Will this link to localhost change once I have this deployed?
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ikura'
     db.app = app
     db.init_app(app)
+
 
 
 if __name__ == "__main__":

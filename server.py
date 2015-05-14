@@ -19,7 +19,20 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
 	"""This will bring us to the homepage"""
 
-	return render_template('homepage.html')
+	
+	user_id = session.get("user_id")
+	print "This is session's user_id:", user_id
+
+	if user_id:
+		user = User.query.get(user_id)
+		print "This is the user_id from db:", user
+	else:
+		user = 0
+		print "This is the user_id from db:", user
+		flash("""Before you can get started, you'll
+				need to login or create a new account.""")
+
+	return render_template('homepage.html', user=user)
 
 
 @app.route('/card_submission', methods=['GET', 'POST'])
@@ -33,11 +46,13 @@ def card_submission():
 		apr = request.form["card1_apr"]
 		date = request.form["card1_date"]
 		user_id = session.get("user_id")
+		min_payment = session.get("min_payment")
 
 		print "Name", name
 		print "Debt", debt
 		print "APR", apr
 		print "Date", date
+		print "Min Payment", min_payment
 		print "This is the session", session
 		print "user id", user_id
 
@@ -50,7 +65,8 @@ def card_submission():
 			new_card = Card(card_name = name,
 						card_debt = debt,
 						card_apr = apr,
-						card_date = date, 
+						card_date = date,
+						min_payment=min_payment,
 						user_id = user_id)
 			db.session.add(new_card)   
 			db.session.commit()
@@ -60,7 +76,8 @@ def card_submission():
 								card_name=name, 
 								card_debt=debt,
 								card_apr=apr,
-								card_date=date)
+								card_date=date,
+								min_payment=min_payment)
 	else:
 		return render_template('card_submission.html')
 

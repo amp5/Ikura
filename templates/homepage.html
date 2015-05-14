@@ -7,8 +7,11 @@
 
 <h5> Helping you get on track with your credit card debt</h5>
 
-
- <a href="/card_submission" class="btn btn-info" role="button">Let's get started!</a>
+{% if user == 0 %}
+	 	<a href="/login" class="btn btn-info" role="button">Let's get started!</a>
+{% else %}
+	<a href="/card_submission" class="btn btn-info" role="button">Let's get started!</a>
+{% endif %}
 
 
 
