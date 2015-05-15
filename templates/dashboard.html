@@ -4,27 +4,35 @@
 
 This is my dashboard.
 
-<div>
+<div id="visualization">
 	This will be where I display my visualizations
+	<svg width="550" height="400">
+	    <circle cx="500" cy="180" r="50"/>
+	    <rect x="80" y="60" width="250" height="250" id="r1"/>
+	    <rect x="140" y="120" width="250" height="250" id="r2"/>
+	    <rect x="90" y="180" width="250" height="250" id="r3"/>
+	    <rect x="130" y="240" width="250" height="250" id="r4"/>
+	    <rect x="100" y="300" width="250" height="250" rx="40" id="r5"/>
+	</svg>
 </div>
 
 <br>
 <br>
-<div>
+<div id="card-summary">
 	This is where I will display what credit card info user entered, Will display on left side of visualization.
 	<br>
 	<br>
 
 
 	<h2>{{card_name}}</h2>
-	<button type="button" class="btn btn-default btn-lg">
+	<button type="button" class="btn btn-default btn-lg" id="card-debt">
   		<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 
 	</button> {{card_debt}}
 
 	<br>
 	<br>
 	
-	<button type="button" class="btn btn-default btn-lg">
+	<button type="button" class="btn btn-default btn-lg" id="card-date">
   		<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
 	</button> {{card_date}}
 
@@ -35,11 +43,11 @@ This is my dashboard.
 <br>
 <br>
 
-<div>
+<div id="plan">
 	Payment plan div.
 </div>
 
-<div>
+<div id="action">
 	Take action div.
 </div>
 

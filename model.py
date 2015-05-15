@@ -32,10 +32,10 @@ class Card(db.Model):
     card_name = db.Column(db.String(64), nullable=False)
     card_debt = db.Column(db.Float, nullable=False)
     card_apr = db.Column(db.Float, nullable=False)
-    card_date = db.Column(db.Date, nullable=True)
+    card_date = db.Column(db.Integer, nullable=True)
     min_payment = db.Column(db.String(64), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    user = db.relationship("User", backref="Cards")
+    user = db.relationship("User", backref="Card")
 
     #  if i need to change just one table in db I can drop that
     # one table and then do db.create_all() in -i model.py and it'll add that new table....

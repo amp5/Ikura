@@ -6,24 +6,24 @@
 
 <p>First, tell me about your credit card debt:</p>
 
-<form action="/card_submission" method='POST'>
+<form action="/card_submission" method='POST' id="entire_form">
     	 Credit Card Name:
     	 <!-- insert little 'i' comments here to explain stuff -->
     <br>
-    	<input type="text" name="card1_name" required>
+    	<input type="text" name="card1_name" required id="name">
     <br>
     	Amount of Debt:
     <br>
-    	<input type="number" step="0.01" min="0" name="card1_debt" required>
+    	<input type="number" step="0.01" min="0" name="card1_debt" required id="debt">
     <br>
     	Annual Percentage Rate (APR):
         <!-- add note to mention this should be in percent format __%-->
     <br>
-    	<input type="number" step="0.01" min="0" name="card1_apr" required>
+    	<input type="number" step="0.01" min="0" name="card1_apr" required id="apr">
     <br>
         <label> How is your minimum payment calculated?
             <!-- make the default for this first one. add note explaining this to users. -->
-        <select name="min_payment">
+        <select name="min_payment" id="min_payment">
           <option value="int_1per" selected="selected"t>Interest + 1% of the balance</option>
           <option value="2.00_per">2.00%</option>
           <option value="2.08_per">2.08%</option>
@@ -39,12 +39,14 @@
     <br>
     	<!-- Have date be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
     	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
-    	Date to pay off:
-	  	<input type="date" name="card1_date" min="2015-05-10">
+    	
+<!-- change to number of months to pay off. For now, do three options. 12, 24, 36 -->
+      Select how long you want your payment plan to be: 
+	  	<input type="integer" name="card1_date" min="1" max="36" id="date">
 
     <br>
     <br>	
-    	<input type="submit" value="Let's Do This!">
+    	<input type="submit" value="Let's Do This!" id="submit">
 </form>
 
 

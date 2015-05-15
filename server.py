@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
+# import calculations
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -85,6 +86,8 @@ def card_submission():
 @app.route('/dashboard')
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
+	#need to import calculations and then display the dictionary of dictionaries on this page for now. 
+
 
 	return render_template('dashboard.html')
 
@@ -180,10 +183,37 @@ def logout():
 
 
 
+
+# @app.route('/query')
+# def user_cards():
+# 	"""Loop over al cards user has entered and return a dictionary of dictionaries. 
+# 	The outer dictionary key = user_id, values = cards
+# 	The inner dictionary key = name of a card, values = min payments, min intr rates,
+# 														min debt decrease, suggested payments,
+# 														suggested intr rates, suggested debt decrease """
+
+
+# 	#need to query database to get all cards where user_id is in session
+# 	#object filled with cards
+# 	# from object must need ot pull out all things we want
+
+# 	#TODO: #
+# 	# Make sure to take user_id from session #
+# 	user_dict = {}
+# 	ikura_query = Card.query.filter_by(user_id=1).all()
+
+# 	# ikura_query= db.session.query(Card.user_id)
+# 	print "my ikura_query", ikura_query
+# 	return redirect('/')
+
+
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
     app.debug = True
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     connect_to_db(app)
 
@@ -191,6 +221,7 @@ if __name__ == "__main__":
     DebugToolbarExtension(app)
 
     app.run()
+
 
 
 #***************** # Notes # ***********************
