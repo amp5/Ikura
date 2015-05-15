@@ -1,7 +1,4 @@
 from model import connect_to_db, db, User, Card, Value
-from flask_sqlalchemy import SQLAlchemy
-import psycopg2
-db = SQLAlchemy()
 
 
 
@@ -25,6 +22,7 @@ def user_cards():
 
 	# ikura_query= db.session.query(Card.user_id)
 	print "print my ikura_query", ikura_query
+	return ikura_query
 
 
 	# for card in ikura_query:
@@ -182,6 +180,21 @@ def user_cards():
 
 user_cards()
 
+
+
+# Tried doing this like in model and still getting 
+# "application not registered on db instance and no application bound to current context" error
+# if __name__ == "__main__":
+#     # As a convenience, if we run this module interactively, it will leave
+#     # you in a state of being able to work with the database directly.
+
+#     from server import app
+#     connect_to_db(app)
+#     with app.app_context():
+#     	print "Connected to DB."
+
+
+ 
 
 
 

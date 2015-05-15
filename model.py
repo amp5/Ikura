@@ -1,6 +1,6 @@
 """Models and database functions for Ikura project"""
 
-from flask_sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 import psycopg2
 db = SQLAlchemy()
 
@@ -83,7 +83,6 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ikura'
     db.app = app
     db.init_app(app)
-
 
 
 if __name__ == "__main__":
