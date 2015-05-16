@@ -1,7 +1,7 @@
 """Models and database functions for Ikura project"""
 
-from flask.ext.sqlalchemy import SQLAlchemy
-import psycopg2
+from flask_sqlalchemy import SQLAlchemy
+# import psycopg2
 db = SQLAlchemy()
 
 
@@ -21,7 +21,7 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+        return "<User user_id=%s email=%s ........>" % (self.user_id, self.email)
 
 class Card(db.Model):
     """Holds information about a user's credit cards"""
@@ -32,6 +32,8 @@ class Card(db.Model):
     card_name = db.Column(db.String(64), nullable=False)
     card_debt = db.Column(db.Float, nullable=False)
     card_apr = db.Column(db.Float, nullable=False)
+    # need to change all the names of this. date is not right. It's months to pay off....
+    # change here and in server, calculations and html
     card_date = db.Column(db.Integer, nullable=True)
     min_payment = db.Column(db.String(64), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -44,15 +46,15 @@ class Card(db.Model):
     def __repr__(self):
         """Provide helpful card representation when printed."""
 
-        return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
+        return "<Card card_id=%s card_name=%s ........>" % (self.card_id, self.card_name)
 
 
 class Value(db.Model):
     """Stores user answers for value question: money, time, sanity"""
 
+    
     __tablename__ = "values"
 
-    # TODO: Make sure you can have boolean values? Ask if this is the best strategy for this.
 
     value_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     money_spent_high = db.Column(db.BOOLEAN)
@@ -68,18 +70,14 @@ class Value(db.Model):
     def __repr__(self):
         """Provide helpful card representation when printed."""
 
-        return "<Card card_id=%s card_name=%s>" % (self.card_id, self.card_name)
+        return "<Card card_id=%s card_name=%s ........>" % (self.card_id, self.card_name)
+
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
-    # # Configure to use our SQLite database
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ikura.db'
-    # db.app = app
-    # db.init_app(app)
-
 
     # Configuring PostgreSQL 
-    # Will this link to localhost change once I have this deployed?
+    # Will this link to localhost change once I have this deployed? <- yes
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ikura'
     db.app = app
     db.init_app(app)
@@ -88,6 +86,7 @@ def connect_to_db(app):
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.
+    # we want to connect to the db after lines 3-5 run.
 
     from server import app
     connect_to_db(app)

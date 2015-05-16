@@ -24,17 +24,27 @@ This is my dashboard.
 	<br>
 
 
-	<h2>{{card_name}}</h2>
-	<button type="button" class="btn btn-default btn-lg" id="card-debt">
-  		<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 
-	</button> {{card_debt}}
+	<!-- for loop in jinjia! -->
+	{% for card in query %}
+		<br>
+		<br>
+		Card id: {{card.card_id}},
+		<br> 
+		Card name: {{card.card_name}}
+		<br>
+		Card debt: {{card.card_debt}}	
+		<br>
+		Card apr: {{card.card_apr}}
+		<br>
+		Card time to pay off: {{card.card_date}}
+		<br>
+		User id: {{card.user_id}}
+		<br>
+		<br>
+	{% endfor %}
 
-	<br>
-	<br>
-	
-	<button type="button" class="btn btn-default btn-lg" id="card-date">
-  		<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
-	</button> {{card_date}}
+
+	<!-- <Card card_id=1 card_name=Mastercard> -->
 
 	<!-- add floating point display on number -->
 	<!-- add apr amount and min payment -->
@@ -49,6 +59,8 @@ This is my dashboard.
 
 <div id="action">
 	Take action div.
+	<!--  add in a note here that if a card doesn't have 0apr, suggest to switch to a 0 apr
+	ONLY if they can pay it off within that date... -->
 </div>
 
 <!-- Use this! http://getbootstrap.com/examples/dashboard/ -->

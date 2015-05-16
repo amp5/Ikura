@@ -1,7 +1,7 @@
 """Ikura Server"""
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
@@ -11,16 +11,16 @@ Bootstrap(app)
 app.secret_key = "AcBbCa"
 app.jinja_env.undefined = StrictUndefined
 
-app.debug = True
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.debug = True
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-connect_to_db(app)
+# connect_to_db(app)
 
-# Use the DebugToolbar
-DebugToolbarExtension(app)
+# # Use the DebugToolbar
+# DebugToolbarExtension(app)
 
 
-import calculations
+from calculations import user_cards
 
 ###############################################################
 # View Routes #
@@ -82,12 +82,13 @@ def card_submission():
 			db.session.commit()
 			flash("Thank you for entering this information! We've calculated your payment plan:")
 
-		return render_template('dashboard.html', 
-								card_name=name, 
-								card_debt=debt,
-								card_apr=apr,
-								card_date=date,
-								min_payment=min_payment)
+		return redirect(url_for('dashboard'))
+		# redirect('dashboard.html', 
+		# 						card_name=name, 
+		# 						card_debt=debt,
+		# 						card_apr=apr,
+		# 						card_date=date,
+		# 						min_payment=min_payment)
 	else:
 		return render_template('card_submission.html')
 
@@ -97,9 +98,23 @@ def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
 	#need to import calculations and then display the dictionary of dictionaries on this page for now. 
 	
-	calculations.min_payment(card_name, card_debt, card_apr, card_date, min_payment)
+	ikura_query = Card.query.filter_by(user_id=1).all()
 
-	return render_template('dashboard.html')
+	# print ikura_query
+
+	# once I can query this, I can run a  for loop to pass in cc
+	# info into calculations
+	# Then I want to display this data for each card into dahsboard. 
+	# In a dictionary.
+
+
+	# TODO:
+	user_cards(ikura_query)
+	# later I want to pass this answer to my dashboard. aka. pass the dictionary
+	# of dictionaries....
+	
+
+	return render_template('dashboard.html', query=ikura_query)
 
 
 
@@ -194,43 +209,41 @@ def logout():
 
 
 
-@app.route('/query')
-def user_cards():
-	"""Loop over al cards user has entered and return a dictionary of dictionaries. 
-	The outer dictionary key = user_id, values = cards
-	The inner dictionary key = name of a card, values = min payments, min intr rates,
-														min debt decrease, suggested payments,
-														suggested intr rates, suggested debt decrease """
+# @app.route('/query')
+# def user_cards():
+# 	"""Loop over al cards user has entered and return a dictionary of dictionaries. 
+# 	The outer dictionary key = user_id, values = cards
+# 	The inner dictionary key = name of a card, values = min payments, min intr rates,
+# 														min debt decrease, suggested payments,
+# 														suggested intr rates, suggested debt decrease """
 
 
-	#need to query database to get all cards where user_id is in session
-	#object filled with cards
-	# from object must need ot pull out all things we want
+# 	#need to query database to get all cards where user_id is in session
+# 	#object filled with cards
+# 	# from object must need ot pull out all things we want
 
-	#TODO: #
-	# Make sure to take user_id from session #
-	user_dict = {}
-	ikura_query = Card.query.filter_by(user_id=1).all()
+# 	#TODO: #
+# 	# Make sure to take user_id from session #
+# 	user_dict = {}
+# 	ikura_query = Card.query.filter_by(user_id=1).all()
 
-	# ikura_query= db.session.query(Card.user_id)
-	print "my ikura_query", ikura_query
-	return redirect('/')
-
-app.run()
+# 	# ikura_query= db.session.query(Card.user_id)
+# 	print "my ikura_query", ikura_query
+# 	return redirect('/')
 
 
-# if __name__ == "__main__":
-#     # We have to set debug=True here, since it has to be True at the point
-#     # that we invoke the DebugToolbarExtension
-#     app.debug = True
-#     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+if __name__ == "__main__":
+    # We have to set debug=True here, since it has to be True at the point
+    # that we invoke the DebugToolbarExtension
+    app.debug = True
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-#     connect_to_db(app)
+    connect_to_db(app)
 
-#     # Use the DebugToolbar
-#     DebugToolbarExtension(app)
+    # Use the DebugToolbar
+    DebugToolbarExtension(app)
 
-#     app.run()
+    app.run()
 
 
 #***************** # Notes # ***********************
