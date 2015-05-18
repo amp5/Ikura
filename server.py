@@ -98,7 +98,8 @@ def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
 	#need to import calculations and then display the dictionary of dictionaries on this page for now. 
 	
-	ikura_query = Card.query.filter_by(user_id=1).all()
+	# change this to not a query. results of a query
+	results_of_query = Card.query.filter_by(user_id=1).all()
 
 	# print ikura_query
 
@@ -109,12 +110,12 @@ def dashboard():
 
 
 	# TODO:
-	user_cards(ikura_query)
+	user_cards(results_of_query)
 	# later I want to pass this answer to my dashboard. aka. pass the dictionary
 	# of dictionaries....
 	
 
-	return render_template('dashboard.html', query=ikura_query)
+	return render_template('dashboard.html', query_results=results_of_query)
 
 
 

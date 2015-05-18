@@ -25,14 +25,14 @@ This is my dashboard.
 
 
 	<!-- for loop in jinjia! -->
-	{% for card in query %}
+	{% for card in query_results %}
 		<br>
 		<br>
 		Card id: {{card.card_id}},
 		<br> 
 		Card name: {{card.card_name}}
 		<br>
-		Card debt: {{card.card_debt | currency}}	
+		Card debt: {{card.card_debt }}	
 		<br>
 		Card apr: {{card.card_apr}}
 		<br>

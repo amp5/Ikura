@@ -1,9 +1,133 @@
 from model import connect_to_db, db, User, Card, Value
 
 
+def min_payment_plan(name, date, debt, apr, user_id):
+	"""Calculates min oayment plan for card and returns a dictionary 
+		with diff calculations as values"""
 
-def user_cards(query):
-	"""Loop over al cards user has entered and return a dictionary of dictionaries. 
+	# ----- # Base calculations # ----- #
+	interest_per_month = apr/date
+	# print interest_per_month
+	# 0.00833333333333
+
+	min_payment = interest_per_month + (debt *0.01)
+	# print min_payment
+	# 10.0083333333
+
+	monthly_payment_suggestion = float(debt) / float((date + 1))
+	# print monthly_payment_suggestion
+	# 76.9230769231
+
+	rounded_monthly_payment_siggestion = round(monthly_payment_suggestion, 2)
+	# 76.92
+
+	# ----- # Min payment calculations # ----- # 
+	new_debt_list=[debt]
+	interest_to_pay_list = []
+	min_total_payment_list = []
+	cards = {}
+
+	# interest_to_pay = debt * interest_per_month
+	# print interest_to_pay
+	# 8.33333333333
+
+	# min_total_payment = min_payment + interest_to_pay
+	# print min_total_payment
+	# 18.3416666667
+	 
+	# new_debt = debt + interest_to_pay - min_total_payment
+	# print new_debt
+	# 989.991666667
+
+	while debt >0:
+
+		interest_to_pay = debt * interest_per_month
+		interest_to_pay_list.append(interest_to_pay)
+
+		min_total_payment = min_payment + interest_to_pay
+		min_total_payment_list.append(min_total_payment)
+
+		new_debt = debt + interest_to_pay - min_total_payment
+		new_debt_list.append(new_debt)
+		debt = new_debt
+
+	# print "Min Debt decreasing:", new_debt_list
+	# print "*"* 20 
+	# print "Min Interest decreasing", interest_to_pay_list
+	# print "*"* 20 
+	# print "Min payments", min_total_payment_list
+
+	# print "*"* 40
+
+	cards[name] = [new_debt_list, interest_to_pay_list, min_total_payment_list]
+	# print '--'*20
+	# print "This is dictionary cards", cards 
+	return cards
+
+
+def suggested_plan(name, date, debt, apr, cards, user_id):
+	"""Calculates suggested plan and returns an appended dictionary 
+	from previous min_payment_plan functionw"""
+
+	cards = cards
+	# print "THIS IS MY CARDS FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", cards
+	# print "Completed."
+	interest_per_month = apr/date
+	# print "interest per month:", interest_per_month
+	monthly_payment_suggestion = float(debt) / float((date + 1))
+	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
+	# print "rounded suggestion:", rounded_monthly_payment_suggestion
+	# ----- # Suggested payment calculations # ----- # 
+
+	new_debt_list=[debt]
+	interest_to_pay_list = []
+	monthly_payment_list = []
+
+
+	#Something wrong with this while loop. 
+	#Prints out inf, inf, inf, and numbers....
+	while debt >0:
+
+
+		# interest_to_pay = debt * interest_per_month
+		# interest_to_pay_list.append(interest_to_pay)
+
+		# min_total_payment = min_payment + interest_to_pay
+		# min_total_payment_list.append(min_total_payment)
+
+		# new_debt = debt + interest_to_pay - min_total_payment
+		# new_debt_list.append(new_debt)
+		# debt = new_debt
+
+
+
+
+		interest_to_pay = debt * interest_per_month
+		interest_to_pay_list.append(interest_to_pay)
+		# print "interest list:", interest_to_pay_list
+
+		# monthly_payment = min_payment + interest_to_pay
+		monthly_payment_list.append(rounded_monthly_payment_suggestion)
+		# print "monthly payment list:", monthly_payment_list
+
+		new_debt = debt + interest_to_pay - rounded_monthly_payment_suggestion
+		new_debt_list.append(new_debt)
+		debt = new_debt
+
+	# print "Suggested Debt decreasing:", new_debt_list
+	# print "*"* 20 
+	# print "Suggested Interest decreasing", interest_to_pay_list
+	# print "*"* 20 
+	# print "Suggested payments", monthly_payment_list
+
+	cards[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
+	# print '--'*20
+	# print "This is dictionary cards", cards
+	return cards 
+
+
+def user_cards(query_results):
+	"""Loop over all cards user has entered and return a dictionary of dictionaries. 
 	The outer dictionary key = user_id, values = cards
 	The inner dictionary key = name of a card, values = min payments, min intr rates,
 														min debt decrease, suggested payments,
@@ -18,14 +142,18 @@ def user_cards(query):
 	# Make sure to take user_id from session once it's connected #
 	# for now just manually entering in where user_id is 1. AKA the only user in the database
 
-	print "This is the query pulled in from dashboard. User inputted.", query
+	print "This is the query pulled in from dashboard. User inputted.", query_results
 
-	user_dict = {}
+	user_card_list = []
+	user_dict = {user_card_list}
+
 	
-	for card in query:
+	for card in query_results:
 		name = card.card_name 
 		debt = card.card_debt
 		apr = card.card_apr
+		#This will turn user inputted apr into percentage
+		apr = apr/100
 		date = card.card_date
 		min_payment = card.min_payment
 		user_id = card.user_id
@@ -36,162 +164,28 @@ def user_cards(query):
 		print "Date", date
 		print "Min payment", min_payment
 		print "User", user_id
+
+		returned_dict = min_payment_plan(name, date, debt, apr, user_id)
+		print "This is returned_dict:", returned_dict
+		print "Completed."
+		completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
+		print "This should be the whole dict", completed_card_dict
+		# This is only printing out the one card dictionary with user. 
+		# Want this dictionary to append with multiple dictionaries
 		
 
 
-
-
-		def min_payment_plan(name, date, debt, apr, user_id):
-			"""Calculates min oayment plan for card and returns a dictionary 
-				with diff calculations as values"""
-
-			# ----- # Base calculations # ----- #
-			interest_per_month = apr/date
-			# print interest_per_month
-			# 0.00833333333333
-
-			min_payment = interest_per_month + (debt *0.01)
-			# print min_payment
-			# 10.0083333333
-
-			monthly_payment_suggestion = float(debt) / float((date + 1))
-			# print monthly_payment_suggestion
-			# 76.9230769231
-
-			rounded_monthly_payment_siggestion = round(monthly_payment_suggestion, 2)
-			# 76.92
-
-			# ----- # Min payment calculations # ----- # 
-			new_debt_list=[debt]
-			interest_to_pay_list = []
-			min_total_payment_list = []
-			cards = {}
-
-			# interest_to_pay = debt * interest_per_month
-			# print interest_to_pay
-			# 8.33333333333
-
-			# min_total_payment = min_payment + interest_to_pay
-			# print min_total_payment
-			# 18.3416666667
-			 
-			# new_debt = debt + interest_to_pay - min_total_payment
-			# print new_debt
-			# 989.991666667
-
-			while debt >0:
-
-				interest_to_pay = debt * interest_per_month
-				interest_to_pay_list.append(interest_to_pay)
-
-				min_total_payment = min_payment + interest_to_pay
-				min_total_payment_list.append(min_total_payment)
-
-				new_debt = debt + interest_to_pay - min_total_payment
-				new_debt_list.append(new_debt)
-				debt = new_debt
-
-			# print "Min Debt decreasing:", new_debt_list
-			# print "*"* 20 
-			# print "Min Interest decreasing", interest_to_pay_list
-			# print "*"* 20 
-			# print "Min payments", min_total_payment_list
-
-			# print "*"* 40
-
-			cards[name] = [new_debt_list, interest_to_pay_list, min_total_payment]
-			# print '--'*20
-			# print "This is dictionary cards", cards 
-			# print cards
-			return cards
-
-		def suggested_plan(name, date, debt, apr, cards, user_id):
-			"""Calculates suggested plan and returns an appended dictionary 
-			from previous min_payment_plan functionw"""
-
-			cards = cards
-			# print "THIS IS MY CARDS FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", cards
-			interest_per_month = apr/date
-			monthly_payment_suggestion = float(debt) / float((date + 1))
-			rounded_monthly_payment_siggestion = round(monthly_payment_suggestion, 2)
-
-			# ----- # Suggested payment calculations # ----- # 
-
-			new_debt_list=[debt]
-			interest_to_pay_list = []
-			monthly_payment_list = []
-
-			while debt >0:
-
-				interest_to_pay = debt * interest_per_month
-				interest_to_pay_list.append(interest_to_pay)
-
-				# monthly_payment = min_payment + interest_to_pay
-				monthly_payment_list.append(monthly_payment_suggestion)
-
-				new_debt = debt + interest_to_pay - monthly_payment_suggestion
-				new_debt_list.append(new_debt)
-				debt = new_debt
-
-			# print "Suggested Debt decreasing:", new_debt_list
-			# print "*"* 20 
-			# print "Suggested Interest decreasing", interest_to_pay_list
-			# print "*"* 20 
-			# print "Suggested payments", monthly_payment_list
-
-			cards[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
-			print '--'*20
-			print "This is dictionary cards", cards
-			return cards 
-
-		def main():
-
-			#  These values will be taken from user input. #
-			# # Scenario 1
-			# name = "Visa 145"
-			# date = 12
-			# debt = 1000
-			# apr = 0.1
-
-
-			# # Scenario 2
-			# name = "Visa 14335"
-			# date = 12
-			# debt = 2000
-			# apr = 0.2
-
-			# # Scenario 3
-			# name = "Visa 399
-			# date = 12
-			# debt = 5000
-			# apr = 0.21
-
-			# # Scenario 4
-			# name = "Mastercard 1"
-			# # make these into lists of things and we will iterate over them
-			# date = 24
-			# debt = 3000
-			# apr = 0.2
-
-
-			returned_dict = min_payment_plan(name, date, debt, apr)
-			# print returned_dict
-		# 	completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict)
-
-		# 	print "*" * 100
-		# 	print "This should be the whole dict", completed_card_dict
-		 
-		### do I need to call main() or call each function.... ####
-
-		returned_dict = min_payment_plan(name, date, debt, apr, user_id)
-		completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
-		print "This should be the whole dict", completed_card_dict
-
-		user_dict['user_id'] = [cards]
+		# PLAY WITH DICTIONARIES!!!!!!
 
 
 
-# user_cards()
+		user_dict['user_id'] = user_card_list.append(completed_card_dict)
+
+	print "Change this to return once I know this is the whole dictionary of dictionaries.", user_dict
+
+
+
+
 
 
 
