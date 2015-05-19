@@ -110,12 +110,11 @@ def dashboard():
 
 
 	# TODO:
-	user_cards(results_of_query)
+	user_card_dict = user_cards(results_of_query)
 	# later I want to pass this answer to my dashboard. aka. pass the dictionary
 	# of dictionaries....
-	
 
-	return render_template('dashboard.html', query_results=results_of_query)
+	return render_template('dashboard.html', query_results=results_of_query, user_card_dict=user_card_dict)
 
 
 
@@ -209,30 +208,6 @@ def logout():
 
 
 
-
-# @app.route('/query')
-# def user_cards():
-# 	"""Loop over al cards user has entered and return a dictionary of dictionaries. 
-# 	The outer dictionary key = user_id, values = cards
-# 	The inner dictionary key = name of a card, values = min payments, min intr rates,
-# 														min debt decrease, suggested payments,
-# 														suggested intr rates, suggested debt decrease """
-
-
-# 	#need to query database to get all cards where user_id is in session
-# 	#object filled with cards
-# 	# from object must need ot pull out all things we want
-
-# 	#TODO: #
-# 	# Make sure to take user_id from session #
-# 	user_dict = {}
-# 	ikura_query = Card.query.filter_by(user_id=1).all()
-
-# 	# ikura_query= db.session.query(Card.user_id)
-# 	print "my ikura_query", ikura_query
-# 	return redirect('/')
-
-
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
@@ -255,3 +230,5 @@ if __name__ == "__main__":
 # Need to combine subscribe and login to same @app.route. Should be able to
 # have jinja display different messages on same page.
 # Want to make this more succinct.
+#TODO: #
+# Make sure to take user_id from session #

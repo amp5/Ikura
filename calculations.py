@@ -2,8 +2,10 @@ from model import connect_to_db, db, User, Card, Value
 
 
 def min_payment_plan(name, date, debt, apr, user_id):
-	"""Calculates min oayment plan for card and returns a dictionary 
-		with diff calculations as values"""
+	"""Calculates min payment plan for card and returns a dictionary 
+		with diff calculations as values
+
+		{Name: [new_debt_list, interest_to_pay_list, min_total_payment_list]} """
 
 	# ----- # Base calculations # ----- #
 	interest_per_month = apr/date
@@ -67,41 +69,28 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 def suggested_plan(name, date, debt, apr, cards, user_id):
 	"""Calculates suggested plan and returns an appended dictionary 
-	from previous min_payment_plan functionw"""
+	from previous min_payment_plan function
+
+	{Name: [new_debt_list(min), interest_to_pay_list(min), min_total_payment_list, 
+			new_debt_list(suggested), interest_to_pay_list(suggested), monthly_payment_list])}
+	"""
 
 	cards = cards
 	# print "THIS IS MY CARDS FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", cards
-	# print "Completed."
 	interest_per_month = apr/date
 	# print "interest per month:", interest_per_month
 	monthly_payment_suggestion = float(debt) / float((date + 1))
 	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
 	# print "rounded suggestion:", rounded_monthly_payment_suggestion
+	
+
 	# ----- # Suggested payment calculations # ----- # 
 
 	new_debt_list=[debt]
 	interest_to_pay_list = []
 	monthly_payment_list = []
 
-
-	#Something wrong with this while loop. 
-	#Prints out inf, inf, inf, and numbers....
 	while debt >0:
-
-
-		# interest_to_pay = debt * interest_per_month
-		# interest_to_pay_list.append(interest_to_pay)
-
-		# min_total_payment = min_payment + interest_to_pay
-		# min_total_payment_list.append(min_total_payment)
-
-		# new_debt = debt + interest_to_pay - min_total_payment
-		# new_debt_list.append(new_debt)
-		# debt = new_debt
-
-
-
-
 		interest_to_pay = debt * interest_per_month
 		interest_to_pay_list.append(interest_to_pay)
 		# print "interest list:", interest_to_pay_list
@@ -142,12 +131,9 @@ def user_cards(query_results):
 	# Make sure to take user_id from session once it's connected #
 	# for now just manually entering in where user_id is 1. AKA the only user in the database
 
-	print "This is the query pulled in from dashboard. User inputted.", query_results
+	user_dict = {}
+	card_dict_list = []
 
-	user_card_list = []
-	user_dict = {user_card_list}
-
-	
 	for card in query_results:
 		name = card.card_name 
 		debt = card.card_debt
@@ -157,6 +143,7 @@ def user_cards(query_results):
 		date = card.card_date
 		min_payment = card.min_payment
 		user_id = card.user_id
+		
 
 		print "Name", name
 		print "Debt", debt
@@ -166,45 +153,21 @@ def user_cards(query_results):
 		print "User", user_id
 
 		returned_dict = min_payment_plan(name, date, debt, apr, user_id)
-		print "This is returned_dict:", returned_dict
-		print "Completed."
 		completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
-		print "This should be the whole dict", completed_card_dict
-		# This is only printing out the one card dictionary with user. 
-		# Want this dictionary to append with multiple dictionaries
-		
+		card_dict_list.append(completed_card_dict)
 
+	# print "This is card list", card_dict_list
 
-		# PLAY WITH DICTIONARIES!!!!!!
+	user_dict = {user_id : {}}
+	
+	for card_dict in card_dict_list:
+		if user_dict[user_id]:
+			user_dict[user_id].append(card_dict)
+		else:
+			user_dict[user_id] = [card_dict]
+	print "This better work as the user dictionary.", user_dict
 
-
-
-		user_dict['user_id'] = user_card_list.append(completed_card_dict)
-
-	print "Change this to return once I know this is the whole dictionary of dictionaries.", user_dict
-
-
-
-
-
-
-
-# Tried doing this like in model and still getting 
-# "application not registered on db instance and no application bound to current context" error
-# if __name__ == "__main__":
-#     # As a convenience, if we run this module interactively, it will leave
-#     # you in a state of being able to work with the database directly.
-
-#     from server import app
-#     connect_to_db(app)
-#     with app.app_context():
-#     	print "Connected to DB."
-
-
- 
-
-
-
+	return user_dict
 
 
 # TODO: # 
@@ -216,3 +179,4 @@ def user_cards(query_results):
 # Or don't work when something bad is entered
 # Or state assumptions so extra testing is unecessary 
 #     such as not testing for negative numbers since html form does not allow
+# change the user_id in here and have it pull from session. Might have to do that in server.py
