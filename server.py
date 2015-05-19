@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, request, flash, session, url
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
+import json
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -98,19 +99,17 @@ def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
 	#need to import calculations and then display the dictionary of dictionaries on this page for now. 
 	
-	# change this to not a query. results of a query
 	results_of_query = Card.query.filter_by(user_id=1).all()
 
-	# print ikura_query
+	user_card_dict_py = user_cards(results_of_query)
 
-	# once I can query this, I can run a  for loop to pass in cc
-	# info into calculations
-	# Then I want to display this data for each card into dahsboard. 
-	# In a dictionary.
+	# This converts my Python dictionary or dictionaries into JSON. 
+	# Will be used to pass onto D3
+	user_card_dict = json.dumps(user_card_dict_py)
+	print type(user_card_dict)
 
 
 	# TODO:
-	user_card_dict = user_cards(results_of_query)
 	# later I want to pass this answer to my dashboard. aka. pass the dictionary
 	# of dictionaries....
 
@@ -204,6 +203,11 @@ def logout():
     flash("You have successfully logged out.")
     
     return redirect('/')
+
+@app.route('/d3')
+def d3():
+ 	"""practice for d3"""
+ 	return render_template('d3_study.html')
 
 
 

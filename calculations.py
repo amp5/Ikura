@@ -1,6 +1,7 @@
 from model import connect_to_db, db, User, Card, Value
 
 
+
 def min_payment_plan(name, date, debt, apr, user_id):
 	"""Calculates min payment plan for card and returns a dictionary 
 		with diff calculations as values
@@ -165,7 +166,7 @@ def user_cards(query_results):
 			user_dict[user_id].append(card_dict)
 		else:
 			user_dict[user_id] = [card_dict]
-	print "This better work as the user dictionary.", user_dict
+	print "Complete User Dictionary:", user_dict
 
 	return user_dict
 
