@@ -62,7 +62,7 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 	# print "*"* 40
 
-	cards[name] = [new_debt_list, interest_to_pay_list, min_total_payment_list]
+	cards[name] = [[new_debt_list, interest_to_pay_list, min_total_payment_list]]
 	# print '--'*20
 	# print "This is dictionary cards", cards 
 	return cards
