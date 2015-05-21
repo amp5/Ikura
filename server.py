@@ -52,46 +52,58 @@ def card_submission():
 	   user inuptted info to dashboard"""
 
 	if request.method == 'POST':
-		name = request.form["card1_name"]
-		debt = request.form["card1_debt"]
-		apr = request.form["card1_apr"]
-		date = request.form["card1_date"]
+		print "This is our request object", request.form
+		names = request.form.getlist("card1_name[]")
+		print "This is name", names
+		print names[0]
+		debts = request.form.getlist("card1_debt[]")
+		aprs = request.form.getlist("card1_apr[]")
+		dates = request.form.getlist("card1_date[]")
+		# session.get
 		user_id = session.get("user_id")
 		min_payment = session.get("min_payment")
 
-		print "Name", name
-		print "Debt", debt
-		print "APR", apr
-		print "Date", date
+		print "Name", names
+		print "Debt", debts
+		print "APR", aprs
+		print "Date", dates
 		print "Min Payment", min_payment
 		print "This is the session", session
 		print "user id", user_id
 
-		card = Card.query.filter_by(user_id=user_id).all()
+		for i in range(len(names)):
+			print "Name", names[i]
+			print "Debt", debts[i]
+			print "APR", aprs[i]
+			print "Date", dates[i]
+			print "Min Payment", min_payment
+			print "This is the session", session
+			print "user id", user_id
 
-		if card == None:
-			flash("In order to generate a payment plan for you we need some information on your current debts. ")
-			
-		else:
-			new_card = Card(card_name = name,
-						card_debt = debt,
-						card_apr = apr,
-						card_date = date,
-						min_payment=min_payment,
-						user_id = user_id)
-			db.session.add(new_card)   
-			db.session.commit()
-			flash("Thank you for entering this information! We've calculated your payment plan:")
 
+			card = Card.query.filter_by(user_id=user_id).all()
+
+			if card == None:
+				flash("In order to generate a payment plan for you we need some information on your current debts. ")
+				
+			else:
+				new_card = Card(card_name = names[i],
+							card_debt = debts[i],
+							card_apr = aprs[i],
+							card_date = dates[i],
+							min_payment=min_payment,
+							user_id = user_id)
+				db.session.add(new_card)   
+				db.session.commit()
+				flash("Thank you for entering this information! We've calculated your payment plan:")
 		return redirect(url_for('dashboard'))
-		# redirect('dashboard.html', 
-		# 						card_name=name, 
-		# 						card_debt=debt,
-		# 						card_apr=apr,
-		# 						card_date=date,
-		# 						min_payment=min_payment)
+		
 	else:
 		return render_template('card_submission.html')
+
+		# 127.0.0.1 - - [20/May/2015 18:26:20] "POST /card_submission HTTP/1.1" 302 -
+		# ASK FOR HELP ON THIS !!!!! WHAT IS WRONG WITH FLASK. WHY DOES IT BREAK HERE
+		# CARDS ARE GETTING UPLOADED IN DATABASE BUT NO...
 
 
 @app.route('/dashboard')
@@ -209,7 +221,7 @@ def d3():
  	"""practice for d3"""
  	return render_template('d3_study.html')
 
-
+ 
 
 
 if __name__ == "__main__":
