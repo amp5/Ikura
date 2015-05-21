@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, request, flash, session, url
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
+from organize_calcs import organization
 import json
 
 app = Flask(__name__)
@@ -118,14 +119,24 @@ def dashboard():
 	# This converts my Python dictionary or dictionaries into JSON. 
 	# Will be used to pass onto D3
 	user_card_dict = json.dumps(user_card_dict_py)
-	print type(user_card_dict)
+	# print type(user_card_dict)
+
+
+# ************** IM HERE ******************
+	all_totals = organization(user_card_dict_py)
+	print "What is this?", all_totals
+
+	# rounded_all_totals = [float(int(x)) for x in all_totals]
+	# print rounded_all_totals
 
 
 	# TODO:
 	# later I want to pass this answer to my dashboard. aka. pass the dictionary
 	# of dictionaries....
 
-	return render_template('dashboard.html', query_results=results_of_query, user_card_dict=user_card_dict)
+	return render_template('dashboard.html', query_results=results_of_query,
+											 user_card_dict=user_card_dict, 
+											 all_totals=all_totals)
 
 
 

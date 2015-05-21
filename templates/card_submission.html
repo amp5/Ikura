@@ -15,12 +15,12 @@
       <br>
       	Amount of Debt:
       <br>
-      	<input type="number" step="0.01" min="0" name="card1_debt[]" required id="debt">
+      	<input type="number" step="0.01" min="0" max="100000" name="card1_debt[]" required id="debt">
       <br>
       	Annual Percentage Rate (APR):
           <!-- add note to mention this should be in percent format __%-->
       <br>
-      	<input type="number" step="0.01" min="0" name="card1_apr[]" required id="apr">
+      	<input type="number" step="0.01" min="0" max="100" name="card1_apr[]" required id="apr">
       <br>
           <label> How is your minimum payment calculated?
               <!-- make the default for this first one. add note explaining this to users. -->
@@ -45,44 +45,7 @@
         Select how long you want your payment plan to be: 
   	  	<input type="number" name="card1_date[]" min="1" max="36" id="date">
 
-      <br>
-      <br>
 
-     Credit Card Name:
-         <!-- insert little 'i' comments here to explain stuff -->
-      <br>
-        <input type="text" name="card1_name[]" required id="name">
-      <br>
-        Amount of Debt:
-      <br>
-        <input type="number" step="0.01" min="0" name="card1_debt[]" required id="debt">
-      <br>
-        Annual Percentage Rate (APR):
-          <!-- add note to mention this should be in percent format __%-->
-      <br>
-        <input type="number" step="0.01" min="0" name="card1_apr[]" required id="apr">
-      <br>
-          <label> How is your minimum payment calculated?
-              <!-- make the default for this first one. add note explaining this to users. -->
-          <select name="min_payment[]" id="min_payment">
-            <option value="int_1per" selected="selected"t>Interest + 1% of the balance</option>
-            <option value="2.00_per">2.00%</option>
-            <option value="2.08_per">2.08%</option>
-            <option value="2.50_per">2.50%</option>
-            <option value="2.78_per">2.78%</option>
-            <option value="3.00_per">3.00%</option>
-            <option value="3.50_per">3.50%</option>
-            <option value="4.00_per">4.00%</option>
-            <option value="4.50_per">4.50%</option>
-            <option value="5.00_per">5.00%</option>
-          </select>
-          </label>
-      <br>
-        Select how long you want your payment plan to be: 
-        <input type="number" name="card1_date[]" min="1" max="36" id="date">
-
-      <br>
-      <br>
     </div>
     <div>
       <br>
@@ -107,5 +70,12 @@ Based on Gallup Poll Research:
 http://www.creditcards.com/credit-card-news/ownership-statistics-charts-1276.php 
 
 -->
+
+<!-- Need to add a remove new card section in JS file 'forms.js' -->
+
+      <!-- Want to have only button on page.
+      Want user to click button and then display info.
+      Add section in div id = 'add_new_card' forces user to input some card info. 
+      Right now, if user doesn't click add card and clicks submit "input out of range" -->
 
 <!-- For now, have only one credit card info show up. Then start playing with this more in server.py -->

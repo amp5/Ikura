@@ -166,7 +166,7 @@ def user_cards(query_results):
 			user_dict[user_id].append(card_dict)
 		else:
 			user_dict[user_id] = [card_dict]
-	print "Complete User Dictionary:", user_dict
+	# print "Complete User Dictionary:", user_dict
 
 	return user_dict
 
@@ -181,3 +181,6 @@ def user_cards(query_results):
 # Or state assumptions so extra testing is unecessary 
 #     such as not testing for negative numbers since html form does not allow
 # change the user_id in here and have it pull from session. Might have to do that in server.py
+
+
+# NOT SURE CALCULATIONS ARE UPDATING PAST TWO CARDS... LOOK INTO THIS....
