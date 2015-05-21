@@ -15,10 +15,17 @@ print type(user_card_dict_py)
 print "Values:", user_card_dict_py.values()
 
 values = user_card_dict_py.values()
+print "All of values", type(values)
+print "First index within values", type(values[0])
+print "First index within idex within values", type(values[0][0])
 
 i = 0
 # Fix names in for loop!!!
-for card in enumerate(values):
+# When I typed "for i in values" received following error:
+# TypeError: list indices must be integers, not tuple
+for card in values[0]:
+	print "*"*100
+	print "This is i", i
 	card = values[0][i]
 	print "This is the dictionary of my card:", card
 
@@ -51,6 +58,7 @@ for card in enumerate(values):
 	sugg_payment = sugg_info[2]
 	print "This is the suggested payments for card until debt is gone:", sugg_payment
 	i = i + 1
+	print "This is new i", i 
 
 # thing = values[0][1]
 # print thing
