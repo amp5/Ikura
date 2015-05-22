@@ -1,5 +1,7 @@
 # from calculations import min_payment_plan, suggested_plan, user_cards
 from model import connect_to_db, db, User, Card, Value
+from pandas import Series, DataFrame
+import pandas as pd
 
 # Keeping this here for now so I can play with file to make sure organizaiton works.
 # Will eventually send this stuff to server.py so that this stuff shows on dashboard.html
@@ -130,7 +132,6 @@ def organization(dictionary):
 	# print '*' * 30
 	# print "total sugg payment", total_sugg_payment
 
-	zip(*[[1,2], [3,4], [5,6]])
 
 	total_min = zip(*[rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment])
 	total_sugg = zip(*[rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment])
@@ -138,6 +139,12 @@ def organization(dictionary):
 	all_totals = [total_min, total_sugg]
 
 	print "this is all_totals", all_totals
+	
+	# HELP ON GETTING THIS FORMAT!!!!
+	# df = pd.DataFrame(data = total_min, columns=['Debt', 'Interest', 'Payments'])
+	# print df
+
+
 	return all_totals
 
 # organization()
