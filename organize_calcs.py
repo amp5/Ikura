@@ -130,7 +130,12 @@ def organization(dictionary):
 	# print '*' * 30
 	# print "total sugg payment", total_sugg_payment
 
-	all_totals = [rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment, rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment]
+	zip(*[[1,2], [3,4], [5,6]])
+
+	total_min = zip(*[rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment])
+	total_sugg = zip(*[rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment])
+
+	all_totals = [total_min, total_sugg]
 
 	print "this is all_totals", all_totals
 	return all_totals
