@@ -1,7 +1,7 @@
 """Ikura Server"""
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session, url_for
+from flask import Flask, render_template, redirect, request, flash, session, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
@@ -107,6 +107,14 @@ def card_submission():
 		# CARDS ARE GETTING UPLOADED IN DATABASE BUT NO...
 
 
+@app.route('/d3-data')
+def d3_data():
+	f = open("d3-data.json")
+	text = f.read()
+	json_data = json.loads(text)
+	return jsonify({'data':json_data})
+
+
 @app.route('/dashboard')
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
@@ -123,8 +131,27 @@ def dashboard():
 
 
 # ************** IM HERE ******************
+	# all_totals = [df_min, df_sugg, d3_points_list]
 	all_totals = organization(user_card_dict_py)
-	print "What is this?", all_totals
+
+	d3_points_list_json = json.dumps(all_totals[2])
+
+	print "JSON:", d3_points_list_json
+	print type(d3_points_list_json)
+
+
+
+
+	# row_json = json.dumps(row)
+
+
+
+
+
+
+
+
+	# print "What is this?", all_totals
 
 	# rounded_all_totals = [float(int(x)) for x in all_totals]
 	# print rounded_all_totals
@@ -134,9 +161,19 @@ def dashboard():
 	# later I want to pass this answer to my dashboard. aka. pass the dictionary
 	# of dictionaries....
 
+
+
 	return render_template('dashboard.html', query_results=results_of_query,
 											 user_card_dict=user_card_dict, 
-											 all_totals=all_totals)
+											 all_totals=all_totals, 
+											 d3_data = d3_points_list_json)
+
+
+
+@app.route('/d3')
+def d3():
+ 	"""practice for d3"""
+ 	return render_template('d3_study.html')
 
 
 
@@ -226,11 +263,6 @@ def logout():
     flash("You have successfully logged out.")
     
     return redirect('/')
-
-@app.route('/d3')
-def d3():
- 	"""practice for d3"""
- 	return render_template('d3_study.html')
 
  
 

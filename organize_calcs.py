@@ -1,7 +1,8 @@
-# from calculations import min_payment_plan, suggested_plan, user_cards
 from model import connect_to_db, db, User, Card, Value
 from pandas import Series, DataFrame
 import pandas as pd
+from datetime import datetime
+# import json
 
 # Keeping this here for now so I can play with file to make sure organizaiton works.
 # Will eventually send this stuff to server.py so that this stuff shows on dashboard.html
@@ -12,10 +13,7 @@ def organization(dictionary):
 
 	# print type(user_card_dict_py)
 	# print "Values:", user_card_dict_py.values()
-
-
 	# results_of_query = Card.query.filter_by(user_id=1).all()
-
 	# user_card_dict_py = user_cards(results_of_query)
 
 	# This converts my Python dictionary or dictionaries into JSON. 
@@ -133,19 +131,119 @@ def organization(dictionary):
 	# print "total sugg payment", total_sugg_payment
 
 
-	total_min = zip(*[rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment])
-	total_sugg = zip(*[rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment])
+	now = datetime.now()
+	dt_min_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_min_debt), freq='M')
+	dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_sugg_debt), freq='M')
 
-	all_totals = [total_min, total_sugg]
+	# How to get month and year to display on table?
+	total_min = zip(*[dt_min_month, rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment])
+	total_sugg = zip(*[dt_sugg_month, rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment])
 
-	print "this is all_totals", all_totals
+
+	# all_totals = [total_min, total_sugg]
 	
-	# HELP ON GETTING THIS FORMAT!!!!
-	# df = pd.DataFrame(data = total_min, columns=['Debt', 'Interest', 'Payments'])
-	# print df
+	df_min = pd.DataFrame(data = total_min, columns=['Month', 'Debt', 'Interest', 'Payments'])
+	df_sugg = pd.DataFrame(data = total_sugg, columns=['Month', 'Debt', 'Interest', 'Payments'])
+
+	#**************# A debugger tool from Rachael: #**************#
+	# import pdb; pdb.set_trace()
+
+	# print "This is my sugg data frame", df_sugg
 
 
-	return all_totals
+	# ****************** D3 ********************************************
+	# For D3 graph I want points for (debt_decr, time)
+	# min_d3_points = []
+	min_point = zip(*[dt_min_month.date, rounded_total_min_debt])
+	# print "This is zipped point", min_point
+	min_point_list = []
+	for i in range(len(min_point)):
+		point_dict = {'date':str(min_point[i][0]), 'amount':min_point[i][1]}
+		min_point_list.append(point_dict)
+
+	min_point_dict = {"Minimum Payment": min_point_list}
+	# print "dict", min_point_dict
+
+
+	sugg_point = zip(*[dt_sugg_month.date, rounded_total_sugg_debt])
+	sugg_point_list = []
+	for i in range(len(sugg_point)):
+		point_dict = {'date':str(sugg_point[i][0]), 'amount': sugg_point[i][1]}
+		# tel = {'jack': 4098, 'sape': 4139}
+		# point = [str(sugg_point[i][0]), sugg_point[i][1]]
+		sugg_point_list.append(point_dict)
+
+		# print "This is mini dictionary of points for each one", point_dict
+
+	sugg_point_dict = {"Suggested Payment": sugg_point_list}
+	# print "dict of sugg", sugg_point_dict
+
+
+
+
+
+	d3_points_list = [min_point_dict, sugg_point_dict]
+	# print "list of dicts", d3_points_list
+	
+
+
+
+	# min_d3_points_json = df_min_point.to_json()
+	# print min_d3_points_json
+
+
+	# min_d3_points.append(point)
+	# print "These are my points for min_d3_points", min_d3_points
+
+	# min_d3_points_json = min_d3_points.to_json()
+	# print min_d3_points_json
+
+	# sugg_d3_points = []
+	# point = zip(*[dt_sugg_month, rounded_total_sugg_debt])
+	# sugg_d3_points.append(point)
+	# print "These are my points for sugg_d3_points", sugg_d3_points
+
+	# total_d3_points = [min_d3_points, sugg_d3_points]
+
+
+
+
+
+
+
+
+	# d3_points = all_totals[2]
+	# json_d3_points = d3_points.to_json()
+	# print "JSON:", json_d3_points
+	# print type(json_d3_points)
+
+	# # These lines return a JSON of my data frames.
+	# df_sugg_json = df_sugg.to_json()
+	# print df_sugg_json
+	# print type(df_sugg_json)
+
+
+
+
+
+
+# TODO:
+# create points for use in multiple d3 graphs? use toggle feature?: 
+# 	(debt_decr, time)
+# 	(intr_decr, time)
+# 	(payment_decr, time)		
+
+
+
+	df_total = [df_min, df_sugg, d3_points_list]
+	# print '*'* 100
+	# print "These are points I want to use for D3", df_total[2]
+	# print '*'* 100
+
+
+
+	return df_total
+	# return all_totals
 
 # organization()
 
