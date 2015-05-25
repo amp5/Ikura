@@ -10,19 +10,10 @@ from datetime import datetime
 # connect_to_db(app)
 
 def organization(dictionary):
-
-	# print type(user_card_dict_py)
-	# print "Values:", user_card_dict_py.values()
-	# results_of_query = Card.query.filter_by(user_id=1).all()
-	# user_card_dict_py = user_cards(results_of_query)
-
-	# This converts my Python dictionary or dictionaries into JSON. 
-	# Will be used to pass onto D3
-	# user_card_dict = json.dumps(user_card_dict_py)
-	# print type(user_card_dict)
-
+	"""This is rearranging my data to display on html page and for D3"""
 
 	user_card_dict_py = dictionary
+#************* THIS  Trying to add on (0,0) for card debt in sugg **********************************	
 	values = user_card_dict_py.values()
 	# print "All of values", type(values)
 	# print "First index within values", type(values[0])
@@ -88,6 +79,8 @@ def organization(dictionary):
 
 		sugg_payment = sugg_info[2]
 		# print "This is the suggested payments for card until debt is gone:", sugg_payment
+
+
 		total_sugg_payment.append(sugg_payment)
 		# print "sugg payment", total_sugg_payment
 
@@ -105,12 +98,13 @@ def organization(dictionary):
 	
 	total_sugg_debt = [x + y for x, y in zip(total_sugg_debt[0], total_sugg_debt[1])]
 	rounded_total_sugg_debt = [round(x, 2) for x in total_sugg_debt]
+	# print "total rounded sugg debt", rounded_total_sugg_debt
 
 	
 	total_sugg_int = [x + y for x, y in zip(total_sugg_int[0], total_sugg_int[1])]
 	rounded_total_sugg_int = [round(x, 2) for x in total_sugg_int]
 
-	
+
 	total_sugg_payment = [x + y for x, y in zip(total_sugg_payment[0], total_sugg_payment[1])]
 	rounded_total_sugg_payment = [round(x, 2) for x in total_sugg_payment]
 
@@ -133,11 +127,15 @@ def organization(dictionary):
 
 	now = datetime.now()
 	dt_min_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_min_debt), freq='M')
+	
+#*************** THIS *******************************************
 	dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_sugg_debt), freq='M')
 
 	# How to get month and year to display on table?
 	total_min = zip(*[dt_min_month, rounded_total_min_debt, rounded_total_min_int, rounded_total_min_payment])
 	total_sugg = zip(*[dt_sugg_month, rounded_total_sugg_debt, rounded_total_sugg_int, rounded_total_sugg_payment])
+	# print "M:", len(total_min)
+	# print "S:", len(total_sugg)
 
 
 	# all_totals = [total_min, total_sugg]
@@ -155,13 +153,14 @@ def organization(dictionary):
 	# For D3 graph I want points for (debt_decr, time)
 	# min_d3_points = []
 	min_point = zip(*[dt_min_month.date, rounded_total_min_debt])
+	# print "Min length:", len(min_point)
 	# print "This is zipped point", min_point
 
 	data_point_list = []
 
 	# min_point_list = []
 	for i in range(len(min_point)):
-		point_dict = {"type":"Minimum Payment", "date":str(min_point[i][0]), "amount":min_point[i][1]}
+		point_dict = {"types":"Minimum Payment", "date":str(min_point[i][0]), "amount":min_point[i][1]}
 		# min_point_list.append(point_dict)
 		data_point_list.append(point_dict)
 
@@ -172,9 +171,12 @@ def organization(dictionary):
 
 
 	sugg_point = zip(*[dt_sugg_month.date, rounded_total_sugg_debt])
+	# print "Sugg points", sugg_point
+	# print "Sugg length:", len(sugg_point)
+
 	# sugg_point_list = []
 	for i in range(len(sugg_point)):
-		point_dict = {"type":"Suggested Payment", "date":str(sugg_point[i][0]), "amount": sugg_point[i][1]}
+		point_dict = {"types":"Suggested Payment", "date":str(sugg_point[i][0]), "amount": sugg_point[i][1]}
 		# point = [str(sugg_point[i][0]), sugg_point[i][1]]
 		# sugg_point_list.append(point_dict)
 		data_point_list.append(point_dict)
@@ -191,45 +193,6 @@ def organization(dictionary):
 
 
 
-	# d3_points_list = []
-	# print "list of dicts", d3_points_list
-	
-
-
-
-	# min_d3_points_json = df_min_point.to_json()
-	# print min_d3_points_json
-
-
-	# min_d3_points.append(point)
-	# print "These are my points for min_d3_points", min_d3_points
-
-	# min_d3_points_json = min_d3_points.to_json()
-	# print min_d3_points_json
-
-	# sugg_d3_points = []
-	# point = zip(*[dt_sugg_month, rounded_total_sugg_debt])
-	# sugg_d3_points.append(point)
-	# print "These are my points for sugg_d3_points", sugg_d3_points
-
-	# total_d3_points = [min_d3_points, sugg_d3_points]
-
-
-
-
-
-
-
-
-	# d3_points = all_totals[2]
-	# json_d3_points = d3_points.to_json()
-	# print "JSON:", json_d3_points
-	# print type(json_d3_points)
-
-	# # These lines return a JSON of my data frames.
-	# df_sugg_json = df_sugg.to_json()
-	# print df_sugg_json
-	# print type(df_sugg_json)
 
 
 

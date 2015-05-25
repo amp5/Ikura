@@ -1,474 +1,1012 @@
 [
-    {
-        "Minimum Payment": [
-            {
-                "date": "2015-05-31",
-                "amount": 3000
-            },
-            {
-                "date": "2015-06-30",
-                "amount": 2969.98
-            },
-            {
-                "date": "2015-07-31",
-                "amount": 2939.96
-            },
-            {
-                "date": "2015-08-31",
-                "amount": 2909.94
-            },
-            {
-                "date": "2015-09-30",
-                "amount": 2879.92
-            },
-            {
-                "date": "2015-10-31",
-                "amount": 2849.9
-            },
-            {
-                "date": "2015-11-30",
-                "amount": 2819.88
-            },
-            {
-                "date": "2015-12-31",
-                "amount": 2789.85
-            },
-            {
-                "date": "2016-01-31",
-                "amount": 2759.83
-            },
-            {
-                "date": "2016-02-29",
-                "amount": 2729.81
-            },
-            {
-                "date": "2016-03-31",
-                "amount": 2699.79
-            },
-            {
-                "date": "2016-04-30",
-                "amount": 2669.77
-            },
-            {
-                "date": "2016-05-31",
-                "amount": 2639.75
-            },
-            {
-                "date": "2016-06-30",
-                "amount": 2609.73
-            },
-            {
-                "date": "2016-07-31",
-                "amount": 2579.71
-            },
-            {
-                "date": "2016-08-31",
-                "amount": 2549.69
-            },
-            {
-                "date": "2016-09-30",
-                "amount": 2519.67
-            },
-            {
-                "date": "2016-10-31",
-                "amount": 2489.65
-            },
-            {
-                "date": "2016-11-30",
-                "amount": 2459.63
-            },
-            {
-                "date": "2016-12-31",
-                "amount": 2429.6
-            },
-            {
-                "date": "2017-01-31",
-                "amount": 2399.58
-            },
-            {
-                "date": "2017-02-28",
-                "amount": 2369.56
-            },
-            {
-                "date": "2017-03-31",
-                "amount": 2339.54
-            },
-            {
-                "date": "2017-04-30",
-                "amount": 2309.52
-            },
-            {
-                "date": "2017-05-31",
-                "amount": 2279.5
-            },
-            {
-                "date": "2017-06-30",
-                "amount": 2249.48
-            },
-            {
-                "date": "2017-07-31",
-                "amount": 2219.46
-            },
-            {
-                "date": "2017-08-31",
-                "amount": 2189.44
-            },
-            {
-                "date": "2017-09-30",
-                "amount": 2159.42
-            },
-            {
-                "date": "2017-10-31",
-                "amount": 2129.4
-            },
-            {
-                "date": "2017-11-30",
-                "amount": 2099.38
-            },
-            {
-                "date": "2017-12-31",
-                "amount": 2069.35
-            },
-            {
-                "date": "2018-01-31",
-                "amount": 2039.33
-            },
-            {
-                "date": "2018-02-28",
-                "amount": 2009.31
-            },
-            {
-                "date": "2018-03-31",
-                "amount": 1979.29
-            },
-            {
-                "date": "2018-04-30",
-                "amount": 1949.27
-            },
-            {
-                "date": "2018-05-31",
-                "amount": 1919.25
-            },
-            {
-                "date": "2018-06-30",
-                "amount": 1889.23
-            },
-            {
-                "date": "2018-07-31",
-                "amount": 1859.21
-            },
-            {
-                "date": "2018-08-31",
-                "amount": 1829.19
-            },
-            {
-                "date": "2018-09-30",
-                "amount": 1799.17
-            },
-            {
-                "date": "2018-10-31",
-                "amount": 1769.15
-            },
-            {
-                "date": "2018-11-30",
-                "amount": 1739.13
-            },
-            {
-                "date": "2018-12-31",
-                "amount": 1709.1
-            },
-            {
-                "date": "2019-01-31",
-                "amount": 1679.08
-            },
-            {
-                "date": "2019-02-28",
-                "amount": 1649.06
-            },
-            {
-                "date": "2019-03-31",
-                "amount": 1619.04
-            },
-            {
-                "date": "2019-04-30",
-                "amount": 1589.02
-            },
-            {
-                "date": "2019-05-31",
-                "amount": 1559
-            },
-            {
-                "date": "2019-06-30",
-                "amount": 1528.98
-            },
-            {
-                "date": "2019-07-31",
-                "amount": 1498.96
-            },
-            {
-                "date": "2019-08-31",
-                "amount": 1468.94
-            },
-            {
-                "date": "2019-09-30",
-                "amount": 1438.92
-            },
-            {
-                "date": "2019-10-31",
-                "amount": 1408.9
-            },
-            {
-                "date": "2019-11-30",
-                "amount": 1378.88
-            },
-            {
-                "date": "2019-12-31",
-                "amount": 1348.85
-            },
-            {
-                "date": "2020-01-31",
-                "amount": 1318.83
-            },
-            {
-                "date": "2020-02-29",
-                "amount": 1288.81
-            },
-            {
-                "date": "2020-03-31",
-                "amount": 1258.79
-            },
-            {
-                "date": "2020-04-30",
-                "amount": 1228.77
-            },
-            {
-                "date": "2020-05-31",
-                "amount": 1198.75
-            },
-            {
-                "date": "2020-06-30",
-                "amount": 1168.73
-            },
-            {
-                "date": "2020-07-31",
-                "amount": 1138.71
-            },
-            {
-                "date": "2020-08-31",
-                "amount": 1108.69
-            },
-            {
-                "date": "2020-09-30",
-                "amount": 1078.67
-            },
-            {
-                "date": "2020-10-31",
-                "amount": 1048.65
-            },
-            {
-                "date": "2020-11-30",
-                "amount": 1018.63
-            },
-            {
-                "date": "2020-12-31",
-                "amount": 988.6
-            },
-            {
-                "date": "2021-01-31",
-                "amount": 958.58
-            },
-            {
-                "date": "2021-02-28",
-                "amount": 928.56
-            },
-            {
-                "date": "2021-03-31",
-                "amount": 898.54
-            },
-            {
-                "date": "2021-04-30",
-                "amount": 868.52
-            },
-            {
-                "date": "2021-05-31",
-                "amount": 838.5
-            },
-            {
-                "date": "2021-06-30",
-                "amount": 808.48
-            },
-            {
-                "date": "2021-07-31",
-                "amount": 778.46
-            },
-            {
-                "date": "2021-08-31",
-                "amount": 748.44
-            },
-            {
-                "date": "2021-09-30",
-                "amount": 718.42
-            },
-            {
-                "date": "2021-10-31",
-                "amount": 688.4
-            },
-            {
-                "date": "2021-11-30",
-                "amount": 658.38
-            },
-            {
-                "date": "2021-12-31",
-                "amount": 628.35
-            },
-            {
-                "date": "2022-01-31",
-                "amount": 598.33
-            },
-            {
-                "date": "2022-02-28",
-                "amount": 568.31
-            },
-            {
-                "date": "2022-03-31",
-                "amount": 538.29
-            },
-            {
-                "date": "2022-04-30",
-                "amount": 508.27
-            },
-            {
-                "date": "2022-05-31",
-                "amount": 478.25
-            },
-            {
-                "date": "2022-06-30",
-                "amount": 448.23
-            },
-            {
-                "date": "2022-07-31",
-                "amount": 418.21
-            },
-            {
-                "date": "2022-08-31",
-                "amount": 388.19
-            },
-            {
-                "date": "2022-09-30",
-                "amount": 358.17
-            },
-            {
-                "date": "2022-10-31",
-                "amount": 328.15
-            },
-            {
-                "date": "2022-11-30",
-                "amount": 298.13
-            },
-            {
-                "date": "2022-12-31",
-                "amount": 268.1
-            },
-            {
-                "date": "2023-01-31",
-                "amount": 238.08
-            },
-            {
-                "date": "2023-02-28",
-                "amount": 208.06
-            },
-            {
-                "date": "2023-03-31",
-                "amount": 178.04
-            },
-            {
-                "date": "2023-04-30",
-                "amount": 148.02
-            },
-            {
-                "date": "2023-05-31",
-                "amount": 118
-            },
-            {
-                "date": "2023-06-30",
-                "amount": 87.98
-            },
-            {
-                "date": "2023-07-31",
-                "amount": 57.96
-            },
-            {
-                "date": "2023-08-31",
-                "amount": 27.94
-            },
-            {
-                "date": "2023-09-30",
-                "amount": -2.08
-            }
-        ]
-    },
-    {
-        "Suggested Payment": [
-            {
-                "date": "2015-05-31",
-                "amount": 3000
-            },
-            {
-                "date": "2015-06-30",
-                "amount": 2802.56
-            },
-            {
-                "date": "2015-07-31",
-                "amount": 2602.94
-            },
-            {
-                "date": "2015-08-31",
-                "amount": 2401.12
-            },
-            {
-                "date": "2015-09-30",
-                "amount": 2197.06
-            },
-            {
-                "date": "2015-10-31",
-                "amount": 1990.74
-            },
-            {
-                "date": "2015-11-30",
-                "amount": 1782.14
-            },
-            {
-                "date": "2015-12-31",
-                "amount": 1571.24
-            },
-            {
-                "date": "2016-01-31",
-                "amount": 1357.99
-            },
-            {
-                "date": "2016-02-29",
-                "amount": 1142.38
-            },
-            {
-                "date": "2016-03-31",
-                "amount": 924.39
-            },
-            {
-                "date": "2016-04-30",
-                "amount": 703.97
-            },
-            {
-                "date": "2016-05-31",
-                "amount": 481.11
-            },
-            {
-                "date": "2016-06-30",
-                "amount": 255.78
-            },
-            {
-                "date": "2016-07-31",
-                "amount": 27.95
-            }
-        ]
-    }
+        {
+            "date": "2015-05-31",
+            "amount": 3000,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-06-30",
+            "amount": 2969.98,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-07-31",
+            "amount": 2939.96,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-08-31",
+            "amount": 2909.94,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-09-30",
+            "amount": 2879.92,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-10-31",
+            "amount": 2849.9,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-11-30",
+            "amount": 2819.88,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-12-31",
+            "amount": 2789.85,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-01-31",
+            "amount": 2759.83,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-02-29",
+            "amount": 2729.81,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-03-31",
+            "amount": 2699.79,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-04-30",
+            "amount": 2669.77,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-05-31",
+            "amount": 2639.75,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-06-30",
+            "amount": 2609.73,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-07-31",
+            "amount": 2579.71,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-08-31",
+            "amount": 2549.69,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-09-30",
+            "amount": 2519.67,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-10-31",
+            "amount": 2489.65,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-11-30",
+            "amount": 2459.63,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2016-12-31",
+            "amount": 2429.6,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-01-31",
+            "amount": 2399.58,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-02-28",
+            "amount": 2369.56,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-03-31",
+            "amount": 2339.54,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-04-30",
+            "amount": 2309.52,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-05-31",
+            "amount": 2279.5,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-06-30",
+            "amount": 2249.48,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-07-31",
+            "amount": 2219.46,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-08-31",
+            "amount": 2189.44,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-09-30",
+            "amount": 2159.42,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-10-31",
+            "amount": 2129.4,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-11-30",
+            "amount": 2099.38,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2017-12-31",
+            "amount": 2069.35,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-01-31",
+            "amount": 2039.33,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-02-28",
+            "amount": 2009.31,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-03-31",
+            "amount": 1979.29,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-04-30",
+            "amount": 1949.27,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-05-31",
+            "amount": 1919.25,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-06-30",
+            "amount": 1889.23,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-07-31",
+            "amount": 1859.21,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-08-31",
+            "amount": 1829.19,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-09-30",
+            "amount": 1799.17,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-10-31",
+            "amount": 1769.15,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-11-30",
+            "amount": 1739.13,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2018-12-31",
+            "amount": 1709.1,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-01-31",
+            "amount": 1679.08,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-02-28",
+            "amount": 1649.06,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-03-31",
+            "amount": 1619.04,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-04-30",
+            "amount": 1589.02,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-05-31",
+            "amount": 1559,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-06-30",
+            "amount": 1528.98,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-07-31",
+            "amount": 1498.96,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-08-31",
+            "amount": 1468.94,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-09-30",
+            "amount": 1438.92,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-10-31",
+            "amount": 1408.9,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-11-30",
+            "amount": 1378.88,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2019-12-31",
+            "amount": 1348.85,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-01-31",
+            "amount": 1318.83,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-02-29",
+            "amount": 1288.81,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-03-31",
+            "amount": 1258.79,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-04-30",
+            "amount": 1228.77,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-05-31",
+            "amount": 1198.75,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-06-30",
+            "amount": 1168.73,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-07-31",
+            "amount": 1138.71,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-08-31",
+            "amount": 1108.69,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-09-30",
+            "amount": 1078.67,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-10-31",
+            "amount": 1048.65,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-11-30",
+            "amount": 1018.63,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2020-12-31",
+            "amount": 988.6,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-01-31",
+            "amount": 958.58,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-02-28",
+            "amount": 928.56,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-03-31",
+            "amount": 898.54,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-04-30",
+            "amount": 868.52,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-05-31",
+            "amount": 838.5,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-06-30",
+            "amount": 808.48,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-07-31",
+            "amount": 778.46,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-08-31",
+            "amount": 748.44,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-09-30",
+            "amount": 718.42,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-10-31",
+            "amount": 688.4,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-11-30",
+            "amount": 658.38,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2021-12-31",
+            "amount": 628.35,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-01-31",
+            "amount": 598.33,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-02-28",
+            "amount": 568.31,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-03-31",
+            "amount": 538.29,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-04-30",
+            "amount": 508.27,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-05-31",
+            "amount": 478.25,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-06-30",
+            "amount": 448.23,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-07-31",
+            "amount": 418.21,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-08-31",
+            "amount": 388.19,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-09-30",
+            "amount": 358.17,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-10-31",
+            "amount": 328.15,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-11-30",
+            "amount": 298.13,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2022-12-31",
+            "amount": 268.1,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-01-31",
+            "amount": 238.08,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-02-28",
+            "amount": 208.06,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-03-31",
+            "amount": 178.04,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-04-30",
+            "amount": 148.02,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-05-31",
+            "amount": 118,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-06-30",
+            "amount": 87.98,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-07-31",
+            "amount": 57.96,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-08-31",
+            "amount": 27.94,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2023-09-30",
+            "amount": -2.08,
+            "types": "Minimum Payment"
+        },
+        {
+            "date": "2015-05-31",
+            "amount": 3000,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-06-30",
+            "amount": 2802.56,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-07-31",
+            "amount": 2602.94,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-08-31",
+            "amount": 2401.12,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-09-30",
+            "amount": 2197.06,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-10-31",
+            "amount": 1990.74,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-11-30",
+            "amount": 1782.14,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2015-12-31",
+            "amount": 1571.24,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-01-31",
+            "amount": 1357.99,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-02-29",
+            "amount": 1142.38,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-03-31",
+            "amount": 924.39,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-04-30",
+            "amount": 703.97,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-05-31",
+            "amount": 481.11,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-06-30",
+            "amount": 255.78,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-07-31",
+            "amount": 27.95,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-08-31",
+            "amount": -111.38,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2016-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2017-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2018-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2019-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-02-29",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2020-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2021-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-10-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-11-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2022-12-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-01-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-02-28",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-03-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-04-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-05-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-06-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-07-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-08-31",
+            "amount": 0,
+            "types": "Suggested Payment"
+        },
+        {
+            "date": "2023-09-30",
+            "amount": 0,
+            "types": "Suggested Payment"
+        }
 ]
