@@ -9,19 +9,38 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     
 
-    <style>
+    
 
-        body {
-          font: 10px sans-serif;
-        }
+       <style type="text/css">
+        
+            body {
+              font: 10px sans-serif;
+            }
 
-        .axis path, .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px;
+                background-color: teal;
+                margin-right: 2px;
+            }
 
-    </style>
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+            .axis text {
+                font-family: sans-serif;;
+                font-size: 11px;
+            }
+
+            .browser text {
+              text-anchor: end;
+            }
+        
+        </style>
 
     <!-- **************  BOOTSTRAP  **************** -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">

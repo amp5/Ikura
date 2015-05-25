@@ -7,6 +7,7 @@ from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
 from organize_calcs import organization
 import json
+import csv
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -134,17 +135,48 @@ def dashboard():
 	# all_totals = [df_min, df_sugg, d3_points_list]
 	all_totals = organization(user_card_dict_py)
 
+	data_points = all_totals[2]
+	print "These are my data points", data_points
+	print type(data_points)
+	# print type(data_points)
+	# print "Are these it - MIN?", data_points[0]
+	# print "A MIN DATA POINT", data_points[0].values()[0][0].keys()
+	
+
+
+
+
+	# min_data_points = data_points[0].values()[0]
+
+
+	
+
+
+
+
+	# print "Are these it SUGG?", data_points[1]
+
+
+	# with open('output.tsv', 'w') as output_file:
+ #    dw = csv.DictWriter(output_file, sorted(min_data_points[0].keys()), delimiter='\t')
+ #    dw.writeheader()
+ #    dw.writerows(data_points)
+
+
+	
+
+
 	d3_points_list_json = json.dumps(all_totals[2])
 
-	print "JSON:", d3_points_list_json
-	print type(d3_points_list_json)
+	
 
 
 
 
-	# row_json = json.dumps(row)
 
 
+	# print "JSON:", d3_points_list_json
+	# print type(d3_points_list_json)
 
 
 

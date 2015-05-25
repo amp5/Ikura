@@ -28,8 +28,11 @@
         </style>
     </head>
     <body>
-        <!-- <script type="text/javascript"> -->
-<!--            //   // d3.select("body")
+
+
+      galwjhbgehrjbgrej,gbeg
+        <script type="text/javascript">
+           //   // d3.select("body")
            //   //        .append("p")
            //   //        .text("New paragraph!");
              
@@ -249,209 +252,114 @@
            //  //     .attr("fill", "red")
 
 
-           //  var w = 500;
-           //  var h = 300;
-           //  var padding = 30;
+            var w = 500;
+            var h = 300;
+            var padding = 30;
 
-           //  // var dataset = [ 
-           //  //                 [5, 20], 
-           //  //                 [480, 90], 
-           //  //                 [250, 50], 
-           //  //                 [100, 33], 
-           //  //                 [330, 95],
-           //  //                 [410, 12], 
-           //  //                 [475, 44], 
-           //  //                 [25, 67], 
-           //  //                 [85, 21], 
-           //  //                 [220, 88], 
-           //  //                 [600, 150]
-           //  //                 ];
+            // var dataset = [ 
+            //                 [5, 20], 
+            //                 [480, 90], 
+            //                 [250, 50], 
+            //                 [100, 33], 
+            //                 [330, 95],
+            //                 [410, 12], 
+            //                 [475, 44], 
+            //                 [25, 67], 
+            //                 [85, 21], 
+            //                 [220, 88], 
+            //                 [600, 150]
+            //                 ];
 
 
-           //  var dataset = [];                   //Initialize empty array
-           //  var numDataPoints = 50;             //Number of dummy data points to create
-           //  var xRange = Math.random() * 1000;  //Max range of new x values
-           //  var yRange = Math.random() * 1000;  //Max range of new y values
-           //  for (var i = 0; i < numDataPoints; i++) {                   //Loop numDataPoints times
-           //      var newNumber1 = Math.floor(Math.random() * xRange);    //New random integer
-           //      var newNumber2 = Math.floor(Math.random() * yRange);    //New random integer
-           //      dataset.push([newNumber1, newNumber2]);                 //Add new number to array
-           //  }
+            var dataset = [];                   //Initialize empty array
+            var numDataPoints = 50;             //Number of dummy data points to create
+            var xRange = Math.random() * 1000;  //Max range of new x values
+            var yRange = Math.random() * 1000;  //Max range of new y values
+            for (var i = 0; i < numDataPoints; i++) {                   //Loop numDataPoints times
+                var newNumber1 = Math.floor(Math.random() * xRange);    //New random integer
+                var newNumber2 = Math.floor(Math.random() * yRange);    //New random integer
+                dataset.push([newNumber1, newNumber2]);                 //Add new number to array
+            }
 
-           //  var xScale = d3.scale.linear()
-           //                      .domain([0, d3.max(dataset, function(d) {return d[0]; })])
-           //                      .range([padding, w - padding * 2]);
+            var xScale = d3.scale.linear()
+                                .domain([0, d3.max(dataset, function(d) {return d[0]; })])
+                                .range([padding, w - padding * 2]);
             
-           //  var yScale = d3.scale.linear()
-           //                      .domain([0, d3.max(dataset, function(d) {return d[1]; })])
-           //                      .range([h - padding, padding]);
+            var yScale = d3.scale.linear()
+                                .domain([0, d3.max(dataset, function(d) {return d[1]; })])
+                                .range([h - padding, padding]);
 
-           //  var rScale = d3.scale.linear()
-           //                      .domain([0, d3.max(dataset, function(d) { return d[1]; })])
-           //                      .range([2, 5]);
+            var rScale = d3.scale.linear()
+                                .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                                .range([2, 5]);
 
-           //  var formatAsPercentage = d3.format(".1%");
+            var formatAsPercentage = d3.format(".1%");
 
-           //  var xAxis = d3.svg.axis()
-           //                      .scale(xScale)
-           //                      .orient("bottom")
-           //                      .ticks(5)
-           //                      .tickFormat(formatAsPercentage);
+            var xAxis = d3.svg.axis()
+                                .scale(xScale)
+                                .orient("bottom")
+                                .ticks(5)
+                                .tickFormat(formatAsPercentage);
 
-           //  var yAxis = d3.svg.axis()
-           //                      .scale(xScale)
-           //                      .orient("left")
-           //                      .ticks(5)
-           //                      .tickFormat(formatAsPercentage);
-
-
-           //  var svg = d3.select("body")
-           //              .append("svg")
-           //              .attr("width", w)
-           //              .attr("height", h);
-
-           //  svg.selectAll("circle")
-           //      .data(dataset)
-           //      .enter()
-           //      .append("circle")
-           //      .attr("cx", function(d) {
-           //          return xScale(d[0]);
-           //      })
-           //      .attr("cy", function(d) {
-           //          return yScale(d[1]);
-           //      })
-           //      .attr("r", function(d) {
-           //          return rScale(d[1]);
-           //      });
-
-           //  // svg.selectAll("text")
-           //  //     .data(dataset)
-           //  //     .enter()
-           //  //     .append("text")
-           //  //     .text(function(d) {
-           //  //         return d[0] + "," + d[1];
-           //  //     })
-           //  //     .attr("x", function(d){
-           //  //         return xScale(d[0]);
-           //  //     })
-           //  //     .attr("y", function(d){
-           //  //         return yScale(d[1]);
-           //  //     })
-           //  //     .attr("font-family", "sans-serif")
-           //  //     .attr("font-size", "11px")
-           //  //     .attr("fill", "red")
-
-           //  svg.append("g")
-           //      .attr("class", "axis")
-           //      .attr("transform", "translate(0, " + (h - padding) + ")")
-           //      .call(xAxis);
-
-           //  svg.append("g")
-           //      .attr("class", "axis")
-           //      .attr("transform", "translate(" + padding + ",0)")
-           //      .call(yAxis);
- -->
-
-<script src="http://d3js.org/d3.v3.js"> </script>
-<script>
-
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-var parseDate = d3.time.format("%y-%b-%d").parse,
-    formatPercent = d3.format(".0%");
-
-var x = d3.time.scale()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-var color = d3.scale.category20();
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickFormat(formatPercent);
-
-var area = d3.svg.area()
-    .x(function(d) { return x(d.date); })
-    .y0(function(d) { return y(d.y0); })
-    .y1(function(d) { return y(d.y0 + d.y); });
-
-var stack = d3.layout.stack()
-    .values(function(d) { return d.values; });
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-d3.json("../static/d3-data.json", function(error, data) {
-    if(error) {
-            console.log(error);
-        }   else {
-            console.log("found some data");
-            console.log(data);
-            ds=data[0].Minimum_Payment[0];;
-        }
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
-
-  data.forEach(function(d) {
-    d.date = parseDate(d.date);
-  });
+            var yAxis = d3.svg.axis()
+                                .scale(xScale)
+                                .orient("left")
+                                .ticks(5)
+                                .tickFormat(formatAsPercentage);
 
 
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+            svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle")
+                .attr("cx", function(d) {
+                    return xScale(d[0]);
+                })
+                .attr("cy", function(d) {
+                    return yScale(d[1]);
+                })
+                .attr("r", function(d) {
+                    return rScale(d[1]);
+                });
+
+            // svg.selectAll("text")
+            //     .data(dataset)
+            //     .enter()
+            //     .append("text")
+            //     .text(function(d) {
+            //         return d[0] + "," + d[1];
+            //     })
+            //     .attr("x", function(d){
+            //         return xScale(d[0]);
+            //     })
+            //     .attr("y", function(d){
+            //         return yScale(d[1]);
+            //     })
+            //     .attr("font-family", "sans-serif")
+            //     .attr("font-size", "11px")
+            //     .attr("fill", "red")
+
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(0, " + (h - padding) + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(" + padding + ",0)")
+                .call(yAxis);
 
 
-  var browsers = stack(color.domain().map(function(name) {
-    return {
-      name: name,
-      values: data.map(function(d) {
-        return {date: d.date, y: d[name] / 100};
-      })
-    };
-  }));
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-
-  var browser = svg.selectAll(".browser")
-      .data(browsers)
-    .enter().append("g")
-      .attr("class", "browser");
-
-  browser.append("path")
-      .attr("class", "area")
-      .attr("d", function(d) { return area(d.values); })
-      .style("fill", function(d) { return color(d.name); });
-
-  browser.append("text")
-      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.y0 + d.value.y / 2) + ")"; })
-      .attr("x", -6)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name; });
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-});
-
-</script>
 
 
         </script>
+
+        Words. ebgelrbgerlgrah. 
     </body>
 </html>
 

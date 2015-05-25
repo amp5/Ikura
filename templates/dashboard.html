@@ -30,194 +30,88 @@
   		<div class="col-md-9" id="main">
   			<div class="col-xs-12 col-md-12 col-lg-12" id="visualization">
 				Visualization:
+				<div id="viz1">
+					<script type="text/javascript">
+						//Width and height
+						var w = 500;
+						var h = 300;
+						var padding = 30;
+						
+						//Dynamic, random dataset
+						var dataset = [];					//Initialize empty array
+						var numDataPoints = 50;				//Number of dummy data points to create
+						var xRange = Math.random() * 1000;	//Max range of new x values
+						var yRange = Math.random() * 1000;	//Max range of new y values
+						for (var i = 0; i < numDataPoints; i++) {					//Loop numDataPoints times
+							var newNumber1 = Math.floor(Math.random() * xRange);	//New random integer
+							var newNumber2 = Math.floor(Math.random() * yRange);	//New random integer
+							dataset.push([newNumber1, newNumber2]);					//Add new number to array
+						}
+						//Create scale functions
+						var xScale = d3.scale.linear()
+											 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+											 .range([padding, w - padding * 2]);
+						var yScale = d3.scale.linear()
+											 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+											 .range([h - padding, padding]);
+						var rScale = d3.scale.linear()
+											 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+											 .range([2, 5]);
+						var formatAsPercentage = d3.format(".1%");
+						//Define X axis
+						var xAxis = d3.svg.axis()
+										  .scale(xScale)
+										  .orient("bottom")
+										  .ticks(5)
+										  .tickFormat(formatAsPercentage);
+						//Define Y axis
+						var yAxis = d3.svg.axis()
+										  .scale(yScale)
+										  .orient("left")
+										  .ticks(5)
+										  .tickFormat(formatAsPercentage);
+						//Create SVG element
+						var svg = d3.select("#viz1")
+									.append("svg")
+									.attr("width", w)
+									.attr("height", h);
+						//Create circles
+						svg.selectAll("circle")
+						   .data(dataset)
+						   .enter()
+						   .append("circle")
+						   .attr("cx", function(d) {
+						   		return xScale(d[0]);
+						   })
+						   .attr("cy", function(d) {
+						   		return yScale(d[1]);
+						   })
+						   .attr("r", function(d) {
+						   		return rScale(d[1]);
+						   });
+			
+						
+						//Create X axis
+						svg.append("g")
+							.attr("class", "axis")
+							.attr("transform", "translate(0," + (h - padding) + ")")
+							.call(xAxis);
+						
+						//Create Y axis
+						svg.append("g")
+							.attr("class", "axis")
+							.attr("transform", "translate(" + padding + ",0)")
+							.call(yAxis);
+					</script>
+				</div>
 				
 
-				<div id="chart">
-					<script>
-
-					var format = d3.time.format("%m/%d/%y");
-
-					var margin = {top: 20, right: 30, bottom: 30, left: 40},
-					    width = 960 - margin.left - margin.right,
-					    height = 500 - margin.top - margin.bottom;
-
-					var x = d3.time.scale()
-					    .range([0, width]);
-
-					var y = d3.scale.linear()
-					    .range([height, 0]);
-
-					var z = d3.scale.category20c();
-
-					var xAxis = d3.svg.axis()
-					    .scale(x)
-					    .orient("bottom")
-					    .ticks(d3.time.days);
-
-					var yAxis = d3.svg.axis()
-					    .scale(y)
-					    .orient("left");
-
-					var stack = d3.layout.stack()
-					    .offset("zero")
-					    .values(function(d) { return d.values; })
-					    .x(function(d) { return d.date; })
-					    .y(function(d) { return d.value; });
-
-					var nest = d3.nest()
-					    .key(function(d) { return d.key; });
-
-					var area = d3.svg.area()
-					    .interpolate("cardinal")
-					    .x(function(d) { return x(d.date); })
-					    .y0(function(d) { return y(d.y0); })
-					    .y1(function(d) { return y(d.y0 + d.y); });
-
-					var svg = d3.select("body").append("svg")
-					    .attr("width", width + margin.left + margin.right)
-					    .attr("height", height + margin.top + margin.bottom)
-					  .append("g")
-					    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-					var data = [
-						{
-			                "date": "2015-05-31",
-			                "amount": 3000
-			            },
-			            {
-			                "date": "2015-06-30",
-			                "amount": 2802.56
-			            },
-			            {
-			                "date": "2015-07-31",
-			                "amount": 2602.94
-			            },
-			            {
-			                "date": "2015-08-31",
-			                "amount": 2401.12
-			            },
-			            {
-			                "date": "2015-09-30",
-			                "amount": 2197.06
-			            },
-			            {
-			                "date": "2015-10-31",
-			                "amount": 1990.74
-			            },
-			            {
-			                "date": "2015-11-30",
-			                "amount": 1782.14
-			            },
-			            {
-			                "date": "2015-12-31",
-			                "amount": 1571.24
-			            },
-			            {
-			                "date": "2016-01-31",
-			                "amount": 1357.99
-			            },
-			            {
-			                "date": "2016-02-29",
-			                "amount": 1142.38
-			            },
-			            {
-			                "date": "2016-03-31",
-			                "amount": 924.39
-			            },
-			            {
-			                "date": "2016-04-30",
-			                "amount": 703.97
-			            },
-			            {
-			                "date": "2016-05-31",
-			                "amount": 481.11
-			            },
-			            {
-			                "date": "2016-06-30",
-			                "amount": 255.78
-			            },
-			            {
-			                "date": "2016-07-31",
-			                "amount": 27.95
-			            }    
-            		];
-
-            		var dataset = [
-            				[ 
-            					{x: 2015-05-31, y:3000},
-            					{x: 2015-06-30, y:2802.56}, 
-            					{x: 2015-07-31, y:2602.94},
-            					{x: 2015-08-31, y:},
-            					{x: 2015-09-30, y:},
-            					{x: 2015-10-31, y:},
-            					{x: 2015-11-30, y:}, 
-            					{x: 2015-12-31, y:},
-            					{x: 2016-01-31, y:},
-            					{x: 2016-02-29, y:},
-            					{x: 2016-03-31, y:},
-            					{x: 2016-04-30, y:}, 
-            					{x: 2016-05-31, y:},
-            					{x: 2016-06-30, y:},
-            					{x: 2016-07-31, y:},
-            				]
-            		]
-					// d3.json("../static/d3-data.json", function(error, data) {
-   		// 				data.forEach(function(d) {
-					//     d.date = parseDate(d.date);
-					//     d.value = +d.value;
-					// })
-
-   					// *******************************************
-   					// How to get at my data points for D3
-   					// points[0] = Minimum payment dict
-   					// points[0].values() = list of list of dictionary points (date, amount)
-   					// value_list = points[0].values()
-   					// value_list[0][0] = first dictionary of a point
-
-   					// points[1] = suggested payments dict
-   					// points[1].values() = list of list of dictionary points (date, amount)
-   					// value_list = points[1].values()
-   					// value_list[0][0] = first dictionary of a point
-
-
-					// d3.csv("data.csv", function(data) {
-					//   data.forEach(function(d) {
-					//     d.date = format.parse(d.date);
-					//     d.value = +d.value;
-					//   });
-
-					  var layers = stack(nest.entries(data));
-
-					  x.domain(d3.extent(data, function(d) { return d.date; }));
-					  y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-
-					  svg.selectAll(".layer")
-					      .data(layers)
-					    .enter().append("path")
-					      .attr("class", "layer")
-					      .attr("d", function(d) { return area(d.values); })
-					      .style("fill", function(d, i) { return z(i); });
-
-					  svg.append("g")
-					      .attr("class", "x axis")
-					      .attr("transform", "translate(0," + height + ")")
-					      .call(xAxis);
-
-					  svg.append("g")
-					      .attr("class", "y axis")
-					      .call(yAxis);
+				<div id="viz3">
+					Viz 3: 
 					
-
-					</script>
 				</div>
 
 
-				<!-- <svg width="500" height="100">
-					<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="grey" />
-					<circle cx="200" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-					<circle cx="350" cy="50" r="40" stroke="black" stroke-width="3" fill="grey" />
-				</svg> -->
 			</div>
 
 	 

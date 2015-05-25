@@ -156,33 +156,42 @@ def organization(dictionary):
 	# min_d3_points = []
 	min_point = zip(*[dt_min_month.date, rounded_total_min_debt])
 	# print "This is zipped point", min_point
-	min_point_list = []
-	for i in range(len(min_point)):
-		point_dict = {'date':str(min_point[i][0]), 'amount':min_point[i][1]}
-		min_point_list.append(point_dict)
 
-	min_point_dict = {"Minimum Payment": min_point_list}
+	data_point_list = []
+
+	# min_point_list = []
+	for i in range(len(min_point)):
+		point_dict = {"type":"Minimum Payment", "date":str(min_point[i][0]), "amount":min_point[i][1]}
+		# min_point_list.append(point_dict)
+		data_point_list.append(point_dict)
+
+	# min_point_dict = {"Minimum Payment": min_point_list}
 	# print "dict", min_point_dict
 
 
+
+
 	sugg_point = zip(*[dt_sugg_month.date, rounded_total_sugg_debt])
-	sugg_point_list = []
+	# sugg_point_list = []
 	for i in range(len(sugg_point)):
-		point_dict = {'date':str(sugg_point[i][0]), 'amount': sugg_point[i][1]}
-		# tel = {'jack': 4098, 'sape': 4139}
+		point_dict = {"type":"Suggested Payment", "date":str(sugg_point[i][0]), "amount": sugg_point[i][1]}
 		# point = [str(sugg_point[i][0]), sugg_point[i][1]]
-		sugg_point_list.append(point_dict)
+		# sugg_point_list.append(point_dict)
+		data_point_list.append(point_dict)
 
-		# print "This is mini dictionary of points for each one", point_dict
+	# print "This is mini dictionary of points for each one", point_dict
 
-	sugg_point_dict = {"Suggested Payment": sugg_point_list}
+	# sugg_point_dict = {"Suggested Payment": sugg_point_list}
 	# print "dict of sugg", sugg_point_dict
 
+	data_point_dict = {"User Points": data_point_list}
+	# print "This is my dictoinary of all of my data points", data_point_dict
 
 
 
 
-	d3_points_list = [min_point_dict, sugg_point_dict]
+
+	# d3_points_list = []
 	# print "list of dicts", d3_points_list
 	
 
@@ -235,7 +244,7 @@ def organization(dictionary):
 
 
 
-	df_total = [df_min, df_sugg, d3_points_list]
+	df_total = [df_min, df_sugg, data_point_dict]
 	# print '*'* 100
 	# print "These are points I want to use for D3", df_total[2]
 	# print '*'* 100
