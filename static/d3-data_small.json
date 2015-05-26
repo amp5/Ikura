@@ -1,0 +1,22 @@
+[
+        {
+            "date": "2015-05-31",
+            "Minimum": 3000, 
+            "Suggested": 3000
+        },
+        {
+            "date": "2015-06-30",
+            "Minimum": 2969.98, 
+            "Suggested": 2802.56
+        },
+        {
+            "date": "2015-07-31",
+            "Minimum": 2939.96, 
+            "Suggested": 2602.94
+        },
+        {
+            "date": "2015-08-30",
+            "Minimum": 2800, 
+            "Suggested": 0
+        }
+]
