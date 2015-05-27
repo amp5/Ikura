@@ -41,7 +41,11 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 	print "*"* 40
 
-	card[name] = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
+	minimum = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
+
+	card[name] = minimum
+
+	# print "This is card", card
 
 	# print "This is how long debt list is", len(new_debt_list)
 	# print '--'*20
@@ -62,7 +66,9 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 	monthly_payment_suggestion = float(debt) / float((date + 1))
 	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
 
-	
+	# minimum = card[name]
+
+	minimum = card[name].items()
 
 	# ----- # Suggested payment calculations # ----- # 
 
@@ -88,14 +94,15 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 # ***************************************************************************************************
 # TRYING TO ADD THIS DICTIONARY TO THE DICTIONARY INSIDE CARD {VISA: {MIN : [....]}, {SUGG : [....]}}
 # ***************************************************************************************************
-
+	# this is my minimum dictionary but I can't seem to add the suggested dictionary to this...
+	minimum = card[name].items()
     
-	card[name].append(suggested)
-	print "What is this now", card
+	print "What is, ", minimum.append(suggested)
+	# print "What is this now", card
 
 
-	# print "This is suggested dict", suggested
-	values = card.values
+	# # print "This is suggested dict", suggested
+	# values = card.values
 	# print "This should be values of card", values
 
 	# total_card = card.update(suggested)
