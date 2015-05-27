@@ -11,37 +11,15 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 	# ----- # Base calculations # ----- #
 	interest_per_month = apr/date
-	# print interest_per_month
-	# 0.00833333333333
-
 	min_payment = interest_per_month + (debt *0.01)
-	# print min_payment
-	# 10.0083333333
-
 	monthly_payment_suggestion = float(debt) / float((date + 1))
-	# print monthly_payment_suggestion
-	# 76.9230769231
-
 	rounded_monthly_payment_siggestion = round(monthly_payment_suggestion, 2)
-	# 76.92
 
 	# ----- # Min payment calculations # ----- # 
 	new_debt_list=[debt]
 	interest_to_pay_list = []
 	min_total_payment_list = []
-	cards = {}
-
-	# interest_to_pay = debt * interest_per_month
-	# print interest_to_pay
-	# 8.33333333333
-
-	# min_total_payment = min_payment + interest_to_pay
-	# print min_total_payment
-	# 18.3416666667
-	 
-	# new_debt = debt + interest_to_pay - min_total_payment
-	# print new_debt
-	# 989.991666667
+	card = {}
 
 	while debt >0:
 
@@ -61,14 +39,14 @@ def min_payment_plan(name, date, debt, apr, user_id):
 	# print "*"* 20 
 	# print "Min payments", min_total_payment_list
 
-	# print "*"* 40
+	print "*"* 40
 
-	cards[name] = [[new_debt_list, interest_to_pay_list, min_total_payment_list]]
+	card[name] = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
 
 	# print "This is how long debt list is", len(new_debt_list)
 	# print '--'*20
-	# print "This is dictionary cards", cards 
-	return cards
+	# print "This is dictionary cards", card 
+	return card
 
 
 def suggested_plan(name, date, debt, apr, card, user_id):
@@ -80,14 +58,10 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 	"""
 	# print "These are my card", card
 
-
-	# print "How many card are there", len(card)
-	# print "THIS IS MY card FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", card
 	interest_per_month = apr/date
-	# print "interest per month:", interest_per_month
 	monthly_payment_suggestion = float(debt) / float((date + 1))
 	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
-	# print "rounded suggestion:", rounded_monthly_payment_suggestion
+
 	
 
 	# ----- # Suggested payment calculations # ----- # 
@@ -99,29 +73,43 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 	while debt >0:
 		interest_to_pay = debt * interest_per_month
 		interest_to_pay_list.append(interest_to_pay)
-		# print "interest list:", interest_to_pay_list
 
-		# monthly_payment = min_payment + interest_to_pay
 		monthly_payment_list.append(rounded_monthly_payment_suggestion)
-		# print "monthly payment list:", monthly_payment_list
 
 		new_debt = debt + interest_to_pay - rounded_monthly_payment_suggestion
 		new_debt_list.append(new_debt)
 		debt = new_debt
 
-	# print "What is in here", monthly_payment_list
-
-	# print "Suggested Debt decreasing:", new_debt_list
-	# print "*"* 20 
-	# print "Suggested Interest decreasing", interest_to_pay_list
-	# print "*"* 20 
-	# print "Suggested payments", monthly_payment_list
+	# print "This is my card dict so far......", card
 
 
+	suggested = {"Suggested": [new_debt_list, interest_to_pay_list, monthly_payment_list]}
 
-	# print "Taking this from card - min len ", data_points_len
+# ***************************************************************************************************
+# TRYING TO ADD THIS DICTIONARY TO THE DICTIONARY INSIDE CARD {VISA: {MIN : [....]}, {SUGG : [....]}}
+# ***************************************************************************************************
 
-	card[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
+    
+	card[name].append(suggested)
+	print "What is this now", card
+
+
+	# print "This is suggested dict", suggested
+	values = card.values
+	# print "This should be values of card", values
+
+	# total_card = card.update(suggested)
+	# print "This should have min and sugg values for card", total_card
+
+# 	card[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
+
+
+# 	card[name].value.update(extra)
+
+
+
+# card[name] = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
+
 	# print '--'*20
 	# print "This is dictionary card", card
 
@@ -169,7 +157,7 @@ def user_cards(query_results):
 		
 		card_dict_list.append(completed_card_dict)
 
-	print "This is card list", card_dict_list
+	# print "This is card list", card_dict_list
 
 	user_dict = {user_id : {}}
 	
