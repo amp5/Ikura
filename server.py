@@ -14,14 +14,6 @@ Bootstrap(app)
 app.secret_key = "AcBbCa"
 app.jinja_env.undefined = StrictUndefined
 
-# app.debug = True
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
-# connect_to_db(app)
-
-# # Use the DebugToolbar
-# DebugToolbarExtension(app)
-
 
 from calculations import user_cards
 
@@ -103,60 +95,25 @@ def card_submission():
 	else:
 		return render_template('card_submission.html')
 
-		# 127.0.0.1 - - [20/May/2015 18:26:20] "POST /card_submission HTTP/1.1" 302 -
-		# ASK FOR HELP ON THIS !!!!! WHAT IS WRONG WITH FLASK. WHY DOES IT BREAK HERE
-		# CARDS ARE GETTING UPLOADED IN DATABASE BUT NO...
-
-
-@app.route('/d3-data')
-def d3_data():
-	f = open("d3-data.json")
-	text = f.read()
-	json_data = json.loads(text)
-	return jsonify({'data':json_data})
-
 
 @app.route('/dashboard')
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
-	#need to import calculations and then display the dictionary of dictionaries on this page for now. 
-	
+
 	results_of_query = Card.query.filter_by(user_id=1).all()
-
 	user_card_dict_py = user_cards(results_of_query)
-
-	# This converts my Python dictionary or dictionaries into JSON. 
-	# Will be used to pass onto D3
-	user_card_dict = json.dumps(user_card_dict_py)
-	# print type(user_card_dict)
-
 
 
 	all_totals = organization(user_card_dict_py)
-
 	data_points = all_totals[2]
-	# print "These are my data points", data_points
-	# print type(data_points)
-	
 	d3_points_list_json = json.dumps(all_totals[2])
-	print "JSON:", d3_points_list_json
-
-	
+	# print "JSON:", d3_points_list_json
 
 
 
-
-	# TODO:
-	# later I want to pass this answer to my dashboard. aka. pass the dictionary
-	# of dictionaries....
-
-
-
-	return render_template('dashboard.html', query_results=results_of_query,
-											 user_card_dict=user_card_dict, 
+	return render_template('dashboard.html', query_results=results_of_query, 
 											 all_totals=all_totals, 
 											 d3_data = d3_points_list_json)
-
 
 
 @app.route('/d3')

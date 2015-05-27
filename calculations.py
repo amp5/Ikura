@@ -8,6 +8,7 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 		{Name: [new_debt_list, interest_to_pay_list, min_total_payment_list]} """
 
+
 	# ----- # Base calculations # ----- #
 	interest_per_month = apr/date
 	# print interest_per_month
@@ -70,18 +71,18 @@ def min_payment_plan(name, date, debt, apr, user_id):
 	return cards
 
 
-def suggested_plan(name, date, debt, apr, cards, user_id):
+def suggested_plan(name, date, debt, apr, card, user_id):
 	"""Calculates suggested plan and returns an appended dictionary 
 	from previous min_payment_plan function
 
 	{Name: [new_debt_list(min), interest_to_pay_list(min), min_total_payment_list, 
 			new_debt_list(suggested), interest_to_pay_list(suggested), monthly_payment_list])}
 	"""
+	# print "These are my card", card
 
-	cards = cards
 
-	# print "How many cards are there", len(cards)
-	# print "THIS IS MY CARDS FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", cards
+	# print "How many card are there", len(card)
+	# print "THIS IS MY card FROM THE PAST FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!", card
 	interest_per_month = apr/date
 	# print "interest per month:", interest_per_month
 	monthly_payment_suggestion = float(debt) / float((date + 1))
@@ -109,24 +110,6 @@ def suggested_plan(name, date, debt, apr, cards, user_id):
 		debt = new_debt
 
 	# print "What is in here", monthly_payment_list
-# DOING THIS FOR D3 CALUCLATIONS. SUGG AND MIN MUST HAVE SAME # OF POINTS *****************************		
-
-	data_points_len = len(cards.values()[0][0][0])
-
-	list_len = len(new_debt_list)
-
-	while list_len < data_points_len:
-		new_debt_list.append(0)
-		monthly_payment_list.append(0)
-		interest_to_pay_list.append(0)
-		list_len = list_len + 1
-	# print "Should now have a bunch of zeros added", new_debt_list
-	# print len(new_debt_list)
-
-
-
-
-
 
 	# print "Suggested Debt decreasing:", new_debt_list
 	# print "*"* 20 
@@ -136,13 +119,13 @@ def suggested_plan(name, date, debt, apr, cards, user_id):
 
 
 
-	# print "Taking this from cards - min len ", data_points_len
+	# print "Taking this from card - min len ", data_points_len
 
-	cards[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
+	card[name].append([new_debt_list, interest_to_pay_list, monthly_payment_list])
 	# print '--'*20
-	# print "This is dictionary cards", cards
+	# print "This is dictionary card", card
 
-	return cards 
+	return card 
 
 
 def user_cards(query_results):
@@ -153,9 +136,6 @@ def user_cards(query_results):
 														suggested intr rates, suggested debt decrease """
 
 
-	# need to query database to get all cards where user_id is in session
-	# object filled with cards
-	# from object must need ot pull out all things we want
 
 	#TODO: #
 	# Make sure to take user_id from session once it's connected #
@@ -169,6 +149,7 @@ def user_cards(query_results):
 		name = card.card_name 
 		debt = card.card_debt
 		apr = card.card_apr
+
 		#This will turn user inputted apr into percentage
 		apr = apr/100
 		date = card.card_date
@@ -185,16 +166,10 @@ def user_cards(query_results):
 
 		returned_dict = min_payment_plan(name, date, debt, apr, user_id)
 		completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
-
-		# print "Does this have my min in it?", completed_card_dict
-		
-
-#****************** MIN PAYMENT LENGTH ***************************
-		# min_payment_len completed_card_dict.values()[0][1][3]
 		
 		card_dict_list.append(completed_card_dict)
 
-	# print "This is card list", card_dict_list
+	print "This is card list", card_dict_list
 
 	user_dict = {user_id : {}}
 	

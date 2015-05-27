@@ -9,11 +9,13 @@ from datetime import datetime
 # from server import app
 # connect_to_db(app)
 
+
+#  This should be a dict with key of card name, each value is a diction with total min and sugg
+
 def organization(dictionary):
 	"""This is rearranging my data to display on html page and for D3"""
 
 	user_card_dict_py = dictionary
-#************* THIS  Trying to add on (0,0) for card debt in sugg **********************************	
 	values = user_card_dict_py.values()
 	# print "All of values", type(values)
 	# print "First index within values", type(values[0])
@@ -26,6 +28,8 @@ def organization(dictionary):
 	total_sugg_debt = []
 	total_sugg_int = []
 	total_sugg_payment = []
+
+	# print "What is", values[0]
 
 	for i in range(len(values[0])):
 		print "*" * 100
@@ -128,7 +132,6 @@ def organization(dictionary):
 	now = datetime.now()
 	dt_min_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_min_debt), freq='M')
 	
-#*************** THIS *******************************************
 	dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(rounded_total_sugg_debt), freq='M')
 
 	# How to get month and year to display on table?
@@ -146,56 +149,28 @@ def organization(dictionary):
 	#**************# A debugger tool from Rachael: #**************#
 	# import pdb; pdb.set_trace()
 
-	# print "This is my sugg data frame", df_sugg
-
-
-	# ****************** D3 ********************************************
-	# For D3 graph I want points for (debt_decr, time)
-	# min_d3_points = []
+#********** This is the list of my data points (date: ##, Min: ##, Sugg: ##) that will be JSONified and passed to D3 **********#
 	min_point = zip(*[dt_min_month.date, rounded_total_min_debt])
 	# print "Min length:", len(min_point)
 	# print "This is zipped point", min_point
 
-	data_point_list = []
-
-	# min_point_list = []
-	for i in range(len(min_point)):
-		point_dict = {"types":"Minimum Payment", "date":str(min_point[i][0]), "amount":min_point[i][1]}
-		# min_point_list.append(point_dict)
-		data_point_list.append(point_dict)
-
-	# min_point_dict = {"Minimum Payment": min_point_list}
-	# print "dict", min_point_dict
+	while len(rounded_total_sugg_debt) < len(rounded_total_min_debt):
+		rounded_total_sugg_debt.append(0)
 
 
+	new_data_points = zip(*[dt_min_month.date, rounded_total_min_debt, rounded_total_sugg_debt])
 
 
-	sugg_point = zip(*[dt_sugg_month.date, rounded_total_sugg_debt])
-	# print "Sugg points", sugg_point
-	# print "Sugg length:", len(sugg_point)
-
-	# sugg_point_list = []
-	for i in range(len(sugg_point)):
-		point_dict = {"types":"Suggested Payment", "date":str(sugg_point[i][0]), "amount": sugg_point[i][1]}
-		# point = [str(sugg_point[i][0]), sugg_point[i][1]]
-		# sugg_point_list.append(point_dict)
-		data_point_list.append(point_dict)
-
-	# print "This is mini dictionary of points for each one", point_dict
-
-	# sugg_point_dict = {"Suggested Payment": sugg_point_list}
-	# print "dict of sugg", sugg_point_dict
-
-	data_point_dict = {"User Points": data_point_list}
-	# print "This is my dictoinary of all of my data points", data_point_dict
+	new_data_point_list = []
+	for i in range(len(new_data_points)):
+		point_dict = {"date":str(new_data_points[i][0]), "Minimum":new_data_points[i][1], "Suggested": new_data_points[i][2]}
+		new_data_point_list.append(point_dict)
 
 
+	df_total = [df_min, df_sugg, new_data_point_list]
 
 
-
-
-
-
+	return df_total
 
 
 
@@ -204,20 +179,6 @@ def organization(dictionary):
 # 	(debt_decr, time)
 # 	(intr_decr, time)
 # 	(payment_decr, time)		
-
-
-
-	df_total = [df_min, df_sugg, data_point_dict]
-	# print '*'* 100
-	# print "These are points I want to use for D3", df_total[2]
-	# print '*'* 100
-
-
-
-	return df_total
-	# return all_totals
-
-# organization()
 
 
 

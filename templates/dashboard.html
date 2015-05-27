@@ -32,6 +32,7 @@
 
 				<div id="viz2">
 					<script>
+						console.dir({{d3_data | safe}})
 
 						var margin = {top: 20, right: 80, bottom: 30, left: 50},
 						    width = 960 - margin.left - margin.right,
@@ -67,13 +68,13 @@
 						  .append("g")
 						    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 // CHANGE THIS TO JSON!!!
+						json_data = {{d3_data | safe}}
 
-
-						d3.json("../static/d3-data_small.json", function(data) {
+						// d3.json(json_data, function(data) {
 						 // *********************  HELP HERE *********************
 						  // console.log(data)
-						  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }))
-						  data.forEach(function(d) {
+						  color.domain(d3.keys(json_data[0]).filter(function(key) { return key !== "date"; }))
+						  json_data.forEach(function(d) {
 						    d.date = format.parse(d.date);
 						 
 						  });
@@ -88,14 +89,14 @@
 						  var types = color.domain().map(function(payment_type) {
 						    return {
 						      payment_type: payment_type,
-						      values: data.map(function(d) {
+						      values: json_data.map(function(d) {
 						        return {date: d.date, amount: +d[payment_type]};
 						      })
 						    };
 						  });
 						  
 
-						  x.domain(d3.extent(data, function(d) { return d.date; }));
+						  x.domain(d3.extent(json_data, function(d) { return d.date; }));
 
 						  y.domain([
 						    d3.min(types, function(c) {return d3.min(c.values, function(v) {  return v.amount; }); }),
@@ -135,7 +136,7 @@
 						  //     .attr("x", 3)
 						  //     .attr("dy", ".35em")
 						  //     .text(function(d) { return d.name; });
-						});
+						// });
 
 					</script>
 
