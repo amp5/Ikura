@@ -100,20 +100,90 @@ def card_submission():
 def dashboard():
 	"""Displays calculations and visualizations for credit cards"""
 
-	results_of_query = Card.query.filter_by(user_id=1).all()
+	
+	user_id = session.get("user_id")
+
+	results_of_query = Card.query.filter_by(user_id=user_id).all()
 	user_card_dict_py = user_cards(results_of_query)
 
 
 	all_totals = organization(user_card_dict_py)
 	data_points = all_totals[2]
 	d3_points_list_json = json.dumps(all_totals[2])
-	# print "JSON:", d3_points_list_json
 
 
 
-	return render_template('dashboard.html', query_results=results_of_query, 
+	return render_template('/dashboard.html', query_results=results_of_query, 
 											 all_totals=all_totals, 
-											 d3_data = d3_points_list_json)
+												 d3_data = d3_points_list_json)
+
+@app.route('/update_dashboard', methods=['POST'])
+def update_dashboard():
+
+
+	user_id = session.get("user_id")
+	results_of_query = Card.query.filter_by(user_id=user_id).all()
+
+	print "This is our request object", request.form
+	names = request.form.getlist("card1_name[]")
+	print "This is name", names
+	print names[0]
+	debts = request.form.getlist("card1_debt[]")
+	aprs = request.form.getlist("card1_apr[]")
+	dates = request.form.getlist("card1_date[]")
+	user_id = session.get("user_id")
+	min_payment = session.get("min_payment")
+
+	print "Name", names
+	print "Debt", debts
+	print "APR", aprs
+	print "Date", dates
+	print "Min Payment", min_payment
+	print "This is the session", session
+	print "user id", user_id
+
+	
+
+	for card in results_of_query:
+		name = card.card_name 
+		debt = card.card_debt
+		apr = card.card_apr
+		#This will turn user inputted apr into percentage
+		apr = apr/100
+		date = card.card_date
+		min_payment = card.min_payment
+		user_id = card.user_id
+		pcard_id = card.card_id
+
+	for i in range(len(names)):
+		print "Name", names[i]
+		print "Debt", debts[i]
+		print "APR", aprs[i]
+		print "Date", dates[i]
+		print "Min Payment", min_payment
+		print "This is the session", session
+		print "user id", user_id
+
+
+		# card = Card.query.filter_by(user_id=user_id).all()
+
+		if results_of_query == None:
+			flash("In order to generate a payment plan for you we need some information on your current debts. ")
+			
+		else:
+			updated_card = Card(card_name = names[i], 
+						card_debt = debts[i],
+						card_apr = aprs[i],
+						card_date = dates[i],
+						min_payment=min_payment,
+						user_id = user_id)
+			db.session.add(updated_card)   
+			db.session.commit()
+			flash("We've updated your payment plan!")
+	
+
+	return render_template('d3_study.html')
+		
 
 
 @app.route('/d3')
@@ -210,7 +280,7 @@ def logout():
     
     return redirect('/')
 
- 
+ # http://getbootstrap.com/javascript/#alerts
 
 
 if __name__ == "__main__":
@@ -237,3 +307,5 @@ if __name__ == "__main__":
 # Want to make this more succinct.
 #TODO: #
 # Make sure to take user_id from session #
+# deactivate dashboard for users not logged in
+# Need to add option to remove card from database!

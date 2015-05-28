@@ -7,9 +7,6 @@
     <!-- **************  D3  **************** -->
     <script src="http://d3js.org/d3.v3.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    
-
-    
 
        <style type="text/css">
         
@@ -65,14 +62,23 @@
         </style>
 
     <!-- **************  BOOTSTRAP  **************** -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-   
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     <!-- **************  JAVASCRIPT  **************** -->
     <script src="../static/forms.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{
+     url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
   </head>
 
 
@@ -99,6 +105,7 @@
             <li><a href="/login">Login</a></li>
             <li><a href="/logout">Log out</a></li>
             <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
