@@ -41,17 +41,6 @@ class Card(db.Model):
     #  if i need to change just one table in db I can drop that
     # one table and then do db.create_all() in -i model.py and it'll add that new table....
 
-    def updated_card(card_name, card_debt, card_apr, card_date, min_payment, user_id):
-        Card.update().where(Card.card_id = card_id).values(card_name = card_name, 
-                                                            card_debt = card_debt, 
-                                                            card_apr = card_apr, 
-                                                            card_date = card_date, 
-                                                            min_payment = min_payment, 
-                                                            user_id = user_id)
-
-# table.update().returning(table.c.col1, table.c.col2).\
-#     where(table.c.name=='foo').values(name='bar')
-
 
     def __repr__(self):
         """Provide helpful card representation when printed."""

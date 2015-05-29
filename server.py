@@ -134,55 +134,59 @@ def update_dashboard():
 	user_id = session.get("user_id")
 	min_payment = session.get("min_payment")
 
-	print "Name", names
-	print "Debt", debts
-	print "APR", aprs
-	print "Date", dates
-	print "Min Payment", min_payment
-	print "This is the session", session
-	print "user id", user_id
+	# print "Name", names
+	# print "Debt", debts
+	# print "APR", aprs
+	# print "Date", dates
+	# print "Min Payment", min_payment
+	# print "This is the session", session
+	# print "user id", user_id
 
 	
 
-	for card in results_of_query:
-		name = card.card_name 
-		debt = card.card_debt
-		apr = card.card_apr
-		#This will turn user inputted apr into percentage
-		apr = apr/100
-		date = card.card_date
-		min_payment = card.min_payment
-		user_id = card.user_id
-		pcard_id = card.card_id
+	for index, card in enumerate(results_of_query):
 
-	for i in range(len(names)):
-		print "Name", names[i]
-		print "Debt", debts[i]
-		print "APR", aprs[i]
-		print "Date", dates[i]
-		print "Min Payment", min_payment
-		print "This is the session", session
-		print "user id", user_id
+			print "Name", names[index]
+			print "Debt", debts[index]
+			print "APR", aprs[index]
+			print "Date", dates[index]
+			print "Min Payment", min_payment
+			print "This is the session", session
+			print "user id", user_id
 
+			card.card_name = names[index] 
+			card.card_debt = debts[index]
+			card.card_apr = aprs[index]
+			card.card_date = dates[index]
+			card.min_payment=min_payment
+			card.user_id = user_id
 
-		# card = Card.query.filter_by(user_id=user_id).all()
-
-		if results_of_query == None:
-			flash("In order to generate a payment plan for you we need some information on your current debts. ")
-			
-		else:
-			updated_card = Card(card_name = names[i], 
-						card_debt = debts[i],
-						card_apr = aprs[i],
-						card_date = dates[i],
-						min_payment=min_payment,
-						user_id = user_id)
-			db.session.add(updated_card)   
 			db.session.commit()
-			flash("We've updated your payment plan!")
+	flash("We've updated your payment plan!")
 	
 
-	return render_template('d3_study.html')
+	return redirect('/dashboard')
+
+@app.route('/dashboard_int')
+def dashboard_int():
+	"""Will calculate sugg payments with a weight on higher interests"""
+
+	user_id = session.get("user_id")
+
+	results_of_query = Card.query.filter_by(user_id=user_id).all()
+# Add new function in calculations to replace user_cards
+	user_card_dict_py = user_cards_int(results_of_query)
+
+# See if you can still use organization function
+	all_totals = organization(user_card_dict_py)
+	data_points = all_totals[2]
+	d3_points_list_json = json.dumps(all_totals[2])
+
+
+
+	return render_template('/dashboard_int.html', query_results=results_of_query, 
+											 all_totals=all_totals, 
+												 d3_data = d3_points_list_json)
 		
 
 
