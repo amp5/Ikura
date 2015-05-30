@@ -12,11 +12,11 @@ from datetime import datetime
 
 #  This should be a dict with key of card name, each value is a dictionary key value pair of min and sugg
 
-def organization(dictionary):
+def organization(user_card_dict_py):
 	"""This is rearranging my data to display on html page and for D3"""
 
-	user_card_dict_py = dictionary
-	# print "What is this?", user_card_dict_py
+
+	# print "What is this user_card_dict_py?", user_card_dict_py
 	values = user_card_dict_py.values()
 	# print "All of values", type(values)
 	# print "First index within values", type(values[0])
@@ -153,6 +153,8 @@ def organization(dictionary):
 			sum_of = sum_of + x
 		total_calc_sugg_payment.append(sum_of)
 
+	# print "total_calc_sugg_payment", total_calc_sugg_payment
+
 	total_min = zip(*[dt_min_month, total_calc_min_debt, total_calc_min_int, total_calc_min_payment])
 	total_sugg = zip(*[dt_sugg_month, total_calc_sugg_debt, total_calc_sugg_int, total_calc_sugg_payment])
 	# print "This is total sugg - (date, debt, int, payment )", total_sugg
@@ -211,6 +213,7 @@ def organization(dictionary):
 # 	(debt_decr, time)
 # 	(intr_decr, time)
 # 	(payment_decr, time)		
-
+# TODOD:
+#  Dates get messed up in graph if they are not the same length
 
 

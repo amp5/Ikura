@@ -12,8 +12,6 @@ def min_payment_plan(name, date, debt, apr, user_id):
 	# ----- # Base calculations # ----- #
 	interest_per_month = apr/date
 	min_payment = interest_per_month + (debt *0.01)
-	monthly_payment_suggestion = float(debt) / float((date + 1))
-	rounded_monthly_payment_siggestion = round(monthly_payment_suggestion, 2)
 
 	# ----- # Min payment calculations # ----- # 
 	new_debt_list=[debt]
@@ -22,7 +20,6 @@ def min_payment_plan(name, date, debt, apr, user_id):
 	card = {}
 
 	while debt >0:
-
 		interest_to_pay = round((debt * interest_per_month), 2)
 		interest_to_pay_list.append(interest_to_pay)
 
@@ -32,11 +29,7 @@ def min_payment_plan(name, date, debt, apr, user_id):
 		new_debt = round((debt + interest_to_pay - min_total_payment), 2)
 		new_debt_list.append(new_debt)
 		debt = new_debt
-
-	print "*"* 40
-
-	
-
+	print "*"* 40	
 	minimum = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
 	card[name] = minimum
 
@@ -51,8 +44,11 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 			new_debt_list(suggested), interest_to_pay_list(suggested), monthly_payment_list])}
 	"""
 
+	print "date right?", date
 	interest_per_month = apr/date
-	monthly_payment_suggestion = round(float(debt) / float((date + 1)), 2)
+	print "int rate", interest_per_month
+	monthly_payment_suggestion = float(debt) / float((date + 1))
+	print "This should be the right number!", monthly_payment_suggestion
 	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
 
 
