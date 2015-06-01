@@ -1,7 +1,6 @@
 from model import connect_to_db, db, User, Card, Value
 
 
-
 def min_payment_plan(name, date, debt, apr, user_id):
 	"""Calculates min payment plan for card and returns a dictionary 
 		with diff calculations as values
@@ -128,85 +127,6 @@ def user_cards(query_results):
 
 	return user_dict
 
-# # *********************************************  #
-# # INTEREST PAYMENT PLAN - SUGGESTED PLAN ONLY
-# # *********************************************  #
-
-# def interest_weight_budget(name, date, debt, apr, user_id):
-# 	"""Calculates suggested plan with a weith on the higer interest rate"""
-# 	 # want to first get all values for al cards. Then select the card with the highest interest payment
-# 	 # prioritize that card's payment and also allow user to enter in budget (will I have to add another table for this or another
-# 	 # column for budget? i.e. 500 per month)
-
-
-# # will be using a hard coded variable now and add this in later
-# 	budget = 500
-
-
-# 	interest_per_month = apr/date
-# 	monthly_payment_suggestion = round(float(debt) / float((date + 1)), 2)
-# 	rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
-# 	max_budget_for_card = budget - rounded_monthly_payment_suggestion
-
-# 	print "how much can I spend on this?", max_budget_for_card
-
-# 	return max_budget_for_card
-
-# def interest_weight(name, date, debt, apr, user_id, ):
-# 		"""Calculates suggested plan with a weith on the higer interest rate"""
-# 	 # want to first get all values for al cards. Then select the card with the highest interest payment
-# 	 # prioritize that card's payment and also allow user to enter in budget (will I have to add another table for this or another
-# 	 # column for budget? i.e. 500 per month)
-
-# 	card = []
-
-
-# 	return card 
-
-# def user_cards_int(query_results):
-# 	"""Loop over all cards user has entered and return a dictionary of dictionaries. 
-# 	The outer dictionary key = user_id, values = cards
-# 	The inner dictionary key = name of a card, values = min payments, min intr rates,
-# 														min debt decrease, suggested payments,
-# 														suggested intr rates, suggested debt decrease """
-	
-# 	user_dict = {}
-# 	card_dict_list = []
-
-# 	for card in query_results:
-# 		name = card.card_name 
-# 		debt = card.card_debt
-# 		apr = card.card_apr
-# 		#This will turn user inputted apr into percentage
-# 		apr = apr/100
-# 		date = card.card_date
-# 		min_payment = card.min_payment
-# 		user_id = card.user_id
-		
-
-# 		print "Name", name
-# 		print "Debt", debt
-# 		print "APR", apr
-# 		print "Date", date
-# 		print "Min payment", min_payment
-# 		print "User", user_id
-
-# 		max_budget = interest_weight_budget(name, date, debt, apr, user_id) 
-# 		completed_card_dict = suggested_plan(name, date, debt, apr, max_budget,user_id)
-# 		card_dict_list.append(completed_card_dict)
-
-
-
-# 	user_dict = {user_id : {}}
-	
-# 	for card_dict in card_dict_list:
-# 		if user_dict[user_id]:
-# 			user_dict[user_id].append(card_dict)
-# 		else:
-# 			user_dict[user_id] = [card_dict]
-# 	# print "Complete User Dictionary:", user_dict
-
-# 	return user_dict_int
 
 
 

@@ -10,11 +10,85 @@
 {% if user == 0 %}
 	 	<a href="/login" class="btn btn-info" role="button" id="start-button">Let's get started!</a>
 {% else %}
-	<a href="/card_submission" class="btn btn-info" role="button" id="start-button">Let's get started!</a>
+	<a data-toggle="modal" class="btn btn-info" href="card_submission.html" data-target="#myModal">Let's get started! </a>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">First, your credit card debt...</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="form-inline" action="/card_submission" method='POST' id="entire_form">
+			    <div id="add_new_card">
+			    	<div class="form-group">
+				      	 Credit Card Name:
+				      	 <!-- insert little 'i' comments here to explain stuff -->
+				      	<input class="form-control"  type="text" name="card1_name[]" required id="name">
+				     </div>
+			      	<div class="form-group">
+				      	<label class="sr-only" for="debt">Amount (in dollars)</label>
+				      	Amount of Debt:
+						<div class="input-group">
+						      <div class="input-group-addon">$</div>
+						      <input class="form-control" type="number" step="0.01" min="0" max="100000" name="card1_debt[]" required id="debt">
+						      <div class="input-group-addon">.00</div>
+						</div>
+					</div>
+			      <div class="form-group">
+			      	Annual Percentage Rate (APR):
+			        <div class="input-group">
+				      	<input class="form-control" type="number" step="0.01" min="0" max="100" name="card1_apr[]" required id="apr">
+				      	<div class="input-group-addon">%</div>
+			      </div>
+			      </div>
+			      
+				 <div class="form-group">
+			        Select how long you want your payment plan to be: 
+			  	  	<input class="form-" type="number" name="card1_date[]" min="1" max="36" id="date" required>
+			  	</div>
+			      <div class="form-group" >
+			          <label> How is your minimum payment calculated?
+			              <!-- make the default for this first one. add note explaining this to users. -->
+			          <select class="form-control" name="min_payment[]" id="min_payment">
+			            <option value="int_1per" selected="selected"t>Interest + 1% of the balance</option>
+			            <option value="2.00_per">2.00%</option>
+			            <option value="2.08_per">2.08%</option>
+			            <option value="2.50_per">2.50%</option>
+			            <option value="2.78_per">2.78%</option>
+			            <option value="3.00_per">3.00%</option>
+			            <option value="3.50_per">3.50%</option>
+			            <option value="4.00_per">4.00%</option>
+			            <option value="4.50_per">4.50%</option>
+			            <option value="5.00_per">5.00%</option>
+			          </select>
+			          </label>
+			      </div>
+			      	<!-- Have date be optional. Useful for 0% apr. Have logic for this one. If apr == 0 then display. -->
+			      	<!-- In case I want to implement this in JS: http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today -->
+			      	
+			  <!-- change to number of months to pay off. For now, do three options. 12, 24, 36 -->
+			 
+			    </div>
+			    <div>
+			      <br>
+			      <button class="btn btn-default" id="new_card"> + Add another card</button>
+			      <br>	
+			      <br>
+			      	<input type="submit" value="Let's do this!" class="btn btn-default" id="submit">
+			    </div>
+			</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 {% endif %}
 
 
 
+<script src="../static/forms.js"></script>
 
 
 {% endblock %}

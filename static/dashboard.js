@@ -5,21 +5,21 @@
 
 
 
+// $('#myModal').on('shown.bs.modal', function () {
+//   $('#myInput').focus()
+// })
 
 
- $(function() {
-    $('form#submit_update').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/dashboard', {
-        names: $('input[name="names"]').val(),
-        debts: $('input[name="debts"]').val(), 
-        aprs: $('input[name="aprs"]').val(),
-        dates: $('input[name="dates"]').val(),
-        min_payment: $('input[name="min_payment"]').val(),
-        session: $('input[name="session"]').val(),
-        user_id: $('input[name="user_id"]').val()
-      }, function(data) {
-        $("#result").text(data.result);
-      });
-      return false;
-    });
-  });
+// $('#entire_form_practice').on('submit', function(ev) {
+//     $('#myModal_practice').modal('show'); 
+
+
+//     var data = $(this).serializeObject();
+//     json_data = JSON.stringify(data);
+//     $("#results").text(json_data); 
+//     $(".modal-body").text(json_data); 
+
+//     // $("#results").text(data);
+
+//     ev.preventDefault();
+// });

@@ -77,14 +77,6 @@ def organization(user_card_dict_py):
 		sugg_payment_list.append(sugg_payment)
 
 
-# # WORKING TOTAL LISTS FROM NEW REVAMP OF CODE
-# 	print "This is my total min debt list for all cards", min_debt_list
-# 	print "This is my total min int for all cards", min_int_list
-# 	print "This is my total min payment for all cards", min_payment_list
-	# print "Total suggested debt decreasing", sugg_debt_list
-	# print "Total sugg int", sugg_int_list
-	# print "Total sugg payment", sugg_payment_list
-
 
 	total_min_debt = zip(*min_debt_list)
 	# print "This is my min debt zipped list", total_min_debt
@@ -162,7 +154,7 @@ def organization(user_card_dict_py):
 #I don't think I need to have the same values for both min and sugg so we shall see...
 	# print "M:", len(total_min)
 	# print "S:", len(total_sugg)
-
+# I think I do...
 
 
 	while len(total_sugg_debt) < len(total_min_debt):

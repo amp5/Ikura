@@ -4,212 +4,346 @@
 
 
 <!-- stored d3 files in base.html -->
+<div role="tabpanel">
 
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#payment_plan" aria-controls="payment_plan" role="tab" data-toggle="tab">Payment Plan</a></li>
+    <li role="presentation"><a href="#payment_plan_int" aria-controls="payment_plan_int" role="tab" data-toggle="tab">Payment Plan Interest</a></li>
+    <li role="presentation"><a href="#payment_plan_amt" aria-controls="payment_plan_amt" role="tab" data-toggle="tab">Payment Plan Debt Amount </a></li>
+    <li role="presentation"><a href="#take_action" aria-controls="take_action" role="tab" data-toggle="tab">Take Action</a></li>
+  </ul>
 
-<div class="container-fluid">
-	<div class="row-fluid">
-		 <div class="col-md-3" id="card-summary">
-		 	<strong>Card Info:</strong>
-			<form action="/update_dashboard" method='POST' id="updated_form">
-			 	{% for card in query_results %}
-					<br>
-					<br>
-		
-					Card name: <input type="text" name="card1_name[]" value = {{card.card_name}} class = "name" id="name" required >
-					
-					<br>
-					Card debt: <input type="number" step="0.01" min="0" max="100000" name="card1_debt[]" value = {{card.card_debt }}	class = "debt" id="debt" required> 
-					<br>
-					Card apr: 
-					<input type="number" step="0.01" min="0" max="100" name="card1_apr[]" value = {{card.card_apr}} id="apr" required >
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="payment_plan">
 
-					<br>
-					Card time to pay off: 
-					<input type="number" name="card1_date[]" min="1" max="36" id="date" value = {{card.card_date}} required>
-					
-					
-					<br>
-
-				{% endfor %}
-			
-
-			<input type="submit" value="Update" id="submit_update">
-
-			</form>
-
-			<br>
-			<br>
-		 </div>
-  		<div class="col-md-9" id="main">
-  			<div class="col-xs-12 col-md-12 col-lg-12" id="visualization">
-				Visualization:
-
-				<div id="viz2">
-					<script>
-						console.dir({{d3_data | safe}})
-
-						var margin = {top: 20, right: 80, bottom: 30, left: 50},
-						    width = 960 - margin.left - margin.right,
-						    height = 500 - margin.top - margin.bottom;
-
-						// var parseDate = d3.time.format("%Y%m%d").parse;
-						var format = d3.time.format("%Y-%m-%d");
-
-						var x = d3.time.scale()
-						    .range([0, width]);
-
-						var y = d3.scale.linear()
-						    .range([height, 0]);
-
-						var color = d3.scale.category10();
-
-						var xAxis = d3.svg.axis()
-						    .scale(x)
-						    .orient("bottom");
-
-						var yAxis = d3.svg.axis()
-						    .scale(y)
-						    .orient("left");
-
-						var line = d3.svg.line()
-						    .interpolate("basis")
-						    .x(function(d) { return x(d.date); })
-						    .y(function(d) { return y(d.amount); });
-
-						var svg = d3.select("#viz2").append("svg")
-						    .attr("width", width + margin.left + margin.right)
-						    .attr("height", height + margin.top + margin.bottom)
-						  	.append("g")
-						    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-						json_data = {{d3_data | safe}}
-
-						 color.domain(d3.keys(json_data[0]).filter(function(key) { return key !== "date"; }))
-						json_data.forEach(function(d) {
-						    d.date = format.parse(d.date);
-						 
-						  });
-
-
-						  var types = color.domain().map(function(payment_type) {
-						    return {
-						      payment_type: payment_type,
-						      values: json_data.map(function(d) {
-						        return {date: d.date, amount: +d[payment_type]};
-						      })
-						    };
-						  });
-						  
-
-						  x.domain(d3.extent(json_data, function(d) { return d.date; }));
-
-						  y.domain([
-						    d3.min(types, function(c) {return d3.min(c.values, function(v) {  return v.amount; }); }),
-						    d3.max(types, function(c) { return d3.max(c.values, function(v) { return v.amount; }); })
-						  ]);
-
-						  svg.append("g")
-						      .attr("class", "x axis")
-						      .attr("transform", "translate(0," + height + ")")
-						      .call(xAxis);
-
-						  svg.append("g")
-						      .attr("class", "y axis")
-						      .call(yAxis)
-						    .append("text")
-						      .attr("transform", "rotate(-90)")
-						      .attr("y", 6)
-						      .attr("dy", ".71em")
-						      .style("text-anchor", "end")
-						      .text("Amount ($)");
-
-						 // debugger
-
-						  var type = svg.selectAll(".type")
-						      .data(types)
-						    .enter().append("g")
-						      .attr("class", "type");
-
-
-
-						  type.append("path")
-						      .attr("class", "line")
-						      .attr("d", function(d) { return line(d.values); })
-						      .style("stroke", function(d) { return color(d.payment_type); });
-
-						//   type.append("text")
-						//       .datum(function(d) { return {name: d.payment_type, values: d.amount[d.amount.length - 1]}; })
-						//       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.amount) + ")"; })
-						//       .attr("x", 3)
-						//       .attr("dy", ".35em")
-						//       .text(function(d) { return d.payment_type; });
-						// });
-
-					</script>
-				</div>
-			</div>
-
-	 
-			<div class="col-xs-6 col-md-6 col-lg-6">
-				<div id="sugg_plan">
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					  <div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingOne">
-					      <h4 class="panel-title">
-					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					          Total Suggested Payment Plan (Debt, Int, Payment):
-					        </a>
-					      </h4>
-					    </div>
-					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-					      <div class="panel-body">
-					        {{all_totals[1].to_html(classes="table table-striped") | safe }}
-					      </div>
-					    </div>
-					  </div>
-				</div>
-			</div>
-		</div>
-
-			<div class="col-xs-6 col-md-6 col-lg-6">
-				<div id="min_plan">
-
-
-
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					  <div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingOne">
-					      <h4 class="panel-title">
-					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					          Total Minimum Payment Plan (Debt, Int, Payment):
-					        </a>
-					      </h4>
-					    </div>
-					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-					      <div class="panel-body">
-					        {{all_totals[0].to_html(classes="table table-striped") | safe}}
-					      </div>
-					    </div>
-					  </div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				 <div class="col-md-3" id="card-summary">
+				 	<strong>Card Info:</strong>
+					<form action="/update_dashboard" method='POST' id="updated_form">
+					 	{% for card in query_results %}
+							<br>
+							<br>
 				
+							Card name: <input type="text" name="card1_name[]" value = {{card.card_name}} class = "name" id="name" required >
+							
+							<br>
+							Card debt: <input type="number" step="0.01" min="0" max="100000" name="card1_debt[]" value = {{card.card_debt }}	class = "debt" id="debt" required> 
+							<br>
+							Card apr: 
+							<input type="number" step="0.01" min="0" max="100" name="card1_apr[]" value = {{card.card_apr}} id="apr" required >
+
+							<br>
+							Card time to pay off: 
+							<input type="number" name="card1_date[]" min="1" max="36" id="date" value = {{card.card_date}} required>
+							
+							
+							<br>
+
+						{% endfor %}
+					
+
+						<input type="submit" value="Update" id="submit_update">
+					</form>
+					<br>
+					<br>
+				 </div>
+		  		<div class="col-md-9" id="main">
+		  			<div class="col-xs-12 col-md-12 col-lg-12" id="visualization">
+						<div id="viz2">
+							<script>
+								console.dir({{d3_data | safe}})
+
+								var margin = {top: 20, right: 80, bottom: 30, left: 50},
+								    width = 760 - margin.left - margin.right,
+								    height = 300 - margin.top - margin.bottom;
+
+								// var parseDate = d3.time.format("%Y%m%d").parse;
+								var format = d3.time.format("%Y-%m-%d");
+
+								var x = d3.time.scale()
+								    .range([0, width]);
+
+								var y = d3.scale.linear()
+								    .range([height, 0]);
+
+								var color = d3.scale.category10();
+
+								var xAxis = d3.svg.axis()
+								    .scale(x)
+								    .orient("bottom");
+
+								var yAxis = d3.svg.axis()
+								    .scale(y)
+								    .orient("left");
+
+								var line = d3.svg.line()
+								    .interpolate("basis")
+								    .x(function(d) { return x(d.date); })
+								    .y(function(d) { return y(d.amount); });
+
+								var svg = d3.select("#viz2").append("svg")
+								    .attr("width", width + margin.left + margin.right)
+								    .attr("height", height + margin.top + margin.bottom)
+								  	.append("g")
+								    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+								json_data = {{d3_data | safe}}
+
+								 color.domain(d3.keys(json_data[0]).filter(function(key) { return key !== "date"; }))
+								json_data.forEach(function(d) {
+								    d.date = format.parse(d.date);
+								 
+								  });
+
+
+								  var types = color.domain().map(function(payment_type) {
+								    return {
+								      payment_type: payment_type,
+								      values: json_data.map(function(d) {
+								        return {date: d.date, amount: +d[payment_type]};
+								      })
+								    };
+								  });
+								  
+
+								  x.domain(d3.extent(json_data, function(d) { return d.date; }));
+
+								  y.domain([
+								    d3.min(types, function(c) {return d3.min(c.values, function(v) {  return v.amount; }); }),
+								    d3.max(types, function(c) { return d3.max(c.values, function(v) { return v.amount; }); })
+								  ]);
+
+								  svg.append("g")
+								      .attr("class", "x axis")
+								      .attr("transform", "translate(0," + height + ")")
+								      .call(xAxis);
+
+								  svg.append("g")
+								      .attr("class", "y axis")
+								      .call(yAxis)
+								    .append("text")
+								      .attr("transform", "rotate(-90)")
+								      .attr("y", 6)
+								      .attr("dy", ".71em")
+								      .style("text-anchor", "end")
+								      .text("Amount ($)");
+
+								 // debugger
+
+								  var type = svg.selectAll(".type")
+								      .data(types)
+								    .enter().append("g")
+								      .attr("class", "type");
+
+
+
+								  type.append("path")
+								      .attr("class", "line")
+								      .attr("d", function(d) { return line(d.values); })
+								      .style("stroke", function(d) { return color(d.payment_type); });
+
+								//   type.append("text")
+								//       .datum(function(d) { return {name: d.payment_type, values: d.amount[d.amount.length - 1]}; })
+								//       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.amount) + ")"; })
+								//       .attr("x", 3)
+								//       .attr("dy", ".35em")
+								//       .text(function(d) { return d.payment_type; });
+								// });
+
+							</script>
+						</div>
+					</div>
+					<div class="col-xs-6 col-md-6 col-lg-6">
+						<div id="sugg_plan">
+							<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingOne">
+							      <h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							          Total Suggested Payment Plan (Debt, Int, Payment):
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							      <div class="panel-body">
+							        {{all_totals[1].to_html(classes="table table-striped") | safe }}
+							      </div>
+							    </div>
+							  </div>
+						</div>
+					</div>
+				</div>
+					<div class="col-xs-6 col-md-6 col-lg-6">
+						<div id="min_plan">
+							<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingOne">
+							      <h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							          Total Minimum Payment Plan (Debt, Int, Payment):
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							      <div class="panel-body">
+							        {{all_totals[0].to_html(classes="table table-striped") | safe}}
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="payment_plan_int">a</div>
+    <div role="tabpanel" class="tab-pane" id="payment_plan_amt">
+    		<div id="viz3">
+							<script>
+								console.dir({{d3_data | safe}})
+
+								var margin = {top: 20, right: 80, bottom: 30, left: 50},
+								    width = 760 - margin.left - margin.right,
+								    height = 300 - margin.top - margin.bottom;
+
+								// var parseDate = d3.time.format("%Y%m%d").parse;
+								var format = d3.time.format("%Y-%m-%d");
+
+								var x = d3.time.scale()
+								    .range([0, width]);
+
+								var y = d3.scale.linear()
+								    .range([height, 0]);
+
+								var color = d3.scale.category10();
+
+								var xAxis = d3.svg.axis()
+								    .scale(x)
+								    .orient("bottom");
+
+								var yAxis = d3.svg.axis()
+								    .scale(y)
+								    .orient("left");
+
+								var line = d3.svg.line()
+								    .interpolate("basis")
+								    .x(function(d) { return x(d.date); })
+								    .y(function(d) { return y(d.amount); });
+
+								var svg = d3.select("#viz3").append("svg")
+								    .attr("width", width + margin.left + margin.right)
+								    .attr("height", height + margin.top + margin.bottom)
+								  	.append("g")
+								    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+								json_data = {{d3_data | safe}}
+
+								 color.domain(d3.keys(json_data[0]).filter(function(key) { return key !== "date"; }))
+								json_data.forEach(function(d) {
+								    d.date = format.parse(d.date);
+								 
+								  });
+
+
+								  var types = color.domain().map(function(payment_type) {
+								    return {
+								      payment_type: payment_type,
+								      values: json_data.map(function(d) {
+								        return {date: d.date, amount: +d[payment_type]};
+								      })
+								    };
+								  });
+								  
+
+								  x.domain(d3.extent(json_data, function(d) { return d.date; }));
+
+								  y.domain([
+								    d3.min(types, function(c) {return d3.min(c.values, function(v) {  return v.amount; }); }),
+								    d3.max(types, function(c) { return d3.max(c.values, function(v) { return v.amount; }); })
+								  ]);
+
+								  svg.append("g")
+								      .attr("class", "x axis")
+								      .attr("transform", "translate(0," + height + ")")
+								      .call(xAxis);
+
+								  svg.append("g")
+								      .attr("class", "y axis")
+								      .call(yAxis)
+								    .append("text")
+								      .attr("transform", "rotate(-90)")
+								      .attr("y", 6)
+								      .attr("dy", ".71em")
+								      .style("text-anchor", "end")
+								      .text("Amount ($)");
+
+								 // debugger
+
+								  var type = svg.selectAll(".type")
+								      .data(types)
+								    .enter().append("g")
+								      .attr("class", "type");
+
+
+
+								  type.append("path")
+								      .attr("class", "line")
+								      .attr("d", function(d) { return line(d.values); })
+								      .style("stroke", function(d) { return color(d.payment_type); });
+
+								//   type.append("text")
+								//       .datum(function(d) { return {name: d.payment_type, values: d.amount[d.amount.length - 1]}; })
+								//       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.amount) + ")"; })
+								//       .attr("x", 3)
+								//       .attr("dy", ".35em")
+								//       .text(function(d) { return d.payment_type; });
+								// });
+
+							</script>
+					</div>
+			<strong>Need to ask user to input budget for this calculation</strong>
+
+
+
+
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="take_action">
+		<div id="action">
+			<ul class="take_action">
+			    <li> It looks like you have one or more cards that are not currently 0% apr.
+			    	 
+			    	<ul>
+			    	 <li>Take to your credit card provide to see if they have any 0% apr cards.</li>
+			    	 <li>Check out other credit card options that provide 0% apr.</li>
+			    	 <li>Keep your card on a 0% apr plan as long as you can until it is paid off.</li>
+			    	 <li><strong>Remember:</strong> Once your 0% apr introductory period ends your credit card will most likely charge you interest on the initial balance transfer!</li>
+			    	</ul>
+
+		    	 <li><em>Check out these websites for more info on 0% apr cards</em>
+		    	 	<ul>
+		    	 	<li>Nerdwallet</li>
+		    	 	<li>Credit Karma</li>
+		    	 </ul>
+		    	 </li>
+			    	
+			    </li>
+			    <li>Stop using your credit cards for purchases! Until you have paid off your debts or unless you can pay off your card in full every month on time stick to paying with a debit card or cash.</li>
+			    <li>While paying off your credit cards is definitely a priority, saving money every month for an emergency fund will help circumvent any unplanned expenses that you might have. </li>
+			  </ul>
+		</div>
+    </div>
+  </div>
+
 </div>
 
-<!-- 
-#TODO
-Figure out a way to not have graph go up to 6000. its adding up all sum totals. but only want it to add up sugg and min separately.
-also have floating text above points for viewer to hover over.  -->
-
-
-<div id="action">
-	Take action div.
-	<!--  add in a note here that if a card doesn't have 0apr, suggest to switch to a 0 apr
-	ONLY if they can pay it off within that date... -->
-</div>
+<!-- Have the first dashboard a mini of all three D3 viz and then have 
+	the next tabs a breakdown of each -->
 
 <!-- Use this! http://getbootstrap.com/examples/dashboard/ -->
 

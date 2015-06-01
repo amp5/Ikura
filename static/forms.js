@@ -1,5 +1,6 @@
 $( document).ready(function(){
-document.addEventListener("DOMContentLoaded", function(event) { 
+        console.log("loaded forms.js")
+
   document.getElementById("new_card").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
     //event.target.innerHTML = "click count: " + event.detail;
@@ -13,11 +14,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     '<option value="2.08_per">2.08%</option><option value="2.50_per">2.50%</option><option value="2.78_per">2.78%</option>' +
     '<option value="3.00_per">3.00%</option><option value="3.50_per">3.50%</option><option value="4.00_per">4.00%</option>' +
     '<option value="4.50_per">4.50%</option><option value="5.00_per">5.00%</option></select></label><br>' +
-    'Select how long you want your payment plan to be: <input type="number" name="card1_date[]" min="1" max="36" id="date"><br><br>')
-    console.log(event)
+    'Select how long you want your payment plan to be: <input type="number" name="card1_date[]" min="1" max="36" id="date"><br><br>');
+    console.log(event);
   }, false);
-});
-
 })
 
 

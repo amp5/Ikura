@@ -1,6 +1,8 @@
 from operator import itemgetter
 
 
+# Class <- make them.
+
 card_name_1 = "Master"
 card_debt_1 = float(1000)
 card_apr_1 = float(.1)
@@ -22,148 +24,145 @@ print card_list_sorted
 
 card_sugg_payments = []
 card_total_debt = []
+total_debt = 0
 for card in card_list:
 	sugg_payment = card[1] / (card[3] + 1)
 	card_sugg_payments.append(sugg_payment)
 	card_debt = card[1]
 	card_total_debt.append(card_debt)
-# print "list of all minimum sugg payments", card_sugg_payments
-
-
-sugg_payment_for_all_cards = sum(card_sugg_payments)
-# print "allocated for paying sugg payments", sugg_payment_for_all_cards
-
-
-total_debt = sum(card_total_debt)
-# print "This is the total debt", total_debt
-
-
-
-
-# # *******************************
-#  # ATTEMPT 3 
-# # *******************************
-
-print '*' * 60
-
-while total_debt > 0:
+	sugg_payment_for_all_cards = sum(card_sugg_payments)
+	total_debt = sum(card_total_debt)
 	extra_per_month = budget - sugg_payment_for_all_cards
-	print "extra to be used for highest card", extra_per_month
 
-	print '*' * 50
-	if card_list_sorted[-1] > 0:
-		last_card = card_list_sorted[-1]
-		print "What am i", last_card
-		debt = last_card[1]
-		int_per_month = last_card[2] / last_card[3]
-		sugg_payment =last_card[1]/(last_card[3] + 1)
-		interest_to_pay_list = []
-		card_payment_completed = []
+print "list of all minimum sugg payments", card_sugg_payments
+print "list of all total debt for all cards", total_debt
+print "allocated for paying sugg payments", sugg_payment_for_all_cards
+print "Extra I have per month to spend", extra_per_month
 
-		# while debt >0:
+
+# *******************************
+ # ATTEMPT 2
+# *******************************
+
+
+total_card_payment_completed = []
+
+
+while card_list_sorted:
+	last_card = card_list_sorted[-1]
+	print "What am i", last_card
+	debt = last_card[1]
+	int_per_month = last_card[2] / last_card[3]
+	sugg_payment =last_card[1]/(last_card[3] + 1)
+	interest_to_pay_list = []
+	card_payment_completed = []
+
+	while debt >0:
 		interest_to_pay = debt * int_per_month
 		interest_to_pay_list.append(interest_to_pay)
 		new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
 		debt = new_debt
 		print "debt", debt
 		card_payment_completed.append(debt)
-		sum_card_payment_completed = sum(card_payment_completed)
-		to_be_added = -sum_card_payment_completed
-		print "are you negative?", to_be_added
-		total_debt = total_debt + to_be_added
-		print "Should be decreasing", total_debt
 
-	if card_list_sorted[-2] > 0:
-		next_card = card_list_sorted[-1]
-		print "What am i", next_card
-		debt = next_card[1]
-		int_per_month = next_card[2] / next_card[3]
-		sugg_payment =next_card[1]/(next_card[3] + 1)
+
+	card_list_sorted.pop(-1)
+
+	print "watch me decrease", card_list_sorted
+	print "list of payments made to last card", card_payment_completed
+	total_card_payment_completed.append(card_payment_completed)
+
+
+	for card in card_list_sorted:
+		print "this should be the next card",  card
+		debt = card[1]
+		int_per_month = card[2] / card[3]
+		sugg_payment =card[1]/(card[3] + 1)
+		print "sugg pay", sugg_payment
 		interest_to_pay_list = []
 		card_payment_completed = []
+		print "how long?", len(total_card_payment_completed[0])
 
-		# while debt >0:
-		interest_to_pay = debt * int_per_month
-		interest_to_pay_list.append(interest_to_pay)
-		new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
-		debt = new_debt
-		print "debt", debt
-		card_payment_completed.append(debt)
-		sum_card_payment_completed = sum(card_payment_completed)
-		to_be_added = -sum_card_payment_completed
-		print "are you negative?", to_be_added
-		total_debt = total_debt + to_be_added
-		print "Should be decreasing", total_debt
+		
+		while debt >0:
+			interest_to_pay = debt * int_per_month
+			interest_to_pay_list.append(interest_to_pay)
+			for i in range(len(total_card_payment_completed[0])):
+				new_debt = round((debt + interest_to_pay - sugg_payment), 2)
+				debt = new_debt
+				print "debt", debt
+			new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
+			debt = new_debt
+			print "new debt", debt
 
-
-
-
+		card_list_sorted.pop(0)
 
 
-
+print "List of lists for all card payments", total_card_payment_completed
 
 
 
-# # *******************************
-#  # ATTEMPT 2
-# # *******************************
 
 
-# total_card_payment_completed = []
 
-# while card_list_sorted:
-# 	# for card in card_list_sorted:
-# 	last_card = card_list_sorted[-1]
-# 	print "What am i", last_card
-# 	debt = last_card[1]
-# 	int_per_month = last_card[2] / last_card[3]
-# 	sugg_payment =last_card[1]/(last_card[3] + 1)
-# 	interest_to_pay_list = []
-# 	card_payment_completed = []
 
-# 	while debt >0:
+
+# # # *******************************
+# #  # ATTEMPT 3 
+# # # *******************************
+
+# print '*' * 60
+
+# while total_debt > 0:
+# 	extra_per_month = budget - sugg_payment_for_all_cards
+# 	print "extra to be used for highest card", extra_per_month
+
+# 	print '*' * 50
+# 	if card_list_sorted[-1] > 0:
+# 		last_card = card_list_sorted[-1]
+# 		print "What am i", last_card
+# 		debt = last_card[1]
+# 		int_per_month = last_card[2] / last_card[3]
+# 		sugg_payment =last_card[1]/(last_card[3] + 1)
+# 		interest_to_pay_list = []
+# 		card_payment_completed = []
+
+# 		# while debt >0:
 # 		interest_to_pay = debt * int_per_month
 # 		interest_to_pay_list.append(interest_to_pay)
 # 		new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
 # 		debt = new_debt
 # 		print "debt", debt
 # 		card_payment_completed.append(debt)
+# 		sum_card_payment_completed = sum(card_payment_completed)
+# 		to_be_added = -sum_card_payment_completed
+# 		print "are you negative?", to_be_added
+# 		total_debt = total_debt + to_be_added
+# 		print "Should be decreasing", total_debt
 
-
-
-# 	card_list_sorted.pop(-1)
-
-
-# 	print "watch me decrease", card_list_sorted
-# 	print "how is this formatted", card_payment_completed
-# 	total_card_payment_completed.append(card_payment_completed)
-
-
-# 	for card in card_list_sorted:
-# 		print "How does this all work?",  card
-# 		debt = card[1]
-# 		int_per_month = card[2] / card[3]
-# 		sugg_payment =card[1]/(card[3] + 1)
-# 		print "sugg pay", sugg_payment
+# 	if card_list_sorted[-2] > 0:
+# 		next_card = card_list_sorted[-1]
+# 		print "What am i", next_card
+# 		debt = next_card[1]
+# 		int_per_month = next_card[2] / next_card[3]
+# 		sugg_payment =next_card[1]/(next_card[3] + 1)
 # 		interest_to_pay_list = []
 # 		card_payment_completed = []
-# 		print "how long?", len(total_card_payment_completed[0])
 
-		
-# 		while debt >0:
-# 			interest_to_pay = debt * int_per_month
-# 			interest_to_pay_list.append(interest_to_pay)
-# 			for i in range(len(total_card_payment_completed[0])):
-# 				new_debt = round((debt + interest_to_pay - sugg_payment), 2)
-# 				debt = new_debt
-# 				print "debt", debt
-# 			new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
-# 			debt = new_debt
-# 			print "new debt", debt
+# 		# while debt >0:
+# 		interest_to_pay = debt * int_per_month
+# 		interest_to_pay_list.append(interest_to_pay)
+# 		new_debt = round((debt + interest_to_pay - sugg_payment - extra_per_month), 2)
+# 		debt = new_debt
+# 		print "debt", debt
+# 		card_payment_completed.append(debt)
+# 		sum_card_payment_completed = sum(card_payment_completed)
+# 		to_be_added = -sum_card_payment_completed
+# 		print "are you negative?", to_be_added
+# 		total_debt = total_debt + to_be_added
+# 		print "Should be decreasing", total_debt
 
 
-
-# print "List of lists for all card payments", total_card_payment_completed
 
 
 

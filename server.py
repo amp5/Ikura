@@ -40,7 +40,7 @@ def homepage():
 	return render_template('homepage.html', user=user)
 
 
-@app.route('/card_submission', methods=['GET', 'POST'])
+@app.route('/card_submission', methods=['POST'])
 def card_submission():
 	"""Allows user to enter in credit card info and then sends 
 	   user inuptted info to dashboard"""
@@ -91,9 +91,6 @@ def card_submission():
 				db.session.commit()
 				flash("Thank you for entering this information! We've calculated your payment plan:")
 		return redirect(url_for('dashboard'))
-		
-	else:
-		return render_template('card_submission.html')
 
 
 @app.route('/dashboard')
@@ -112,14 +109,13 @@ def dashboard():
 	d3_points_list_json = json.dumps(all_totals[2])
 
 
-
 	return render_template('/dashboard.html', query_results=results_of_query, 
 											 all_totals=all_totals, 
 												 d3_data = d3_points_list_json)
 
 @app.route('/update_dashboard', methods=['POST'])
 def update_dashboard():
-
+	"""This allows users to update the credit card debt info on dashboard page"""
 
 	user_id = session.get("user_id")
 	results_of_query = Card.query.filter_by(user_id=user_id).all()
@@ -133,16 +129,6 @@ def update_dashboard():
 	dates = request.form.getlist("card1_date[]")
 	user_id = session.get("user_id")
 	min_payment = session.get("min_payment")
-
-	# print "Name", names
-	# print "Debt", debts
-	# print "APR", aprs
-	# print "Date", dates
-	# print "Min Payment", min_payment
-	# print "This is the session", session
-	# print "user id", user_id
-
-	
 
 	for index, card in enumerate(results_of_query):
 
@@ -164,29 +150,28 @@ def update_dashboard():
 			db.session.commit()
 	flash("We've updated your payment plan!")
 	
-
 	return redirect('/dashboard')
 
-@app.route('/dashboard_int')
-def dashboard_int():
-	"""Will calculate sugg payments with a weight on higher interests"""
+# @app.route('/dashboard_int')
+# def dashboard_int():
+# 	"""Will calculate sugg payments with a weight on higher interests"""
 
-	user_id = session.get("user_id")
+# 	user_id = session.get("user_id")
 
-	results_of_query = Card.query.filter_by(user_id=user_id).all()
-# Add new function in calculations to replace user_cards
-	user_card_dict_py = user_cards_int(results_of_query)
+# 	results_of_query = Card.query.filter_by(user_id=user_id).all()
+# # Add new function in calculations to replace user_cards
+# 	user_card_dict_py = user_cards_int(results_of_query)
 
-# See if you can still use organization function
-	all_totals = organization(user_card_dict_py)
-	data_points = all_totals[2]
-	d3_points_list_json = json.dumps(all_totals[2])
+# # See if you can still use organization function
+# 	all_totals = organization(user_card_dict_py)
+# 	data_points = all_totals[2]
+# 	d3_points_list_json = json.dumps(all_totals[2])
 
 
 
-	return render_template('/dashboard_int.html', query_results=results_of_query, 
-											 all_totals=all_totals, 
-												 d3_data = d3_points_list_json)
+# 	return render_template('/dashboard_int.html', query_results=results_of_query, 
+# 											 all_totals=all_totals, 
+# 												 d3_data = d3_points_list_json)
 		
 
 
