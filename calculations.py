@@ -7,7 +7,6 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
 		{Name: [new_debt_list, interest_to_pay_list, min_total_payment_list]} """
 
-
 	# ----- # Base calculations # ----- #
 	interest_per_month = apr/date
 	min_payment = interest_per_month + (debt *0.01)
@@ -33,7 +32,6 @@ def min_payment_plan(name, date, debt, apr, user_id):
 	card[name] = minimum
 
 	return card
-
 
 def suggested_plan(name, date, debt, apr, card, user_id):
 	"""Calculates suggested plan and returns an appended dictionary 
@@ -78,8 +76,135 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 	sugg_value_from_dict = dict_within_user["Suggested"]
 	min_value_from_dict = dict_within_user["Minimum"]
 
+	# print "this is my card!", card
 
 	return card 
+
+# *************************************
+# Attemptng to fix this problem.
+# 1. figure out in excel what numbers you need to see
+# 2. Get your function to print those numbers
+# 3. save it in a list
+# 4. save it in a dictionary
+# *************************************
+
+
+def calculations_int(query_results):
+
+	# make sure in html. budget is over {{total amount of sugg payments}}
+	budget = 500  # USER MUST ENTER THIS IN!
+	payment_info_list = []
+
+	num_of_cards = []
+	for card in query_results:
+		name = card.card_name 
+		debt = card.card_debt
+		apr = card.card_apr
+		#This will turn user inputted apr into percentage
+		apr = apr/100
+		date = card.card_date
+		min_payment = card.min_payment
+		user_id = card.user_id
+		sugg_payment = card.card_sugg
+		card.card_sugg = debt / (date + 1)
+		sugg_payment = card.card_sugg
+		num_of_cards.append(card)
+
+	
+		# KNOWN BUG - if the card dates are not the same, the calculations will not factor this in
+		# Thus I'm getting the average of the months for now. 
+		# TODO: fix this
+
+	# print "this is num of cards", num_of_cards
+
+	date_list = []
+	for card in num_of_cards:
+		date_list.append(card.card_date)
+
+	avg_num_of_months = sum(date_list) / len(date_list)
+	
+
+	# This should calculate the monthly payments for each card. 
+	# Will also add in the extra budget amount too for 
+		# higest int card until paid off
+	num_of_cards_copy = list(num_of_cards)
+	highest_apr = num_of_cards_copy.pop(0)
+
+	card_info = {}
+	decr_debt = []
+	payment_per_month = []
+
+	for month in range(avg_num_of_months):
+		# print "#" * 60
+		sugg_payment_total = []
+		
+		# calculating extra budget 
+		for card in num_of_cards:       	
+			sugg_payment = card.card_sugg
+			sugg_payment_total.append(sugg_payment)
+			card_info[card.card_name] = {}
+		sugg_payment_total = sum(sugg_payment_total)
+		extra_budget =  budget - sugg_payment_total
+
+		print "extra budget - I should change after month 7", extra_budget # but I'm not....
+		# KNOWN BUG: problem after going through the first high int rate card, not redoing the extra budget part
+
+		#focused on the number of cards user has entered and making sugg payments
+		# print "Month:", month
+		for card in  num_of_cards_copy:
+			if card == highest_apr:
+				# print "extra budget", extra_budget, " for ", card.card_name, " with debt ", card.card_debt
+				if card.card_debt > 0:
+					if card.card_debt - extra_budget <= 0:
+						card.card_debt = 0
+						decr_debt.append(card.card_debt)
+						payment_per_month.append(extra_budget)
+						# extra_budget = extra_budget + card.card_sugg
+						if num_of_cards_copy:
+							highest_apr = num_of_cards_copy.pop(0)
+						# print "zero debt", card.card_debt
+					else:	
+						card.card_debt = card.card_debt - extra_budget
+						# print "decreasing debt", card.card_debt
+						decr_debt.append(card.card_debt)
+						payment_per_month.append(extra_budget)
+				else: 
+					# some cards are giving me this print statement. why...?
+					payment_per_month.append(0)
+					# print "Error!"
+			else:
+				# print "Non highest apr card", card.card_name, " debt ", card.card_debt, " with sugg payment: ",  card.card_sugg 
+				payment_result = card.card_debt - card.card_sugg
+				if card.card_debt > 0:
+					if payment_result <= 0:
+					  	card.card_debt = 0
+					  	decr_debt.append(card.card_debt)
+					  	payment_per_month.append(card.card_sugg)	
+					else:
+						card.card_debt = card.card_debt - card.card_sugg
+						decr_debt.append(card.card_debt)
+						payment_per_month.append(card.card_sugg)
+						# print "after", card.card_debt
+				# else:
+				# 	payment_per_month.append(0)	
+				# 	print "This shouldn't be here!"
+				
+				# print "what are we now???????", card.card_debt
+
+	print "This is my list of decr debt", decr_debt
+	print len(decr_debt)
+	print "This is my sugg payments/extrabudget amount", payment_per_month
+	print len(payment_per_month)
+
+	# TODO:
+	# NEED TO CREATE A LIST FOR EVERY MONTH THE DEBT DECREASING, PAYMENT AMOUNT
+		# - either do by month... <- a set of points and the index them and transfer them into keys below...
+		# or by card....
+
+	# print "This is my card dict", card_info
+		# here I will assign the lists of info as the value to the 
+		# associated key written above on line 142
+
 
 
 def user_cards(query_results):
@@ -101,6 +226,7 @@ def user_cards(query_results):
 		date = card.card_date
 		min_payment = card.min_payment
 		user_id = card.user_id
+		sugg_payment = card.card_sugg
 		
 
 		print "Name", name
@@ -114,32 +240,42 @@ def user_cards(query_results):
 		completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
 		card_dict_list.append(completed_card_dict)
 
-
-
 	user_dict = {user_id : {}}
-	
 	for card_dict in card_dict_list:
 		if user_dict[user_id]:
 			user_dict[user_id].append(card_dict)
 		else:
 			user_dict[user_id] = [card_dict]
 	# print "Complete User Dictionary:", user_dict
-
 	return user_dict
 
 
+def user_cards_int(results_of_query):
+	"""Loop over all cards user has entered and return a dictionary of dictionaries. 
+	The outer dictionary key = user_id, values = cards
+	The inner dictionary key = name of a card, values = min payments, min intr rates,
+														min debt decrease, suggested payments,
+														suggested intr rates, suggested debt decrease """
+	
+
+	user_dict = {}
+	card_dict_list = []
+
+	# calculating cards based on highest interest rate
+	int_calcs = calculations_int(results_of_query)
+
+	return "stuff"
+
+	# user_dict = {user_id : {}}
+	# for card_dict in card_dict_list:
+	# 	if user_dict[user_id]:
+	# 		user_dict[user_id].append(card_dict)
+	# 	else:
+	# 		user_dict[user_id] = [card_dict]
+	# # print "Complete User Dictionary:", user_dict
+	# return user_dict
 
 
-
-
-#TODO: #
-# Make sure to take user_id from session once it's connected #
-# for now just manually entering in where user_id is 1. AKA the only user in the database
-
-
-# TODO: # 
-# Additional values that need to be factored in: #
-# - min payment plan #
 
 # TODO: # 
 # Add in docstring tests to make sure these calculations work all of the time 
@@ -148,5 +284,3 @@ def user_cards(query_results):
 #     such as not testing for negative numbers since html form does not allow
 # change the user_id in here and have it pull from session. Might have to do that in server.py
 
-
-# NOT SURE CALCULATIONS ARE UPDATING PAST TWO CARDS... LOOK INTO THIS....

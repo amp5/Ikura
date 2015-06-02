@@ -15,7 +15,7 @@ app.secret_key = "AcBbCa"
 app.jinja_env.undefined = StrictUndefined
 
 
-from calculations import user_cards
+from calculations import user_cards, user_cards_int
 
 ###############################################################
 # View Routes #
@@ -100,7 +100,8 @@ def dashboard():
 	
 	user_id = session.get("user_id")
 
-	results_of_query = Card.query.filter_by(user_id=user_id).all()
+	results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
+	print "results_of_query", results_of_query
 	user_card_dict_py = user_cards(results_of_query)
 
 
@@ -152,15 +153,17 @@ def update_dashboard():
 	
 	return redirect('/dashboard')
 
-# @app.route('/dashboard_int')
-# def dashboard_int():
-# 	"""Will calculate sugg payments with a weight on higher interests"""
 
-# 	user_id = session.get("user_id")
 
-# 	results_of_query = Card.query.filter_by(user_id=user_id).all()
-# # Add new function in calculations to replace user_cards
-# 	user_card_dict_py = user_cards_int(results_of_query)
+@app.route('/dashboard_int')
+def dashboard_int():
+	"""Will calculate sugg payments with a weight on higher interests"""
+
+	user_id = session.get("user_id")
+
+	results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
+	print "results_of_query for int", results_of_query
+	user_card_dict_py = user_cards_int(results_of_query)
 
 # # See if you can still use organization function
 # 	all_totals = organization(user_card_dict_py)
@@ -169,10 +172,13 @@ def update_dashboard():
 
 
 
-# 	return render_template('/dashboard_int.html', query_results=results_of_query, 
-# 											 all_totals=all_totals, 
-# 												 d3_data = d3_points_list_json)
+	
+	# return render_template('/dashboard_int.html', query_results=results_of_query, 
+	# 										 all_totals=all_totals, 
+	# 											 d3_data = d3_points_list_json)
+	return render_template('/dashboard_int.html', query_results=results_of_query)
 		
+
 
 
 @app.route('/d3')

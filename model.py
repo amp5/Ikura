@@ -31,6 +31,10 @@ class Card(db.Model):
     card_name = db.Column(db.String(64), nullable=False)
     card_debt = db.Column(db.Float, nullable=False)
     card_apr = db.Column(db.Float, nullable=False)
+    card_sugg = db.Column(db.Float, nullable = True)
+
+
+
     # need to change all the names of this. date is not right. It's months to pay off....
     # change here and in server, calculations and html
     card_date = db.Column(db.Integer, nullable=True)
