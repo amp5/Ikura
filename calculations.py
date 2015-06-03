@@ -86,11 +86,14 @@ def calculations_int(query_results):
 	# make sure in html. budget is over {{total amount of sugg payments}}
 	budget = 500  # USER MUST ENTER THIS IN!
 	payment_info_list = []
-
 	num_of_cards_orig = []
+
+
 	for card in query_results:
 		name = card.card_name 
 		card.current_debt = -1
+		# want to update highest_apr to true for the first card (aka the highest int rate). How do?
+		card.highest_apr = True
 		apr = card.card_apr
 		#This will turn user inputted apr into percentage
 		apr = apr/100
@@ -102,6 +105,9 @@ def calculations_int(query_results):
 		sugg_payment = card.card_sugg
 		num_of_cards_orig.append(card)
 
+
+	for card in query_results[1:]:
+		card.highest_apr = False
 	
 		# KNOWN BUG - if the card dates are not the same, the calculations will not factor this in
 		# Thus I'm getting the average of the months for now. 
@@ -115,10 +121,9 @@ def calculations_int(query_results):
 	avg_num_of_months = sum(date_list) / len(date_list)
 
 
-
 # *************************************
 # Attemptng to fix this problem.
-# 1. figure out in excel what numbers you need to see
+# DONE 1. figure out in excel what numbers you need to see
 # 2. Get your function to print those numbers
 # 3. save it in a list
 # 4. save it in a dictionary
@@ -128,83 +133,39 @@ def calculations_int(query_results):
 	# This should calculate the monthly payments for each card. 
 	# Will also add in the extra budget amount too for 
 	# higest int card until paid off
-	i = 0
-	highest_apr = num_of_cards[i]
-	print "highest_apr", highest_apr
+
+		
+	# calculating extra budget 
+	sugg_payment_total = []
+	for card in num_of_cards: 
+		# print "me", card      	
+		sugg_payment = card.card_sugg
+		sugg_payment_total.append(sugg_payment)
+		# card_info[card.card_name] = {}
+	sugg_payment_total = sum(sugg_payment_total)
+	# print "sugg payment total", sugg_payment_total
+	extra_budget =  budget - sugg_payment_total
+	# KNOWN BUG: problem after going through the first high int rate card, not redoing the extra budget part
+
 
 	card_info = {}
 	decr_debt = []
 	payment_per_month = []
 
 	for month in range(avg_num_of_months + 1):
+		extra_budget = extra_budget
+		print "extra:", extra_budget
 		print "#" * 60
-		sugg_payment_total = []
-		
-		# calculating extra budget 
-		for card in num_of_cards: 
-			# print "me", card      	
-			sugg_payment = card.card_sugg
-			sugg_payment_total.append(sugg_payment)
-			card_info[card.card_name] = {}
-		sugg_payment_total = sum(sugg_payment_total)
-		# print "sugg payment total", sugg_payment_total
-		extra_budget =  budget - sugg_payment_total
-		# print "extra budget - I should change after month 7", extra_budget # but I'm not....
-		# KNOWN BUG: problem after going through the first high int rate card, not redoing the extra budget part
-
 		#focused on the number of cards user has entered and making sugg payments
 		print "Month:", month
 		for card in  num_of_cards:
 			print "*" * 20
 			print card.card_debt, "debt for card", card.card_name
-			
-			# if card == highest_apr:
-
-			# 	# print "I is highest apr!", card
-			# 	# print "I too! - should eb same", highest_apr
-			# 	# print "what is the list now", num_of_cards
-			# 	# print "extra budget", extra_budget, " for ", card.card_name, " with debt ", card.card_debt
-			# 	if debt > 0:
-			# 		# print "card I'm working with - high apr", card
-			# 		if (debt - extra_budget) > 0:
-			# 			# print "decr amount"	
-			# 			debt = debt - extra_budget
-			# 			# print "what is this debt now", debt
-			# 			# print "decreasing debt", card.card_debt
-			# 			# decr_debt.append(card.card_debt)
-			# 			payment_per_month.append(extra_budget)
-			# 		elif (debt - extra_budget) < 0:
-			# 			# print "what about now?", card
-			# 			debt = 0
-			# 			# decr_debt.append(card.card_debt)
-			# 			# payment_per_month.append(extra_budget)
-			# 			# extra_budget = extra_budget + card.card_sugg
-			# 			# print "Do we ever get here?"
-			# 			# if num_of_cards:
-			# 				# print "what are we now", num_of_cards
-			# 				# print "what is this - two cards right?", num_of_cards
-			# 				# print "should be discover card", num_of_cards(0)
-			# 				# highest_apr = num_of_cards.pop(0)
-			# 				# print "should be eventaully discover", highest_apr
-			# 			# print "zero debt", card.card_debt
-			# 	else:
-			# 		# some cards are giving me this print statement. why...?
-			# 		payment_per_month.append(0)
-			# 		# print "Error!"
-			# print "what is my list", num_of_cards
-			# num_of_cards.pop(0)
-			# print "this is what now", num_of_cards
-			# print "and how long", len(num_of_cards)
-
-
-			# if debt:
-			# 	print "has the function recognized the debt?", debt
-
 
 			if card.current_debt > 0:
 				print "here what is my current debt", card.current_debt
-				if card == highest_apr:
-					print "should now show up here"
+				if card.highest_apr == True:
+					print "should now show up here if high apr is true..."
 					payment_result = card.current_debt - card.card_sugg - extra_budget
 					# print "this is my payment result by month - current debt", payment_result
 					if payment_result <= 0:
@@ -237,16 +198,25 @@ def calculations_int(query_results):
 # should I recalculate the extra budget in here now?
 # *****************************
 
-				if highest_apr.current_debt == 0:
-					i += 1
-					if i < len(num_of_cards):
-						highest_apr = num_of_cards[i]
-						print "what is highest_apr", highest_apr
+				if card.current_debt == 0:
+					print "something"
+					print "what is card's sugg. for all or just one?", card.card_sugg
+					sugg_payment_total = sugg_payment_total - card.card_sugg
+					print "sugg payment total", sugg_payment_total
+					extra_budget =  budget - sugg_payment_total
+					print "new extra_budget", extra_budget
+
+# want to then update next card's highest_apr == True in list. How do?
+
+					# i += 1
+					# if i < len(num_of_cards):
+					# 	highest_apr = num_of_cards[i]
+					# 	print "what is highest_apr", highest_apr
 				
 
 			elif card.card_debt > 0:
 				print "This is my initial debt", card.card_debt
-				if card == highest_apr:
+				if card.highest_apr == True:
 					payment_result = card.card_debt - card.card_sugg - extra_budget
 					# print "this is my payment result by month - debt", payment_result
 					if payment_result <= 0:
