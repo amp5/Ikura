@@ -20,6 +20,7 @@ from calculations import user_cards, user_cards_int
 ###############################################################
 # View Routes #
 
+
 @app.route('/')
 def homepage():
 	"""This will bring us to the homepage"""
@@ -111,9 +112,17 @@ def dashboard():
 	d3_points_list_json = json.dumps(all_totals[2])
 
 
+
+	user_card_dict_py_int = user_cards_int(results_of_query)
+	all_totals_int = organization_int(user_card_dict_py_int)
+
+
+
+
 	return render_template('/dashboard.html', query_results=results_of_query, 
 											 all_totals=all_totals, 
-												 d3_data = d3_points_list_json)
+												 d3_data = d3_points_list_json, 
+												 all_totals_int = all_totals_int)
 
 @app.route('/update_dashboard', methods=['POST'])
 def update_dashboard():
@@ -178,7 +187,7 @@ def dashboard_int():
 	# return render_template('/dashboard_int.html', query_results=results_of_query, 
 	# 										 all_totals=all_totals, 
 	# 											 d3_data = d3_points_list_json)
-	return render_template('/dashboard_int.html', query_results=results_of_query)
+	return render_template('/dashboard_int.html', query_results=results_of_query, all_totals=all_totals)
 		
 
 

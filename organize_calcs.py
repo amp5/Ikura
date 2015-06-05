@@ -197,7 +197,7 @@ def organization(user_card_dict_py):
 
 
 	df_total = [df_min, df_sugg, new_data_point_list]
-	# print "df_total", df_total
+	print "df_total", df_total
 
 
 	return df_total
@@ -241,6 +241,17 @@ def organization_int(user_dict_int):
 		all_cards_points.append(card_points)
 
 	print len(all_cards_points)
+
+	df_all = []
+	for item in all_cards_points:
+		df_item = pd.DataFrame(data = item, columns=['Debt', 'Payments', 'Month'])
+		df_all.append(df_item)
+
+	print "is this all"
+	return df_all
+
+
+
 	# print "this is ALL of the cards and their points", all_cards_points
 	# print len(all_cards_points)
 	# print all_cards_points[0]
@@ -297,7 +308,7 @@ def organization_int(user_dict_int):
 
 # 	# this gives me the decr and payment values....
 # 	# print cards.values()
-	return "hellow"
+
 
 # TODO:
 # create points for use in multiple d3 graphs? use toggle feature?: 

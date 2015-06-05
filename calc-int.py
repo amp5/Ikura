@@ -13,6 +13,7 @@ card_debt_2 = float(2000)
 card_apr_2 = float(.15)
 card_date_2 = float(12)
 
+
 budget = float(500)
 
 # TODO: need to figure out how to sort a list...... right now this ex is sorted....
@@ -84,7 +85,7 @@ while card_list_sorted:
 		print "how long?", len(total_card_payment_completed[0])
 
 		
-		while debt >0:
+		while debt > 0:
 			interest_to_pay = debt * int_per_month
 			interest_to_pay_list.append(interest_to_pay)
 			for i in range(len(total_card_payment_completed[0])):

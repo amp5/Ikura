@@ -117,15 +117,6 @@ def calculations_int(query_results):
 	avg_num_of_months = sum(date_list) / len(date_list)
 
 
-# *************************************
-# Attemptng to fix this problem.
-# DONE 1. figure out in excel what numbers you need to see
-# DONE 2. Get your function to print those numbers
-# DONE 3. save it in a list
-# 4. save it in a dictionary
-# *************************************
-
-		
 	# calculating extra budget 
 	sugg_payment_total = []
 	for card in num_of_cards: 
@@ -206,14 +197,11 @@ def calculations_int(query_results):
 		decr_debt = []
 		payments =[]
 
-	# print "payments total", total_payments
-	# print "data list", total_decr_debt
 # ********************************************************************
 # *************************************
 # QUESTION : how to make this scalable
 # and not specify right now how to unpack this
 # *************************************
-
 
 	card1d, card2d, card3d = zip(*total_decr_debt)
 	card1p, card2p, card3p = zip(*total_payments)
@@ -260,6 +248,7 @@ def calculations_int(query_results):
 	# print "dict:", int_rate_dict
 
 	passed_data = [int_rate_dict, points_for_cards]
+
 
 
 	return passed_data
@@ -324,7 +313,6 @@ def user_cards_int(results_of_query):
 
 
 	return int_calcs
-
 
 
 

@@ -14,23 +14,63 @@
 
 <!-- CODE NEEDS TO FOR LOOP BASED ON HOW MANY CARDS USER HAS ENTERED IN -->
 
-Hello there Clarice. 
+
 
 
 <div class="col-xs-6 col-md-6 col-lg-6">
-						<div id="sugg_plan">
+						<div id="card_plan1">
 							<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
 							  <div class="panel panel-default">
 							    <div class="panel-heading" role="tab" id="headingOne">
 							      <h4 class="panel-title">
 							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-							          Total Suggested Payment Plan (Debt, Int, Payment):
+							          Total Suggested Payment Plan (Debt,Payment):
 							        </a>
 							      </h4>
 							    </div>
 							    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 							      <div class="panel-body">
-							       <!--  jinja wrapper :::::::  all_totals[1].to_html(classes="table table-striped") | safe  ::::::: jinja wrapper --> 
+							      	
+									  {{ all_totals_int[0].to_html(classes="table table-striped") | safe  }}
+							       
+							      </div>
+							    </div>
+							  </div>
+						</div>
+						<div id="card_plan2">
+							<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingTwo">
+							      <h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							          Total Suggested Payment Plan (Debt,Payment):
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+							      <div class="panel-body">
+							      	
+									  {{ all_totals_int[1].to_html(classes="table table-striped") | safe  }}
+							       
+							      </div>
+							    </div>
+							  </div>
+						</div>
+						<div id="card_plan3">
+							<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingThree">
+							      <h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							          Total Suggested Payment Plan (Debt,Payment):
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+							      <div class="panel-body">
+							      	
+									  {{ all_totals_int[2].to_html(classes="table table-striped") | safe  }}
+							       
 							      </div>
 							    </div>
 							  </div>
