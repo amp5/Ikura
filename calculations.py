@@ -105,16 +105,12 @@ def calculations_int(query_results):
 		sugg_payment = card.card_sugg
 		num_of_cards_orig.append(card)
 
-
 	for card in query_results[1:]:
 		card.highest_apr = False
-	
-		# KNOWN BUG - if the card dates are not the same, the calculations will not factor this in
-		# Thus I'm getting the average of the months for now. 
-		# TODO: fix this
 
 	num_of_cards = num_of_cards_orig
 	date_list = []
+	
 	for card in num_of_cards:
 		date_list.append(card.card_date)
 
@@ -124,140 +120,150 @@ def calculations_int(query_results):
 # *************************************
 # Attemptng to fix this problem.
 # DONE 1. figure out in excel what numbers you need to see
-# 2. Get your function to print those numbers
-# 3. save it in a list
+# DONE 2. Get your function to print those numbers
+# DONE 3. save it in a list
 # 4. save it in a dictionary
 # *************************************
-
-
-	# This should calculate the monthly payments for each card. 
-	# Will also add in the extra budget amount too for 
-	# higest int card until paid off
 
 		
 	# calculating extra budget 
 	sugg_payment_total = []
 	for card in num_of_cards: 
-		# print "me", card      	
 		sugg_payment = card.card_sugg
 		sugg_payment_total.append(sugg_payment)
-		# card_info[card.card_name] = {}
 	sugg_payment_total = sum(sugg_payment_total)
-	# print "sugg payment total", sugg_payment_total
 	extra_budget =  budget - sugg_payment_total
-	# KNOWN BUG: problem after going through the first high int rate card, not redoing the extra budget part
 
 
 	card_info = {}
 	decr_debt = []
-	payment_per_month = []
+	total_decr_debt = []
+	payments = []
+	total_payments = []
+
+	# This should calculate the monthly payments for each card. 
+	# Will also add in the extra budget amount too for 
+	# higest int card until paid off
 
 	for month in range(avg_num_of_months + 1):
 		extra_budget = extra_budget
-		print "extra:", extra_budget
-		print "#" * 60
-		#focused on the number of cards user has entered and making sugg payments
-		print "Month:", month
 		for card in  num_of_cards:
-			print "*" * 20
-			print card.card_debt, "debt for card", card.card_name
-
 			if card.current_debt > 0:
-				print "here what is my current debt", card.current_debt
 				if card.highest_apr == True:
-					print "should now show up here if high apr is true..."
 					payment_result = card.current_debt - card.card_sugg - extra_budget
-					# print "this is my payment result by month - current debt", payment_result
 					if payment_result <= 0:
-						print "this went negative! - current"
+					  	decr_debt.append(card.current_debt)
+					  	payments.append(card.card_sugg + extra_budget)
 					  	card.current_debt = 0
 					else:
-						# print "this is my debt. should be same as line from last month:   ", card.current_debt
+						decr_debt.append(card.current_debt)
+						payments.append(card.card_sugg + extra_budget)
 						card.current_debt = payment_result
-						# print "This should decrease now to an even smaller number....", card.current_debt
 				else:
-					print "should now show up here"
 					payment_result = card.current_debt - card.card_sugg
-					# print "this is my payment result by month - current debt", payment_result
 					if payment_result <= 0:
-						print "this went negative! - current"
+						decr_debt.append(card.current_debt)
+						payments.append(card.card_sugg)
 					  	card.current_debt = 0
 					else:
-						# print "this is my debt. should be same as line from last month:   ", card.current_debt
+						decr_debt.append(card.current_debt)
+						payments.append(card.card_sugg)
 						card.current_debt = payment_result
-						# print "This should decrease now to an even smaller number...."
 				
 			elif card.current_debt == 0:
-				print "the debt has been paid on this card", card.current_debt
+				decr_debt.append(card.current_debt)
+				payments.append(0)
 				card.current_debt = 0
-				print "still zero?", card.current_debt
-# *****************************
-# Having a oroblem here once highest int card has dropped off when I try to go to the next one
-# and then recalculate which card is the new highest int rate and then minus that card with extra in budget
-# index is either out of range or decreases to the card under than. 
-# should I recalculate the extra budget in here now?
-# *****************************
-
 				if card.current_debt == 0:
-					print "something"
-					print "what is card's sugg. for all or just one?", card.card_sugg
 					sugg_payment_total = sugg_payment_total - card.card_sugg
-					print "sugg payment total", sugg_payment_total
 					extra_budget =  budget - sugg_payment_total
-					print "new extra_budget", extra_budget
-
-# want to then update next card's highest_apr == True in list. How do?
-
-					# i += 1
-					# if i < len(num_of_cards):
-					# 	highest_apr = num_of_cards[i]
-					# 	print "what is highest_apr", highest_apr
-				
 
 			elif card.card_debt > 0:
-				print "This is my initial debt", card.card_debt
 				if card.highest_apr == True:
 					payment_result = card.card_debt - card.card_sugg - extra_budget
-					# print "this is my payment result by month - debt", payment_result
 					if payment_result <= 0:
-						# print "this went negative! - debt"
 					  	card.current_debt = 0
+					  	decr_debt.append(card.card_debt)
+					  	payments.append(card.card_sugg + extra_budget)
 					else:
-						# print "this is my debt. should be same as line 161:   ", card.card_debt
 						card.current_debt = payment_result
-						# print "This should decrease now....", card.current_debt
+						decr_debt.append(card.card_debt)
+						payments.append(card.card_sugg + extra_budget)
 				else: 
 					payment_result = card.card_debt - card.card_sugg
-					# print "this is my payment result by month - debt", payment_result
 					if payment_result <= 0:
-						# print "this went negative! - debt"
 					  	card.current_debt = 0
+					  	decr_debt.append(card.card_debt)
+					  	payments.append(card.card_sugg)
 					else:
-						# print "this is my debt. should be same as line 161:   ", card.card_debt
 						card.current_debt = payment_result
-						# print "This should decrease now....", card.current_debt
-			
-			
+						decr_debt.append(card.card_debt)
+						payments.append(card.card_sugg)
+		
+		# print "is this one each month?", decr_debt
+		total_decr_debt.append(decr_debt)
+		total_payments.append(payments)
+		decr_debt = []
+		payments =[]
+
+	# print "payments total", total_payments
+	# print "data list", total_decr_debt
+# ********************************************************************
+# *************************************
+# QUESTION : how to make this scalable
+# and not specify right now how to unpack this
+# *************************************
+
+
+	card1d, card2d, card3d = zip(*total_decr_debt)
+	card1p, card2p, card3p = zip(*total_payments)
+
+	# print "list1", card1d
+	# print "lsit 1 for payments", card1p
+	# print "list2", card2
+	# print "list3", card3
+
+	card_listd = [card1d, card2d, card3d]
+	card_listp = [card1p, card2p, card3p]
+
+# ********************************************************************
+
+	int_rate_dict = {}
+	int_info_dict = {}
+	int_info_list = []
+	counter = 0
+
+	for card in query_results:
+		list_for_card_d = card_listd[counter]
+		list_for_card_p = card_listp[counter]
+		int_info_dict["Decreasing_Debt"] = list_for_card_d
+		# print "Dict", decr_debt_dict
+		int_info_dict["Payments"] = list_for_card_p
+		# print "Dict", payments_dict
+		info = list_for_card_d, list_for_card_p
+		int_info_list.append(info)
 
 
 
+		# int_info = [decr_debt_dict, payments_dict]
+		int_rate_dict[card.card_name] = int_info_dict
+		counter += 1
+
+	points_for_cards = []
+	for num in range(len(int_info_list)):
+		card_all = int_info_list[num]
+		debt_pay_point = zip(*card_all)
+		num += 1
+		points_for_cards.append(debt_pay_point)
+	# print "final (debt, payment) points for card", points_for_cards
+	# print "what is this", points_for_cards[0]
+	# print "dict:", int_rate_dict
+
+	passed_data = [int_rate_dict, points_for_cards]
 
 
-	# print "This is my list of decr debt", decr_debt
-	# print len(decr_debt)
-	# print "This is my sugg payments/extrabudget amount", payment_per_month
-	# print len(payment_per_month)
-
-	# TODO:
-	# NEED TO CREATE A LIST FOR EVERY MONTH THE DEBT DECREASING, PAYMENT AMOUNT
-		# - either do by month... <- a set of points and the index them and transfer them into keys below...
-		# or by card....
-
-	# print "This is my card dict", card_info
-		# here I will assign the lists of info as the value to the 
-		# associated key written above on line 142
-
-
+	return passed_data
+# TODO: calculate interest rate and payments
 
 def user_cards(query_results):
 	"""Loop over all cards user has entered and return a dictionary of dictionaries. 
@@ -308,24 +314,18 @@ def user_cards_int(results_of_query):
 	The inner dictionary key = name of a card, values = min payments, min intr rates,
 														min debt decrease, suggested payments,
 														suggested intr rates, suggested debt decrease """
-	
-
 	user_dict = {}
-	card_dict_list = []
+	card_dict_int_list = []
+	for card in results_of_query:
+		user_id = card.user_id
 
-	# calculating cards based on highest interest rate
 	int_calcs = calculations_int(results_of_query)
+	# user_dict_int = {user_id : [int_calcs]}
 
-	return "stuff"
 
-	# user_dict = {user_id : {}}
-	# for card_dict in card_dict_list:
-	# 	if user_dict[user_id]:
-	# 		user_dict[user_id].append(card_dict)
-	# 	else:
-	# 		user_dict[user_id] = [card_dict]
-	# # print "Complete User Dictionary:", user_dict
-	# return user_dict
+	return int_calcs
+
+
 
 
 
@@ -334,5 +334,4 @@ def user_cards_int(results_of_query):
 # Or don't work when something bad is entered
 # Or state assumptions so extra testing is unecessary 
 #     such as not testing for negative numbers since html form does not allow
-# change the user_id in here and have it pull from session. Might have to do that in server.py
 

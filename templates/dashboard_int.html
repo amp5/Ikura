@@ -16,6 +16,27 @@
 
 Hello there Clarice. 
 
+
+<div class="col-xs-6 col-md-6 col-lg-6">
+						<div id="sugg_plan">
+							<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingOne">
+							      <h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							          Total Suggested Payment Plan (Debt, Int, Payment):
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							      <div class="panel-body">
+							       <!--  jinja wrapper :::::::  all_totals[1].to_html(classes="table table-striped") | safe  ::::::: jinja wrapper --> 
+							      </div>
+							    </div>
+							  </div>
+						</div>
+					</div>
+
 {% endblock %}
 
 <!-- http://nvd3.org/examples/stackedArea.html ..... use this? -->

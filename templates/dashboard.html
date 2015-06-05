@@ -219,116 +219,101 @@
 
     </div>
     <div role="tabpanel" class="tab-pane" id="payment_plan_amt">
-    		<div id="viz3">
-							<script>
-								console.dir({{d3_data | safe}})
 
-								var margin = {top: 20, right: 80, bottom: 30, left: 50},
-								    width = 760 - margin.left - margin.right,
-								    height = 300 - margin.top - margin.bottom;
+    	<div style="position:absolute; top: 0; left: 0;">
+    	    <button onclick="randomizeFillOpacity();">Randomize fill opacity</button>
+    	</div>
+    	<div id="chart1"></div>
 
-								// var parseDate = d3.time.format("%Y%m%d").parse;
-								var format = d3.time.format("%Y-%m-%d");
-
-								var x = d3.time.scale()
-								    .range([0, width]);
-
-								var y = d3.scale.linear()
-								    .range([height, 0]);
-
-								var color = d3.scale.category10();
-
-								var xAxis = d3.svg.axis()
-								    .scale(x)
-								    .orient("bottom");
-
-								var yAxis = d3.svg.axis()
-								    .scale(y)
-								    .orient("left");
-
-								var line = d3.svg.line()
-								    .interpolate("basis")
-								    .x(function(d) { return x(d.date); })
-								    .y(function(d) { return y(d.amount); });
-
-								var svg = d3.select("#viz3").append("svg")
-								    .attr("width", width + margin.left + margin.right)
-								    .attr("height", height + margin.top + margin.bottom)
-								  	.append("g")
-								    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-								json_data = {{d3_data | safe}}
-
-								 color.domain(d3.keys(json_data[0]).filter(function(key) { return key !== "date"; }))
-								json_data.forEach(function(d) {
-								    d.date = format.parse(d.date);
-								 
-								  });
-
-
-								  var types = color.domain().map(function(payment_type) {
-								    return {
-								      payment_type: payment_type,
-								      values: json_data.map(function(d) {
-								        return {date: d.date, amount: +d[payment_type]};
-								      })
-								    };
-								  });
-								  
-
-								  x.domain(d3.extent(json_data, function(d) { return d.date; }));
-
-								  y.domain([
-								    d3.min(types, function(c) {return d3.min(c.values, function(v) {  return v.amount; }); }),
-								    d3.max(types, function(c) { return d3.max(c.values, function(v) { return v.amount; }); })
-								  ]);
-
-								  svg.append("g")
-								      .attr("class", "x axis")
-								      .attr("transform", "translate(0," + height + ")")
-								      .call(xAxis);
-
-								  svg.append("g")
-								      .attr("class", "y axis")
-								      .call(yAxis)
-								    .append("text")
-								      .attr("transform", "rotate(-90)")
-								      .attr("y", 6)
-								      .attr("dy", ".71em")
-								      .style("text-anchor", "end")
-								      .text("Amount ($)");
-
-								 // debugger
-
-								  var type = svg.selectAll(".type")
-								      .data(types)
-								    .enter().append("g")
-								      .attr("class", "type");
-
-
-
-								  type.append("path")
-								      .attr("class", "line")
-								      .attr("d", function(d) { return line(d.values); })
-								      .style("stroke", function(d) { return color(d.payment_type); });
-
-								//   type.append("text")
-								//       .datum(function(d) { return {name: d.payment_type, values: d.amount[d.amount.length - 1]}; })
-								//       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.amount) + ")"; })
-								//       .attr("x", 3)
-								//       .attr("dy", ".35em")
-								//       .text(function(d) { return d.payment_type; });
-								// });
-
-							</script>
-					</div>
-			<strong>Need to ask user to input budget for this calculation</strong>
-
-
-
-
-
+    	<script>
+    	    // Wrapping in nv.addGraph allows for '0 timeout render', stores rendered charts in nv.graphs, and may do more in the future... it's NOT required
+    	    var chart;
+    	    var data;
+    	    var randomizeFillOpacity = function() {
+    	        var rand = Math.random(0,1);
+    	        for (var i = 0; i < 100; i++) { // modify sine amplitude
+    	            data[4].values[i].y = Math.sin(i/(5 + rand)) * .4 * rand - .25;
+    	        }
+    	        data[4].fillOpacity = rand;
+    	        chart.update();
+    	    };
+    	    nv.addGraph(function() {
+    	        chart = nv.models.lineChart()
+    	            .options({
+    	                transitionDuration: 300,
+    	                //useInteractiveGuideline: true
+    	            })
+    	        ;
+    	        // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
+    	        chart.xAxis
+    	            .axisLabel("Time (s)")
+    	            .tickFormat(d3.format(',.1f'))
+    	            .staggerLabels(true)
+    	        ;
+    	        chart.yAxis
+    	            .axisLabel('Voltage (v)')
+    	            .tickFormat(d3.format(',.2f'))
+    	        ;
+    	        data = sinAndCos();
+    	        d3.select('#chart1').append('svg')
+    	            .datum(data)
+    	            .call(chart);
+    	        nv.utils.windowResize(chart.update);
+    	        return chart;
+    	    });
+    	    function sinAndCos() {
+    	        var sin = [],
+    	            sin2 = [],
+    	            cos = [],
+    	            rand = [],
+    	            rand2 = []
+    	            ;
+    	        for (var i = 0; i < 100; i++) {
+    	            sin.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) }); //the nulls are to show how defined works
+    	            sin2.push({x: i, y: Math.sin(i/5) * 0.4 - 0.25});
+    	            cos.push({x: i, y: .5 * Math.cos(i/10)});
+    	            rand.push({x:i, y: Math.random() / 10});
+    	            rand2.push({x: i, y: Math.cos(i/10) + Math.random() / 10 })
+    	        }
+    	        return [
+    	            {
+    	                area: true,
+    	                values: sin,
+    	                key: "Sine Wave",
+    	                color: "#ff7f0e",
+    	                strokeWidth: 4,
+    	                classed: 'dashed'
+    	            },
+    	            {
+    	                values: cos,
+    	                key: "Cosine Wave",
+    	                color: "#2ca02c"
+    	            },
+    	            {
+    	                values: rand,
+    	                key: "Random Points",
+    	                color: "#2222ff"
+    	            },
+    	            {
+    	                values: rand2,
+    	                key: "Random Cosine",
+    	                color: "#667711",
+    	                strokeWidth: 3.5
+    	            },
+    	            {
+    	                area: true,
+    	                values: sin2,
+    	                key: "Fill opacity",
+    	                color: "#EF9CFB",
+    	                fillOpacity: .1
+    	            }
+    	        ];
+    	    }
+    	</script>
     </div>
+
+
+   
     <div role="tabpanel" class="tab-pane" id="take_action">
 		<div id="action">
 			<ul class="take_action">

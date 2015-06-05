@@ -4,11 +4,16 @@
     <meta charset="utf-8">
     <!-- <script type="text/javascript" src="/Users/alexandraplassaras/src/Ikura/d3/d3.min.js"></script> -->
 
-    <!-- **************  D3  **************** -->
+    <!-- **************  D3  and NVD3 **************** -->
     <script src="http://d3js.org/d3.v3.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdn.rawgit.com/novus/nvd3/v1.7.1/build/nv.d3.js"></script>
     <link href="https://cdn.rawgit.com/novus/nvd3/v1.7.1/build/nv.d3.css" rel="stylesheet">
+
+                  <!-- nvd3 -->
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+     
 
 
        <style type="text/css">
@@ -80,7 +85,7 @@
   </head>
 
 
-  <body>
+  <body class='with-3d-shadow with-transitions'>
      <nav class="navbar navbar-default navbar-static-top navbar-inverse">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -117,6 +122,24 @@
     {% block content %}
     {% endblock %}
 
+<!--  style for nvd3 chart -->
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+        .dashed {
+            stroke-dasharray: 5,5;
+        }
+    </style>
 
   </body>
 </html>

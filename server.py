@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, flash, session, url
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
-from organize_calcs import organization
+from organize_calcs import organization, organization_int
 import json
 import csv
 
@@ -103,6 +103,7 @@ def dashboard():
 	results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
 	print "results_of_query", results_of_query
 	user_card_dict_py = user_cards(results_of_query)
+	# print "what format does this give me", user_card_dict_py
 
 
 	all_totals = organization(user_card_dict_py)
@@ -154,7 +155,6 @@ def update_dashboard():
 	return redirect('/dashboard')
 
 
-
 @app.route('/dashboard_int')
 def dashboard_int():
 	"""Will calculate sugg payments with a weight on higher interests"""
@@ -165,8 +165,10 @@ def dashboard_int():
 	print "results_of_query for int", results_of_query
 	user_card_dict_py = user_cards_int(results_of_query)
 
+
+
 # # See if you can still use organization function
-# 	all_totals = organization(user_card_dict_py)
+	all_totals = organization_int(user_card_dict_py)
 # 	data_points = all_totals[2]
 # 	d3_points_list_json = json.dumps(all_totals[2])
 
