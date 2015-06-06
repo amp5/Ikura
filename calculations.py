@@ -90,7 +90,7 @@ def calculations_int(query_results, budget):
 
 
     for card in query_results:
-        name = card.card_name 
+        name = card.card_name
         card.current_debt = -1
         # want to update highest_apr to true for the first card (aka the highest int rate). How do?
         card.highest_apr = True
@@ -135,6 +135,7 @@ def calculations_int(query_results, budget):
     # This should calculate the monthly payments for each card. 
     # Will also add in the extra budget amount too for 
     # higest int card until paid off
+    i = 0
 
     for month in range(avg_num_of_months + 1):
         extra_budget = extra_budget
@@ -165,9 +166,23 @@ def calculations_int(query_results, budget):
                 decr_debt.append(card.current_debt)
                 payments.append(0)
                 card.current_debt = 0
-                if card.current_debt == 0:
+                if card.highest_apr == True:
+                    i = num_of_cards.index(card)
+                    num_of_cards[i].highest_apr = False
+                    i += 1
+                    if i < len(num_of_cards):
+                        num_of_cards[i].highest_apr = True
+                        print "next card?", num_of_cards[i]
+                    else:
+                        print "you outta line!"
+                else:
                     sugg_payment_total = sugg_payment_total - card.card_sugg
                     extra_budget =  budget - sugg_payment_total
+                    # i = num_of_cards.index(card)
+                    # num_of_cards[i].highest_apr == False
+                    # i += 1
+                    # num_of_cards[i].highest_apr == True
+                    # print "next card?", num_of_cards[i]
 
             elif card.card_debt > 0:
                 if card.highest_apr == True:
@@ -189,19 +204,18 @@ def calculations_int(query_results, budget):
                     else:
                         card.current_debt = payment_result
                         decr_debt.append(card.card_debt)
-                        payments.append(card.card_sugg)
-        
+                        payments.append(card.card_sugg)   
         # print "is this one each month?", decr_debt
         total_decr_debt.append(decr_debt)
         total_payments.append(payments)
         decr_debt = []
         payments =[]
 
-# ********************************************************************
-# *************************************
-# QUESTION : how to make this scalable
-# and not specify right now how to unpack this
-# *************************************
+    # ********************************************************************
+    # *************************************
+    # QUESTION : how to make this scalable
+    # and not specify right now how to unpack this
+    # *************************************
 
     card1d, card2d, card3d = zip(*total_decr_debt)
     card1p, card2p, card3p = zip(*total_payments)
@@ -214,7 +228,7 @@ def calculations_int(query_results, budget):
     card_listd = [card1d, card2d, card3d]
     card_listp = [card1p, card2p, card3p]
 
-# ********************************************************************
+    # ********************************************************************
 
     int_rate_dict = {}
     int_info_dict = {}
@@ -248,8 +262,6 @@ def calculations_int(query_results, budget):
     # print "dict:", int_rate_dict
 
     passed_data = [int_rate_dict, points_for_cards]
-
-
 
     return passed_data
 # TODO: calculate interest rate and payments
@@ -298,7 +310,7 @@ def user_cards(query_results):
 
 
 def user_cards_int(results_of_query, budget):
-    """Loop over all cards user has entered and return a dictionary of dictionaries. 
+    """Loop over all cards user has entered and return a dictionary of dictionaries.
     The outer dictionary key = user_id, values = cards
     The inner dictionary key = name of a card, values = min payments, min intr rates,
                                                         min debt decrease, suggested payments,
@@ -308,7 +320,7 @@ def user_cards_int(results_of_query, budget):
     for card in results_of_query:
         user_id = card.user_id
 
-    budget = 500
+    # budget = 500
 
     int_calcs = calculations_int(results_of_query, budget)
     # user_dict_int = {user_id : [int_calcs]}
@@ -316,12 +328,30 @@ def user_cards_int(results_of_query, budget):
 
     return int_calcs
 
+def total_sugg_payments(results_of_query):
+    """Calculates the suggested payments for all cards that one need to pay per month"""
+
+    sugg_payment_total = []
+
+    for card in results_of_query:
+        sugg_payment = card.card_sugg
+        sugg_payment_total.append(sugg_payment)
+
+
+    sugg_payment_total = sum(sugg_payment_total)
+
+    return sugg_payment_total
+
+def total_sugg_int_paid():
+    pass
+
+def total_min_int_paid():
+    pass
 
 
 
-# TODO: # 
-# Add in docstring tests to make sure these calculations work all of the time 
+# TODO: #
+# Add in docstring tests to make sure these calculations work all of the time
 # Or don't work when something bad is entered
-# Or state assumptions so extra testing is unecessary 
+# Or state assumptions so extra testing is unecessary
 #     such as not testing for negative numbers since html form does not allow
-

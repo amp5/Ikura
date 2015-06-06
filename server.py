@@ -6,6 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
 from organize_calcs import organization, organization_int
+from calculations import total_sugg_payments
 import json
 import csv
 
@@ -20,6 +21,9 @@ from calculations import user_cards, user_cards_int
 ###############################################################
 # View Routes #
 
+BUDGET = 500
+
+print "what is budget? - global", BUDGET
 
 @app.route('/')
 def homepage():
@@ -112,14 +116,20 @@ def dashboard():
     data_points = all_totals[2]
     d3_points_list_json = json.dumps(all_totals[2])
 
-    budget = 500
-    user_card_dict_py_int = user_cards_int(results_of_query, budget)
+    # budget = 500
+    user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
+    print "what is budget? inside dahsboard", BUDGET
     all_totals_int = organization_int(user_card_dict_py_int)
+
+
+    total_sugg_payment_amt = total_sugg_payments(results_of_query)
 
     return render_template('/dashboard.html', query_results=results_of_query, 
                                              all_totals=all_totals, 
-                                                 d3_data = d3_points_list_json, 
-                                                 all_totals_int = all_totals_int)
+                                            d3_data = d3_points_list_json, 
+                                            all_totals_int = all_totals_int, 
+                                            total_sugg_payment_amt =total_sugg_payment_amt)
+
 
 @app.route('/update_dashboard', methods=['POST'])
 def update_dashboard():
@@ -187,14 +197,15 @@ def remove_card():
 
 
 
-# @app.route('/update_dashboard_int', methods=['POST'])
-# def update_dashboard_int():
-#     """This allows users to update the credit card debt info on dashboard page"""
-
-#     budget = request.form["budget"]
-#     print "this should be my budget", budget
+@app.route('/update_dashboard_int', methods=['POST'])
+def update_dashboard_int():
+    """This allows users to update the credit card debt info on dashboard page"""
     
-#     return redirect('/dashboard.html', )
+    global BUDGET 
+    BUDGET = request.form["budget"]
+    BUDGET = int(BUDGET)
+    
+    return redirect('/dashboard')
 
 @app.route('/d3')
 def d3():
