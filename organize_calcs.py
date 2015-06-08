@@ -250,65 +250,6 @@ def organization_int(user_dict_int):
     return df_all
 
 
-
-    # print "this is ALL of the cards and their points", all_cards_points
-    # print len(all_cards_points)
-    # print all_cards_points[0]
-    # print len(all_cards_points[0])
-
-    
-    #   for point in card:
-    #       point = list(point)
-    #       print "this is point", point
-    #       # print "this is type of point", type(point)
-    #       point_list.append(point)
-    #   # print "Is this point list", point_list
-    #   # print len(point_list)
-
-    #   total_points = zip(*[dt, point_list])
-    #   # print "all three points are here?", total_points
-    #   all_cards_points.append(total_points)
-    # # print "len", len(all_cards_points)
-
-    # print "should be ONE?", all_cards_points[0]
-    # print "should be TWO?", all_cards_points[1]
-    # print "should be THREE?", all_cards_points[2]
-
-
-    # for card in all_cards_points:
-    #   print "card points", card
-    #   print len(card)
-    #   # df_card_int = pd.DataFrame(data = num, columns=['Month', 'Debt', 'Payment'])
-    #   # print df_card_int
-
-    # print 
-
-
-        # print '*'*5
-
-#   info = user_dict_int.values()[0][0]
-#   cards = info.keys()
-#   cards_info = info.values()
-#   # print "what is?", cards_info[0][1].values()
-
-
-
-# # must add in  ******   data = something, ******** 
-#   df_card_int = pd.DataFrame(columns=['Month', 'Debt', 'Payments'], index= cards)
-
-#   print df_card_int
-
-#   # for card in info:
-#   #   print card
-
-#   # dt_card1 = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(total_min_debt), freq='M')   
-#   # dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(total_sugg_debt), freq='M')
-    
-
-#   # this gives me the decr and payment values....
-#   # print cards.values()
-
-
 # TODO:
 # create points for use in multiple d3 graphs? use toggle feature?: 
 #   (debt_decr, time)

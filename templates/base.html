@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <!-- <script type="text/javascript" src="/Users/alexandraplassaras/src/Ikura/d3/d3.min.js"></script> -->
 
     <!-- **************  D3  and NVD3 **************** -->
     <script src="http://d3js.org/d3.v3.js"></script>
@@ -10,66 +9,13 @@
     <script src="https://cdn.rawgit.com/novus/nvd3/v1.7.1/build/nv.d3.js"></script>
     <link href="https://cdn.rawgit.com/novus/nvd3/v1.7.1/build/nv.d3.css" rel="stylesheet">
 
-                  <!-- nvd3 -->
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
      
-
-
-       <style type="text/css">
-        
-            body {
-              font: 10px sans-serif;
-            }
-
-            div.bar {
-                display: inline-block;
-                width: 20px;
-                height: 75px;
-                background-color: teal;
-                margin-right: 2px;
-            }
-
-            .axis path,
-            .axis line {
-                fill: none;
-                stroke: #000;
-                shape-rendering: crispEdges;
-            }
-            .axis text {
-                font-family: sans-serif;;
-                font-size: 11px;
-            }
-
-            .browser text {
-              text-anchor: end;
-            }
-            
-            .x.axis path {
-              display: none;
-            }
-
-            .line {
-              fill: none;
-              stroke: steelblue;
-              stroke-width: 1.5px;
-            }
-            .area {
-                fill: lightsteelblue;
-                stroke-width: 0;
-            }
-        
-        </style>
-
     <!-- **************  BOOTSTRAP  **************** -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-                <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-                <!-- Latest compiled and minified JavaScript -->
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/static/project.css" rel="stylesheet"> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-
 
     <!-- **************  JAVASCRIPT  **************** -->
     
@@ -81,8 +27,17 @@
     </script>
     <script src="../static/dashboard.js"></script>
 
+     <!-- Customized CSS-->
+    <link rel="stylesheet" href="./static/style.css">
+
+    
+
+    
+
 
   </head>
+
+
 
 
   <body class='with-3d-shadow with-transitions'>
@@ -96,15 +51,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Home</a>
+          <a class="navbar-brand" href="/">Ikura</a>
 
           <!-- try and add this section in to display user's email when logged in -->
           <!-- <p class="navbar-text">Signed in as email</p> -->
-        </div>
+        </div>      
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right container-fluid">
             <li><a href="/login">Login</a></li>
             <li><a href="/logout">Log out</a></li>
             <li><a href="/signup">Sign Up</a></li>

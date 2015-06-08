@@ -6,7 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_bootstrap import Bootstrap
 from model import connect_to_db, db, User, Card, Value
 from organize_calcs import organization, organization_int
-from calculations import total_sugg_payments
+from calculations import total_sugg_payments, total_sugg_int_amt_paid, total_min_int_paid
 import json
 import csv
 
@@ -101,35 +101,80 @@ def card_submission():
 @app.route('/dashboard')
 def dashboard():
     """Displays calculations and visualizations for credit cards"""
-
     
-    user_id = session.get("user_id")
-    print "what is the user's id???", user_id
+    if session == {}:
+        flash("You are not logged in")
+        return redirect('/login')
+    else:
+        global BUDGET
+        BUDGET = int(BUDGET)
+        
+        user_id = session.get("user_id")
+        print "what is the user's id???", user_id
 
-    results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
-    # print "results_of_query", results_of_query
-    user_card_dict_py = user_cards(results_of_query)
-    # print "what format does this give me", user_card_dict_py
-
-
-    all_totals = organization(user_card_dict_py)
-    data_points = all_totals[2]
-    d3_points_list_json = json.dumps(all_totals[2])
-
-    # budget = 500
-    user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
-    print "what is budget? inside dahsboard", BUDGET
-    all_totals_int = organization_int(user_card_dict_py_int)
+        results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
+        # print "results_of_query", results_of_query
+        user_card_dict_py = user_cards(results_of_query)
+        # print "what format does this give me", user_card_dict_py
 
 
-    total_sugg_payment_amt = total_sugg_payments(results_of_query)
 
-    return render_template('/dashboard.html', query_results=results_of_query, 
-                                             all_totals=all_totals, 
-                                            d3_data = d3_points_list_json, 
-                                            all_totals_int = all_totals_int, 
-                                            total_sugg_payment_amt =total_sugg_payment_amt)
+        # for calulating my summed int rates....#  <- SUGG
+        # the second index is where the cards are.... [0] is visa
 
+        amt_of_cards = len(user_card_dict_py.values()[0])
+        list_of_total_sugg_int_amt_paid = []
+        
+        for item in range(amt_of_cards):
+            card_thing = user_card_dict_py.values()[0][item]
+            interest_thing = card_thing.values()[0].values()[0][1]
+            all_interest_thing = total_sugg_int_amt_paid(interest_thing)
+            list_of_total_sugg_int_amt_paid.append(all_interest_thing)
+
+        list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
+
+
+
+    # for calulating my summed int rates....# <- MIN
+        # the second index is where the cards are.... [0] is visa
+        list_of_total_min_int_amt_paid = []
+        for item in range(amt_of_cards):
+            card_thing = user_card_dict_py.values()[0][item]
+
+            # print "what is this card thing again?", card_thing
+            interest_thing = card_thing.values()[0].values()[1][1]
+            # print "is this my min payments????", interest_thing
+            all_interest_thing = total_min_int_paid(interest_thing)
+            list_of_total_min_int_amt_paid.append(all_interest_thing)
+
+            # print "should be three lists of many numebrs", list_of_total_min_int_amt_paid
+        list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
+        # print "total summed int for min total", list_of_total_min_int_amt_paid_sum
+
+
+
+
+
+        all_totals = organization(user_card_dict_py)
+        data_points = all_totals[2]
+        d3_points_list_json = json.dumps(all_totals[2])
+
+      
+        user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
+        print "what is budget? inside dahsboard", BUDGET
+        all_totals_int = organization_int(user_card_dict_py_int)
+
+
+        total_sugg_payment_amt = total_sugg_payments(results_of_query)
+
+        return render_template('/dashboard.html', query_results=results_of_query, 
+                                                 all_totals=all_totals, 
+                                                d3_data = d3_points_list_json, 
+                                                all_totals_int = all_totals_int, 
+                                                total_sugg_payment_amt =total_sugg_payment_amt,
+                                                list_of_total_sugg_int_amt_paid_sum=list_of_total_sugg_int_amt_paid_sum, 
+                                                list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum)
+    
 
 @app.route('/update_dashboard', methods=['POST'])
 def update_dashboard():

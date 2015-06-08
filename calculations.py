@@ -31,6 +31,10 @@ def min_payment_plan(name, date, debt, apr, user_id):
     minimum = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
     card[name] = minimum
 
+    total_sugg_int_amt_paid(interest_to_pay_list)
+
+    print "this is my min payment list", min_total_payment_list
+
     return card
 
 def suggested_plan(name, date, debt, apr, card, user_id):
@@ -50,6 +54,7 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 
 
     # ----- # Suggested payment calculations # ----- # 
+
 
     new_debt_list=[debt]
     interest_to_pay_list = []
@@ -76,7 +81,11 @@ def suggested_plan(name, date, debt, apr, card, user_id):
     sugg_value_from_dict = dict_within_user["Suggested"]
     min_value_from_dict = dict_within_user["Minimum"]
 
-    # print "this is my card!", card
+
+    
+
+    print "where is my interest", card.values()[0].values()[0][1]
+    int_for_card = card.values()[0].values()[0][1]
 
     return card 
 
@@ -305,6 +314,24 @@ def user_cards(query_results):
             user_dict[user_id].append(card_dict)
         else:
             user_dict[user_id] = [card_dict]
+
+
+    #*******************************#
+    # TRYING TO HAVE MY INT PAYMENT LIST 
+    # DISPLAY SO I CAN RUN HELPER FUNTCTION
+    #*******************************#
+
+    # # the second index is where the cards are.... [0] is visa
+    # print "is this the same? as interest above?", user_dict.values()[0][2]
+    # card_thing = user_dict.values()[0][2]
+
+    # print "interest?", card_thing.values()[0].values()[0][1]
+    # interest_thing = card_thing.values()[0].values()[0][1]
+
+
+
+
+
     # print "Complete User Dictionary:", user_dict
     return user_dict
 
@@ -342,11 +369,32 @@ def total_sugg_payments(results_of_query):
 
     return sugg_payment_total
 
-def total_sugg_int_paid():
-    pass
+def total_sugg_int_amt_paid(interest_to_pay_list):
+    """calculates the interest payments for one card. Used in server.py 
+        dashboard function"""
 
-def total_min_int_paid():
-    pass
+    sugg_int_paid_total = []
+
+    for interest in interest_to_pay_list:
+        sugg_int_paid_total.append(interest)
+    # print "total", sugg_int_paid_total
+
+    sugg_int_paid_total = sum(sugg_int_paid_total)
+    # print "total summed", sugg_int_paid_total
+
+    return sugg_int_paid_total
+
+def total_min_int_paid(interest_to_pay_list):
+    min_int_paid_total = []
+
+    for interest in interest_to_pay_list:
+        min_int_paid_total.append(interest)
+    # print "total", min_int_paid_total
+
+    min_int_paid_total = sum(min_int_paid_total)
+    # print "total min summed", min_int_paid_total
+
+    return min_int_paid_total 
 
 
 

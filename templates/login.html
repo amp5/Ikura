@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="text-center" >
+    <h1>Login</h1>
 
-<h1>Login</h1>
+    <p>Please login to your account.</p>
 
-<p>Please login to your account.</p>
+    <form action="/login" method="POST" id="form">
+        Login Email:
+        <br>
+        	<input type="email" name="email_input" required id="email">
+        <br>
+        	Password:
+        <br>
+        	<input type="password" name="password_input" required id="password">
+        <br>
+        <br>
+            <input class="btn btn-info" role="button" type="submit" value="Login" id="submit">
+    </form>
 
-<form action="/login" method="POST" id="form">
-    Login Email:
-    <br>
-    	<input type="email" name="email_input" required id="email">
-    <br>
-    	Password:
-    <br>
-    	<input type="password" name="password_input" required id="password">
-    <br>
-    <br>
-        <input class="btn btn-info" role="button" type="submit" value="Login" id="submit">
-</form>
+</div>
 
 
 {% endblock %}

@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="text-center">
+    <h1> Sign Up </h1>
 
-<h1> Sign Up </h1>
+    <p>Sign up for your account with Ikura!</p>
 
-<p>Sign up for your account with Ikura!</p>
-
-<form action='/signup' method="POST" id="form">
-    	 Email:
-    <br>
-    	<input type="email" name="email_input" required id="email">
-    <br>
-    	Password:
-    <br>
-    	<input type="password" name="password_input" required id="password">
-    <br>
-    	
-    	<input class="btn btn-info" role="button" type="submit" value="Sign Up" id="submit">
-</form>
-
+    <form action='/signup' method="POST" id="form">
+        	 Email:
+        <br>
+        	<input type="email" name="email_input" required id="email">
+        <br>
+        	Password:
+        <br>
+        	<input type="password" name="password_input" required id="password">
+        <br>
+        	
+        	<input class="btn btn-info" role="button" type="submit" value="Sign Up" id="submit">
+    </form>
+</div>
 
 
 {% endblock %}

@@ -31,7 +31,7 @@
     <div role="tabpanel" class="tab-pane active" id="payment_plan">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="col-md-3" id="card-summary">
+				<div class="col-md-3 box" id="card-summary">
 				 	<strong>Card Info:</strong>
 					<form action="/update_dashboard" method='POST' id="updated_form">
 					 	{% for card in query_results %}
@@ -76,23 +76,39 @@
 						<input type="submit" value="remove">
 					</form>
 					<br>
-					<!-- <button onclick="removeCard()">Remove selected card</button>
- -->
-					<!-- <script>
-					// function removeCard() {
-					//     var x = document.getElementById("remove");
-					//     x.remove(x.selectedIndex);
-					// }
-					// </script> -->
+					<button onclick="removeCard()">Remove selected card</button>
+
+					<script>
+					function removeCard() {
+					    var x = document.getElementById("remove");
+					    x.remove(x.selectedIndex);
+					}
+					</script>
 
 					Total amount of suggested payments that you need to make every month:
 					{{total_sugg_payment_amt}}
 
 					<br>
 					<br>
+					
+					Total amount of interest spent for all cards if sugg payment plan used:
+					{{list_of_total_sugg_int_amt_paid_sum}}
+
+					<br>
+					<br>
+
+					Total amount of interest spent for all cards id min payment plan used:
+					{{list_of_total_min_int_amt_paid_sum}}
+
+					<br>
+					<br>
+					You could save:
+					{{list_of_total_min_int_amt_paid_sum - list_of_total_sugg_int_amt_paid_sum}}
+					<br>
+					<br>
 				</div>
 		  		<div class="col-md-9" id="main">
-		  			<div class="col-xs-12 col-md-12 col-lg-12" id="visualization">
+		  			<div class="col-xs-12 col-md-12 col-lg-12 box" id="visualization">
 						<div id="viz2">
 							<script>
 								console.dir({{d3_data | safe}})
@@ -211,7 +227,7 @@
 							       			 	href="#collapseOne" 
 							       			 	aria-expanded="false" 
 							       			 	aria-controls="collapseOne">
-							          			Total Suggested Payment Plan 
+							          			Total Suggested Payment Plan <br>
 							          			(Debt, Int, Payment):
 							        		</a>
 							      		</h4>
@@ -234,7 +250,8 @@
 							    	<div class="panel-heading" role="tab" id="headingOne">
 							     		<h4 class="panel-title">
 							        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							         			 Total Minimum Payment Plan (Debt, Int, Payment):
+							         			 Total Minimum Payment Plan <br>
+							         			 (Debt, Int, Payment):
 							        		</a>
 							      		</h4>
 							    	</div>
@@ -253,7 +270,7 @@
 		</div>
 
     </div>
-    <div role="tabpanel" class="tab-pane" id="payment_plan_int">
+    <div role="tabpanel" class="tab-pane box text-center" id="payment_plan_int">
 	    	Now let's see how much you can pay off when you have a budget to pay off your debt.
 	    <br>
 	    <br>
@@ -264,7 +281,7 @@
 	    <!-- Have this form submit to the calculations and use as a budget -->
 	    <!-- make sure this info is routed back to server -->
 	    <form action="/update_dashboard_int" method='POST' id="updated_dashboard_int">
-	    	<input type="text" name="budget"  class="budget" id="budget" required >
+	    	<input type="text" name="budget"  class="budget" min="{{total_sugg_payment_amt}}" value="{{total_sugg_payment_amt}}" id="budget" required >
 	    	<!--  add thie default value the total baseline payments for all cards in sugg plan -->
 	    	<input type="submit" value="Submit">					
 	    </form>
@@ -348,7 +365,7 @@
 
 
    
-    <div role="tabpanel" class="tab-pane" id="take_action">
+    <div role="tabpanel" class="tab-pane box text-center" id="take_action">
 		<div id="action">
 			<ul class="take_action">
 			    <li> It looks like you have one or more cards that are not currently 0% apr.
