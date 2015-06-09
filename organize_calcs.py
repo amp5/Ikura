@@ -17,16 +17,7 @@ def to_be_sorted_by_date(i):
 def organization(user_card_dict_py):
     """This is rearranging my data to display on html page and for D3"""
 
-    # print "inside organization, what is this format", user_card_dict_py
-
-    # print "What is this user_card_dict_py?", user_card_dict_py
     values = user_card_dict_py.values()
-    # print "All of values", type(values)
-    # print "First index within values", type(values[0])
-    # print "First index within idex within values", type(values[0][0])
-    # print "What is this? The first card dict?", values[0][0]
-
-    # print "what kind of info does this give me?", values[0]
 
     min_debt_list = []
     min_int_list = []
@@ -36,33 +27,26 @@ def organization(user_card_dict_py):
     sugg_int_list = []
     sugg_payment_list = []
 
-    # print "What is", values[0]
 
     for i in range(len(values[0])):
-        print "*" * 100
         card = values[0][i]
-        # print  "Here is a card!", card
         dict_of_payments_per_card = card.values()[0]
         sugg_payment_info = dict_of_payments_per_card["Suggested"]
         min_payment_info = dict_of_payments_per_card["Minimum"]
-        # print "This is min payment info", min_payment_info
 
     # *************************************
         # Minimum Payment Data #
     # *************************************
 
         min_debt = min_payment_info[0]
-        # print "This is minimum debt on my card as it decreases:", min_debt
         min_debt_list.append(min_debt)
 
 
         min_int = min_payment_info[1]
-        # print "This is the minimum interest accruing for each payment:", min_int
         min_int_list.append(min_int)
 
 
         min_payment = min_payment_info[2]
-        # print "This is the minimum payments for card until debt is gone:", min_payment
         min_payment_list.append(min_payment)
 
     # *************************************
@@ -70,32 +54,23 @@ def organization(user_card_dict_py):
     # *************************************
 
         sugg_debt = sugg_payment_info[0]
-        # print "This is suggested debt on my card as it decreases:", sugg_debt
         sugg_debt_list.append(sugg_debt)
 
         sugg_int = sugg_payment_info[1]
-        # print "This is the suggested interest accruing for each payment:", sugg_int
         sugg_int_list.append(sugg_int)
 
         sugg_payment = sugg_payment_info[2]
-        # print "This is the suggested payments for card until debt is gone:", sugg_payment
         sugg_payment_list.append(sugg_payment)
 
 
 
     total_min_debt = zip(*min_debt_list)
-    # print "This is my min debt zipped list", total_min_debt
     total_min_int = zip(*min_int_list)
-    # print "This is my min int zipped list", total_min_int
     total_min_payment = zip(*min_payment_list)
-    # print "This is my min payment zipped list", total_min_payment
 
     total_sugg_debt = zip(*sugg_debt_list)
-    # print "This is my sugg debt zipped list", total_sugg_debt
     total_sugg_int = zip(*sugg_int_list)
-    # print "This is my sugg int zipped list", total_sugg_int
     total_sugg_payment = zip(*sugg_payment_list)
-    # print "This is my sugg payment zipped list", total_sugg_payment
 
     # Maybe making the choice here NOT to round out numbers. Will round in Jinja on HTML.
 
@@ -150,11 +125,9 @@ def organization(user_card_dict_py):
             sum_of = sum_of + x
         total_calc_sugg_payment.append(sum_of)
 
-    # print "total_calc_sugg_payment", total_calc_sugg_payment
 
     total_min = zip(*[total_calc_min_debt, total_calc_min_int, total_calc_min_payment])
     total_sugg = zip(*[total_calc_sugg_debt, total_calc_sugg_int, total_calc_sugg_payment])
-    # print "This is total sugg - (date, debt, int, payment )", total_sugg
 
     # I don't think I need to have the same values for both min and sugg so we shall see...
     #   print "M:", len(total_min)
@@ -199,7 +172,6 @@ def organization(user_card_dict_py):
 
 
     df_total = [df_min, df_sugg, new_data_point_list]
-    # print "df_total", df_total
 
 
     return df_total
@@ -217,36 +189,26 @@ def organization_int(user_dict_int):
 
     points = len(point_lists[0])
     dt = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=points, freq='M')
-    print len(dt)
+    print "date not time?", dt
 
     card_counter = 0
     all_cards_points = []
     for card in point_lists:
         card_points = []
-        print '*' * 10
-        print "this is my card", card
+        # print '*' * 10
+        # print "this is my card", card
         counter = 0
         
         for point in card:
                 point = list(point)
-                # print "this is my point", point
                 date = dt[counter]
                 counter += 1 
                 point.append(date)
-                # print "This is my point now", point
-                # print "this is my card_counter", card_counter
                 name = str(card_names[card_counter])
-                # print "this is card name one", name
                 point.append(name)
-                # print "This is my point now - with name!", point
                 card_points.append(point)
-                # print "this is card's new point", card_points
         card_counter = card_counter + 1
-        # print "card_counter", card_counter
-                # counter = 0
-            # print "list of all my card's points", card_points
-                # print len(card_points)
-        
+      
 
         all_cards_points.append(card_points)
 
@@ -254,8 +216,8 @@ def organization_int(user_dict_int):
     print "This is all_cards_points", all_cards_points
 
     #give me a list of all my points per card
-    print "all_cards_points - index 0", all_cards_points[0]
-    print len(all_cards_points[0])
+    # print "all_cards_points - index 0", all_cards_points[0]
+    # print len(all_cards_points[0])
 
     # df_all = []
     # for item in all_cards_points:
@@ -265,22 +227,12 @@ def organization_int(user_dict_int):
     # # print "is this all"
     
 
-
-
-
-
-    print '*'* 50
-
-    # print "all_cards_points", all_cards_points
-    # print len(all_cards_points)
-
     all_together_cards_points = []
     for card in all_cards_points:
         for point in card:
             all_together_cards_points.append(point)
 
     sorted_points =sorted(all_together_cards_points, key=to_be_sorted_by_date)
-    # print "are these now sorted?", sorted_points
 
   
     return sorted_points

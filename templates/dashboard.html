@@ -32,39 +32,34 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="col-md-3 box" id="card-summary">
-				 	<strong>Card Info:</strong>
+				 	
 					<form action="/update_dashboard" method='POST' id="updated_form">
 					 	{% for card in query_results %}
-
-					 	<div class="panel panel-default">
-					 	  <div class="panel-heading"
-
+					 		<div class="panel panel-default">
+					 	  		<div class="panel-heading"
 					 	  					{% if card.card_name == "Visa" %}
-					 	  	    		  	id="V"
-
+					 	  	    		  		id="V"
 					 	  	    		  	{% elif card.card_name == "Master" %}
-					 	  	    		  	id="M"
-
+					 	  	    		  		id="M"
 					 	  	    		  	{% elif card.card_name == "Discover" %}
-					 	  	    		  	id="D"
-
-
+					 	  	    		  		id="D"
 					 	  	    			{% endif %}>
-
-
-					 	    <h3 class="panel-title">{{card.card_name}}</h3>
+					 	    <h3 class="panel-title">
+					 	    	<input type="text" name="card1_name[]" 
+					 	    		value = {{card.card_name}}	class = "debt form-control" 
+					 	    		id="name" required> 
+					 	    		
+					 	    	</h3>
 					 	  </div>
 					 	  <div class="panel-body">
-					 	    
 					 	    <div class="form-group">
 					 	    	<div class="input-group">
 					 	    	<div class="input-group-addon">$</div>
 					 	    	<input type="number" step="0.01" min="0" 
 					 	    		max="100000" name="card1_debt[]" 
-					 	    		value = {{card.card_debt }}	class = "debt form-control" 
+					 	    		value = {{card.card_debt}}	class = "debt form-control" 
 					 	    		id="debt" required> 
 					 	    	</div>
-
 					 	    </div>
 					 	    <div class="form-group">
 					 	    	<div class="input-group">
@@ -84,10 +79,6 @@
 					 	    </div>
 					 	  </div>
 					 	</div>
-
-
-
-
 						{% endfor %}
 						<input type="submit" value="Update" id="submit_update">
 
@@ -97,24 +88,18 @@
 					<form action="/remove_card" method="POST" id="remove_card">
 						Remove a card:
 					<br>
-						<select name="remove_card" id="remove" size="5">
+						<select name="remove_card" id="remove" size="3">
 					  		{% for card in query_results %}
 					  		 	<option value="{{card.card_id}}">{{card.card_name}}
 					  		 		</option>
 					  		{% endfor %}
 						</select>
+						<div class="form-group">
 						<input type="submit" value="remove">
+					</div>
 					</form>
-					<br>
-					<button onclick="removeCard()">Remove selected card</button>
-
-					<script>
-					function removeCard() {
-					    var x = document.getElementById("remove");
-					    x.remove(x.selectedIndex);
-					}
-					</script>
-
+					
+<!-- 
 					Total amount of suggested payments that you need to make every month:
 					{{total_sugg_payment_amt}}
 
@@ -130,15 +115,15 @@
 					Total amount of interest spent for all cards id min payment plan used:
 					{{list_of_total_min_int_amt_paid_sum}}
 
-					<br>
-					<br>
+					<br> -->
+					
 					
 				</div>
   		  		<div class="col-md-9" id="main">
   		  			<div class="col-xs-12 col-md-12 col-lg-12 box" id="visualization">
-  		  				<div align="center">
-  		  					<h2> You could save:
-  							$ {{list_of_total_min_int_amt_paid_sum - list_of_total_sugg_int_amt_paid_sum}} </h2>
+  		  				<div align="center" id ="pull-phrase">
+  		  					<h1> <strong>You could save:
+  							$ {{list_of_total_min_int_amt_paid_sum - list_of_total_sugg_int_amt_paid_sum}} </strong></h1>
   							<p>If you follow Ikura's suggested payment plan!<p>
   		  				</div>
   		  			</div>

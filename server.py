@@ -113,12 +113,10 @@ def dashboard():
         BUDGET = int(BUDGET)
         
         user_id = session.get("user_id")
-        # print "what is the user's id???", user_id
         
 
         results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
         user_card_dict_py = user_cards(results_of_query)
-        # print "what format does this give me", user_card_dict_py
 
         user = User.query.filter_by(user_id=user_id).one()
         email = user.email
@@ -148,29 +146,22 @@ def dashboard():
         for item in range(amt_of_cards):
             card_thing = user_card_dict_py.values()[0][item]
 
-            # print "what is this card thing again?", card_thing
             interest_thing = card_thing.values()[0].values()[1][1]
-            # print "is this my min payments????", interest_thing
             all_interest_thing = total_min_int_paid(interest_thing)
             list_of_total_min_int_amt_paid.append(all_interest_thing)
 
-            # print "should be three lists of many numebrs", list_of_total_min_int_amt_paid
         list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
-        # print "total summed int for min total", list_of_total_min_int_amt_paid_sum
 
 
         all_totals = organization(user_card_dict_py)
         data_points = all_totals[2]
         d3_points_list_json = json.dumps(all_totals[2])
 
-        print "this is my json data being passed", d3_points_list_json
 
       
         user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
-
-
         all_totals_int = organization_int(user_card_dict_py_int)
-
+        
         total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
 
        
@@ -191,10 +182,7 @@ def update_dashboard():
     user_id = session.get("user_id")
     results_of_query = Card.query.filter_by(user_id=user_id).all()
 
-    print "This is our request object", request.form
     names = request.form.getlist("card1_name[]")
-    print "This is name", names
-    print names[0]
     debts = request.form.getlist("card1_debt[]")
     aprs = request.form.getlist("card1_apr[]")
     dates = request.form.getlist("card1_date[]")
@@ -202,6 +190,8 @@ def update_dashboard():
     min_payment = session.get("min_payment")
 
     for index, card in enumerate(results_of_query):
+            print "what is this index?", index
+            print "names", names
 
             print "Name", names[index]
             print "Debt", debts[index]
