@@ -36,13 +36,16 @@ def homepage():
     if user_id:
         user = User.query.get(user_id)
         print "This is the user_id from db:", user
+        user = User.query.filter_by(user_id=user_id).one()
+        email = user.email
     else:
         user = 0
+        email = "You are not logged in!"
         print "This is the user_id from db:", user
         flash("""Before you can get started, you'll
                 need to login or create a new account.""")
 
-    return render_template('homepage.html', user=user)
+    return render_template('homepage.html', user=user, email=email)
 
 
 @app.route('/card_submission', methods=['POST'])
@@ -110,12 +113,16 @@ def dashboard():
         BUDGET = int(BUDGET)
         
         user_id = session.get("user_id")
-        print "what is the user's id???", user_id
+        # print "what is the user's id???", user_id
+        
 
         results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
-        # print "results_of_query", results_of_query
         user_card_dict_py = user_cards(results_of_query)
         # print "what format does this give me", user_card_dict_py
+
+        user = User.query.filter_by(user_id=user_id).one()
+        email = user.email
+     
 
 
 
@@ -152,28 +159,29 @@ def dashboard():
         # print "total summed int for min total", list_of_total_min_int_amt_paid_sum
 
 
-
-
-
         all_totals = organization(user_card_dict_py)
         data_points = all_totals[2]
         d3_points_list_json = json.dumps(all_totals[2])
 
+        print "this is my json data being passed", d3_points_list_json
+
       
         user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
-        print "what is budget? inside dahsboard", BUDGET
+
+
         all_totals_int = organization_int(user_card_dict_py_int)
 
+        total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
 
-        total_sugg_payment_amt = total_sugg_payments(results_of_query)
-
+       
         return render_template('/dashboard.html', query_results=results_of_query, 
-                                                 all_totals=all_totals, 
+                                                all_totals=all_totals, 
                                                 d3_data = d3_points_list_json, 
                                                 all_totals_int = all_totals_int, 
                                                 total_sugg_payment_amt =total_sugg_payment_amt,
                                                 list_of_total_sugg_int_amt_paid_sum=list_of_total_sugg_int_amt_paid_sum, 
-                                                list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum)
+                                                list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum, 
+                                                email = email)
     
 
 @app.route('/update_dashboard', methods=['POST'])
@@ -252,10 +260,10 @@ def update_dashboard_int():
     
     return redirect('/dashboard')
 
-@app.route('/d3')
-def d3():
-    """practice for d3"""
-    return render_template('d3_study.html')
+# @app.route('/d3')
+# def d3():
+#     """practice for d3"""
+#     return render_template('d3_study.html')
 
 
 

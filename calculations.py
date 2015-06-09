@@ -33,7 +33,7 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
     total_sugg_int_amt_paid(interest_to_pay_list)
 
-    print "this is my min payment list", min_total_payment_list
+    # print "this is my min payment list", min_total_payment_list
 
     return card
 
@@ -84,7 +84,7 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 
     
 
-    print "where is my interest", card.values()[0].values()[0][1]
+# print "where is my interest", card.values()[0].values()[0][1]
     int_for_card = card.values()[0].values()[0][1]
 
     return card 

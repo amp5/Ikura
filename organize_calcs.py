@@ -11,6 +11,8 @@ from datetime import datetime
 
 
 #  This should be a dict with key of card name, each value is a dictionary key value pair of min and sugg
+def to_be_sorted_by_date(i):
+    return i[2]
 
 def organization(user_card_dict_py):
     """This is rearranging my data to display on html page and for D3"""
@@ -98,8 +100,8 @@ def organization(user_card_dict_py):
     # Maybe making the choice here NOT to round out numbers. Will round in Jinja on HTML.
 
     now = datetime.now()
-    dt_min_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(total_min_debt), freq='M') 
-    dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=len(total_sugg_debt), freq='M')
+    dt_min_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=(len(total_min_debt)-1), freq='M') 
+    dt_sugg_month = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=(len(total_sugg_debt)-1), freq='M')
 
 
     total_calc_min_debt = [] 
@@ -150,8 +152,8 @@ def organization(user_card_dict_py):
 
     # print "total_calc_sugg_payment", total_calc_sugg_payment
 
-    total_min = zip(*[dt_min_month, total_calc_min_debt, total_calc_min_int, total_calc_min_payment])
-    total_sugg = zip(*[dt_sugg_month, total_calc_sugg_debt, total_calc_sugg_int, total_calc_sugg_payment])
+    total_min = zip(*[total_calc_min_debt, total_calc_min_int, total_calc_min_payment])
+    total_sugg = zip(*[total_calc_sugg_debt, total_calc_sugg_int, total_calc_sugg_payment])
     # print "This is total sugg - (date, debt, int, payment )", total_sugg
 
     # I don't think I need to have the same values for both min and sugg so we shall see...
@@ -175,9 +177,9 @@ def organization(user_card_dict_py):
     all_totals = [total_min, total_sugg]
 
     # I think these are right......
-    df_min = pd.DataFrame(data = total_min, columns=['Month', 'Debt', 'Interest', 'Payments'])
+    df_min = pd.DataFrame(data = total_min, index=dt_min_month, columns=['Debt', 'Interest', 'Payments'])
     # print "This is my Min panda", df_min
-    df_sugg = pd.DataFrame(data = total_sugg, columns=['Month', 'Debt', 'Interest', 'Payments'])
+    df_sugg = pd.DataFrame(data = total_sugg, index=dt_sugg_month, columns=['Debt', 'Interest', 'Payments'])
 
 
 
@@ -206,7 +208,8 @@ def organization(user_card_dict_py):
 def organization_int(user_dict_int):
     """organizing this dict into correct format to display on webpage"""
 
-    print user_dict_int[0].keys()
+    card_names = user_dict_int[0].keys()
+    print "am i here?", card_names
 
     now = datetime.now()
     point_lists = user_dict_int[1]
@@ -216,38 +219,71 @@ def organization_int(user_dict_int):
     dt = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=points, freq='M')
     print len(dt)
 
-
+    card_counter = 0
     all_cards_points = []
     for card in point_lists:
         card_points = []
         print '*' * 10
-        # print "this is my card", card
+        print "this is my card", card
         counter = 0
+        
         for point in card:
-            point = list(point)
-            # print "this is my point", point
-            date = dt[counter]
-            counter += 1 
-            point.append(date)
-            # print "This is my point now", point
-            card_points.append(point)
-            # print "this is card's new point", card_points
-            # counter = 0
-        # print "list of all my card's points", card_points
-            # print len(card_points)
-    
+                point = list(point)
+                # print "this is my point", point
+                date = dt[counter]
+                counter += 1 
+                point.append(date)
+                # print "This is my point now", point
+                # print "this is my card_counter", card_counter
+                name = str(card_names[card_counter])
+                # print "this is card name one", name
+                point.append(name)
+                # print "This is my point now - with name!", point
+                card_points.append(point)
+                # print "this is card's new point", card_points
+        card_counter = card_counter + 1
+        # print "card_counter", card_counter
+                # counter = 0
+            # print "list of all my card's points", card_points
+                # print len(card_points)
+        
 
         all_cards_points.append(card_points)
 
+
+    print "This is all_cards_points", all_cards_points
+
+    #give me a list of all my points per card
+    print "all_cards_points - index 0", all_cards_points[0]
+    print len(all_cards_points[0])
+
+    # df_all = []
+    # for item in all_cards_points:
+    #     df_item = pd.DataFrame(data = item, columns=['Debt', 'Payments', 'Month'])
+    #     df_all.append(df_item)
+
+    # # print "is this all"
+    
+
+
+
+
+
+    print '*'* 50
+
+    # print "all_cards_points", all_cards_points
     # print len(all_cards_points)
 
-    df_all = []
-    for item in all_cards_points:
-        df_item = pd.DataFrame(data = item, columns=['Debt', 'Payments', 'Month'])
-        df_all.append(df_item)
+    all_together_cards_points = []
+    for card in all_cards_points:
+        for point in card:
+            all_together_cards_points.append(point)
 
-    # print "is this all"
-    return df_all
+    sorted_points =sorted(all_together_cards_points, key=to_be_sorted_by_date)
+    # print "are these now sorted?", sorted_points
+
+  
+    return sorted_points
 
 
 # TODO:

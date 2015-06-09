@@ -35,29 +35,59 @@
 				 	<strong>Card Info:</strong>
 					<form action="/update_dashboard" method='POST' id="updated_form">
 					 	{% for card in query_results %}
-							<br>
-							<br>
-								Card name: 
-								<input type="text" name="card1_name[]" 
-									value = {{card.card_name}} class = "name" 
-									id="name" required >	
-							<br>
-								Card debt: 
-								<input type="number" step="0.01" min="0" 
-									max="100000" name="card1_debt[]" 
-									value = {{card.card_debt }}	class = "debt" 
-									id="debt" required> 
-							<br>
-								Card apr: 
-								<input type="number" step="0.01" min="0" 
-									max="100" name="card1_apr[]" 
-									value = {{card.card_apr}} id="apr" required>
-							<br>
-								Card time to pay off: 
-								<input type="number" name="card1_date[]" 
-									min="1" max="36" id="date" 
-									value = {{card.card_date}} required>
-							<br>
+
+					 	<div class="panel panel-default">
+					 	  <div class="panel-heading"
+
+					 	  					{% if card.card_name == "Visa" %}
+					 	  	    		  	id="V"
+
+					 	  	    		  	{% elif card.card_name == "Master" %}
+					 	  	    		  	id="M"
+
+					 	  	    		  	{% elif card.card_name == "Discover" %}
+					 	  	    		  	id="D"
+
+
+					 	  	    			{% endif %}>
+
+
+					 	    <h3 class="panel-title">{{card.card_name}}</h3>
+					 	  </div>
+					 	  <div class="panel-body">
+					 	    
+					 	    <div class="form-group">
+					 	    	<div class="input-group">
+					 	    	<div class="input-group-addon">$</div>
+					 	    	<input type="number" step="0.01" min="0" 
+					 	    		max="100000" name="card1_debt[]" 
+					 	    		value = {{card.card_debt }}	class = "debt form-control" 
+					 	    		id="debt" required> 
+					 	    	</div>
+
+					 	    </div>
+					 	    <div class="form-group">
+					 	    	<div class="input-group">
+					 	    	<input type="number" step="0.01" min="0" 
+					 	    		max="100" name="card1_apr[]" 
+					 	    		value = {{card.card_apr}} id="apr" class="form-control" required>
+					 	    	<div class="input-group-addon">%</div>
+					 	    </div>
+					 	    </div>
+					 	    <div class="form-group">
+					 	    	<div class="input-group">
+					 	    	<input type="number" name="card1_date[]" 
+					 	    		min="1" max="36" id="date" class="form-control"
+					 	    		value = {{card.card_date}} required>
+					 	    	<div class="input-group-addon">months</div>
+					 	    	</div>
+					 	    </div>
+					 	  </div>
+					 	</div>
+
+
+
+
 						{% endfor %}
 						<input type="submit" value="Update" id="submit_update">
 
@@ -102,11 +132,17 @@
 
 					<br>
 					<br>
-					You could save:
-					{{list_of_total_min_int_amt_paid_sum - list_of_total_sugg_int_amt_paid_sum}}
-					<br>
-					<br>
+					
 				</div>
+  		  		<div class="col-md-9" id="main">
+  		  			<div class="col-xs-12 col-md-12 col-lg-12 box" id="visualization">
+  		  				<div align="center">
+  		  					<h2> You could save:
+  							$ {{list_of_total_min_int_amt_paid_sum - list_of_total_sugg_int_amt_paid_sum}} </h2>
+  							<p>If you follow Ikura's suggested payment plan!<p>
+  		  				</div>
+  		  			</div>
+  		  		</div>
 		  		<div class="col-md-9" id="main">
 		  			<div class="col-xs-12 col-md-12 col-lg-12 box" id="visualization">
 						<div id="viz2">
@@ -200,6 +236,7 @@
 								  type.append("path")
 								      .attr("class", "line")
 								      .attr("d", function(d) { return line(d.values); })
+								      .attr("stroke", "red")
 								      .style("stroke", function(d) { return color(d.payment_type); });
 
 								//   type.append("text")
@@ -217,8 +254,8 @@
 						<div id="sugg_plan">
 							<div class="panel-group" id="accordion1" role="tablist" 
 								aria-multiselectable="true">
-							  	<div class="panel panel-default">
-							    	<div class="panel-heading" role="tab" 
+							  	<div class="panel panel-default sugg_plan">
+							    	<div class="panel-heading sugg_plan" role="tab" 
 							    		id="headingOne">
 							      		<h4 class="panel-title">
 							       			 <a class="collapsed" 
@@ -247,15 +284,15 @@
 						<div id="min_plan">
 							<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 							  	<div class="panel panel-default">
-							    	<div class="panel-heading" role="tab" id="headingOne">
+							    	<div class="panel-heading" role="tab" id="headingTwo">
 							     		<h4 class="panel-title">
-							        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" align="center">
 							         			 Total Minimum Payment Plan <br>
 							         			 (Debt, Int, Payment):
 							        		</a>
 							      		</h4>
 							    	</div>
-							    	<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							    	<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 							      		<div class="panel-body">
 							        		{{all_totals[0].to_html(classes="table table-striped") | safe}}
 							     		</div>
@@ -270,89 +307,73 @@
 		</div>
 
     </div>
-    <div role="tabpanel" class="tab-pane box text-center" id="payment_plan_int">
-	    	Now let's see how much you can pay off when you have a budget to pay off your debt.
-	    <br>
-	    <br>
-	    	Enter in an amount for how much you can spend every  month to payy off those debts 
-	    <br>
-	    	(your budget must be larger than your suggested monthly payments in the previous tab):
-	    
-	    <!-- Have this form submit to the calculations and use as a budget -->
-	    <!-- make sure this info is routed back to server -->
-	    <form action="/update_dashboard_int" method='POST' id="updated_dashboard_int">
-	    	<input type="text" name="budget"  class="budget" min="{{total_sugg_payment_amt}}" value="{{total_sugg_payment_amt}}" id="budget" required >
-	    	<!--  add thie default value the total baseline payments for all cards in sugg plan -->
-	    	<input type="submit" value="Submit">					
-	    </form>
+    <div role="tabpanel" class="tab-pane box" id="payment_plan_int">
+    	<div id="explanation">
+		    	<h1>Pay off that debt faster</h1>
+		    	Create a budget for your credit card debt
+		    	
+		    	(your budget must be larger than your suggested monthly payments in the previous tab):
+		<div class="col-md-4" align="center">
+		    <form action="/update_dashboard_int" method='POST' id="updated_dashboard_int" class="form-inline">
+		    	<div class="input-group">
+		    		<div class="input-group-addon">$</div>
+		    		<input type="text" name="budget"  class="budget form-control form-group" min="{{total_sugg_payment_amt}}" value="{{total_sugg_payment_amt}}" id="budget" required >
+		    	</div>
+		    	<!--  add thie default value the total baseline payments for all cards in sugg plan -->
+		    	<input class="form-control form-group" type="submit" value="Submit">	
+		    	<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>		
+		    	<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" id="example"data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>		
+		    </form>
+		</div>
+		</div>
 	    <div id="payment-int">
-	    	There will be stuff here.
+	    	
 
-	    	<div id="card_plan1">
-				<div class="panel-group" id="accordion1_int" role="tablist" 
-						aria-multiselectable="true">
-				  	<div class="panel panel-default">
-				    	<div class="panel-heading" role="tab" id="headingOneInt">
-				      		<h4 class="panel-title">
-					        	<a class="collapsed" data-toggle="collapse" 
-					        	data-parent="#accordion1_int" href="#collapseOneInt" 
-					        	aria-expanded="false" aria-controls="collapseOneInt">
-					         	Total Suggested Payment Plan (Debt,Payment):
-					        	</a>
-				      		</h4>
-				    	</div>
-				    	<div id="collapseOneInt" class="panel-collapse collapse" 
-				    			role="tabpanel" aria-labelledby="headingOneInt">
-				      		<div class="panel-body">
-						  		{{ all_totals_int[0].to_html(classes="table 
-						  		table-striped") | safe  }}
-				      		</div>
-				    	</div>
-					</div>
-				</div>
-			</div>
 
-			<div id="card_plan2">
-				<div class="panel-group" id="accordion2_int" role="tablist" aria-multiselectable="true">
-				  	<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingTwoInt">
-					      	<h4 class="panel-title">
-					        	<a class="collapsed" data-toggle="collapse" data-parent="#accordion1_int" href="#collapseTwoInt" aria-expanded="false" aria-controls="collapseTwoInt">
-					          	Total Suggested Payment Plan (Debt,Payment):
-					        	</a>
-					      	</h4>
-					    </div>
-					    <div id="collapseTwoInt" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwoInt">
-					      	<div class="panel-body">
-					      	
-								{{ all_totals_int[1].to_html(classes="table 
-								table-striped") | safe  }}
-					      	</div>
-					    </div>
-				  	</div>
-				</div>
-			</div>
-			<div id="card_plan3">
-				<div class="panel-group" id="accordion3_int" role="tablist" aria-multiselectable="true">
-				  	<div class="panel panel-default">
-				    	<div class="panel-heading" role="tab" id="headingThreeInt">
-				      		<h4 class="panel-title">
-				        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion2_int" href="#collapseThreeInt" aria-expanded="false" aria-controls="collapseThreeInt">
-				          		Total Suggested Payment Plan (Debt,Payment):
-				        		</a>
-				      		</h4>
-				    	</div>
-				    	<div id="collapseThreeInt" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThreeInt">
-				      		<div class="panel-body">
-				      	
-								{{ all_totals_int[2].to_html(classes="table table-striped") | safe  }}
-				       
-				      		</div>
-				    	</div>
-					</div>
-				</div>
+	    	<div id="new-table-type">
+	    		<table style="width:100%" class="table" align="center">
+	    		  	
+    		    	<th>Card</th>
+    		    	<th>Debt</th>
+    		    	<th>Payments</th> 
+    		    	<th>Month</th>
+    		  
+	    		  	{% for card in all_totals_int %}
+		    		  	
 
+		    		  	<tr>
+							
+							{% if card[3] == "Visa" %}
+			    		  	<td bgcolor="#ffbf00">
+
+			    		  	{% elif card[3] == "Master" %}
+			    		  	<td bgcolor ="#ffce3b">
+
+			    		  	{% elif card[3] == "Discover" %}
+			    		  	<td bgcolor="#ffe189">
+
+
+			    			{% endif %}
+
+								{{ card[3] }}
+							</td>
+							<td>
+								${{ card[0] | round(2, 'floor')}}
+							</td>
+							<td>
+								${{ card[1] | round(2, 'floor') }}
+							</td>
+							<td>
+								{{ card[2] }}
+							</td>
+						
+						</tr>
+
+					{% endfor %}
+	    		</table>
 	    	</div>
+
+
 	    </div>
     </div>
     <!-- <div role="tabpanel" class="tab-pane" id="payment_plan_amt">
@@ -366,28 +387,51 @@
 
    
     <div role="tabpanel" class="tab-pane box text-center" id="take_action">
-		<div id="action">
-			<ul class="take_action">
-			    <li> It looks like you have one or more cards that are not currently 0% apr.
-			    	 
-			    	<ul>
-			    	 <li>Take to your credit card provide to see if they have any 0% apr cards.</li>
-			    	 <li>Check out other credit card options that provide 0% apr.</li>
-			    	 <li>Keep your card on a 0% apr plan as long as you can until it is paid off.</li>
-			    	 <li><strong>Remember:</strong> Once your 0% apr introductory period ends your credit card will most likely charge you interest on the initial balance transfer!</li>
-			    	</ul>
+			
+			<div class="panel-group" id="accordion_action_One" role="tablist" aria-multiselectable="true">
+				<div class="panel panel-default panel-danger">
+			    	<div class="panel-heading" role="tab" id="heading_action_One">
+			      		<h4 class="panel-title">
+			        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion_action_One" href="#collapse_action_One" aria-expanded="false" aria-controls="collapse_action_One" >
+			          			Your credit cards do not have 0 APR 
+			        		</a>
+			      		</h4>
+			    	</div>
+			    <div id="collapse_action_One" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_action_One">
+			      	<div class="panel-body">
+			       		<h3>It looks like you have one or more cards that are not currently 0% apr.</h3>
+			    		<p> <strong> Call </strong> your credit card providor to see if they have any 0% apr cards.
+			    		<strong> Research </strong> other credit cards that offer introductory 0% aprs.
+			    		<p class="alert alert-danger" role="alert"> <strong>Remember:</strong> Once your 0% apr introductory period ends your credit card will most likely charge you interest on the initial balance transfer! </p>
+		    			<em>Check out these websites for more info on 0% apr cards</em>
+		    	 		<ul>
+		    	 			Nerdwallet
+		    	 			Credit Karma
+		    	 		</ul>
+			      	</div>
+			    </div>
+			</div>
+			<div class="panel panel-default panel-warning">
+			    <div class="panel-heading" role="tab" id="heading_action_Two">
+			      	<h4 class="panel-title">
+			        	<a class="collapsed" data-toggle="collapse" data-parent="#accordion_action_One" href="#collapse_action_Two" aria-expanded="false" aria-controls="collapse_action_Two">
+			          		Stop using your credit card!
+			        	</a>
+			      	</h4>
+			    </div>
+			    <div id="collapse_action_Two" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_action_Two">
+			      	<div class="panel-body">
+				        Stop using your credit cards for purchases! Until you have paid off your debts or unless you can pay off your card in full every month on time stick to paying with a debit card or cash.
+				        <br>
+				   		While paying off your credit cards is definitely a priority, saving money every month for an emergency fund will help circumvent any unplanned expenses that you might have. 
+			      	</div>
+			    </div>
+			</div>
+			 
+		</div>
 
-		    	 <li><em>Check out these websites for more info on 0% apr cards</em>
-		    	 	<ul>
-		    	 	<li>Nerdwallet</li>
-		    	 	<li>Credit Karma</li>
-		    	 </ul>
-		    	 </li>
-			    	
-			    </li>
-			    <li>Stop using your credit cards for purchases! Until you have paid off your debts or unless you can pay off your card in full every month on time stick to paying with a debit card or cash.</li>
-			    <li>While paying off your credit cards is definitely a priority, saving money every month for an emergency fund will help circumvent any unplanned expenses that you might have. </li>
-			  </ul>
+			
+			  
 		</div>
     </div>
   </div>

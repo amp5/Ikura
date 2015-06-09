@@ -30,18 +30,12 @@
      <!-- Customized CSS-->
     <link rel="stylesheet" href="./static/style.css">
 
-    
-
-    
 
 
   </head>
 
-
-
-
   <body class='with-3d-shadow with-transitions'>
-     <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+     <nav class="navbar navbar-default navbar-static-top ">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -51,7 +45,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Ikura</a>
+          <a class="navbar-brand text" href="/">Ikura</a>
+          
+            {% if not email %}
+              
+                <p class="navbar-text text"> You are not logged in!</p>
+            {% else %}
+                <p class="navbar-text text"> Hi there, {{email}}</p>
+            {% endif %}
 
           <!-- try and add this section in to display user's email when logged in -->
           <!-- <p class="navbar-text">Signed in as email</p> -->
@@ -77,24 +78,6 @@
     {% block content %}
     {% endblock %}
 
-<!--  style for nvd3 chart -->
-    <style>
-        text {
-            font: 12px sans-serif;
-        }
-        svg {
-            display: block;
-        }
-        html, body, #chart1, svg {
-            margin: 0px;
-            padding: 0px;
-            height: 100%;
-            width: 100%;
-        }
-        .dashed {
-            stroke-dasharray: 5,5;
-        }
-    </style>
 
   </body>
 </html>
