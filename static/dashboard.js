@@ -1,6 +1,11 @@
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-});
+// $(function () {
+//   $('[data-toggle="tooltip"]').tooltip()
+// });
 
-$('#example').popover('show');
+// $('#example').popover('show');
+
+
+// $(document).ready(function(){
+//     $('[data-toggle="tooltip"]').tooltip(); 
+// });

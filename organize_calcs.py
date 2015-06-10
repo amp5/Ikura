@@ -202,6 +202,12 @@ def organization_int(user_dict_int):
         for point in card:
                 point = list(point)
                 date = dt[counter]
+                date = date.date()
+                # The line below will show me the months 
+                # but other functions will display months 
+                # organized alphabetically
+                # date = date.strftime("%B")
+                print "date", date
                 counter += 1 
                 point.append(date)
                 name = str(card_names[card_counter])
