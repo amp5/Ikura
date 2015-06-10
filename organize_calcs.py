@@ -151,7 +151,6 @@ def organization(user_card_dict_py):
 
     # I think these are right......
     df_min = pd.DataFrame(data = total_min, index=dt_min_month, columns=['Debt', 'Interest', 'Payments'])
-    # print "This is my Min panda", df_min
     df_sugg = pd.DataFrame(data = total_sugg, index=dt_sugg_month, columns=['Debt', 'Interest', 'Payments'])
 
 
@@ -195,8 +194,6 @@ def organization_int(user_dict_int):
     all_cards_points = []
     for card in point_lists:
         card_points = []
-        # print '*' * 10
-        # print "this is my card", card
         counter = 0
         
         for point in card:
@@ -220,17 +217,6 @@ def organization_int(user_dict_int):
 
 
     print "This is all_cards_points", all_cards_points
-
-    #give me a list of all my points per card
-    # print "all_cards_points - index 0", all_cards_points[0]
-    # print len(all_cards_points[0])
-
-    # df_all = []
-    # for item in all_cards_points:
-    #     df_item = pd.DataFrame(data = item, columns=['Debt', 'Payments', 'Month'])
-    #     df_all.append(df_item)
-
-    # # print "is this all"
     
 
     all_together_cards_points = []

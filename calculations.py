@@ -33,8 +33,6 @@ def min_payment_plan(name, date, debt, apr, user_id):
 
     total_sugg_int_amt_paid(interest_to_pay_list)
 
-    # print "this is my min payment list", min_total_payment_list
-
     return card
 
 def suggested_plan(name, date, debt, apr, card, user_id):
@@ -45,11 +43,9 @@ def suggested_plan(name, date, debt, apr, card, user_id):
             new_debt_list(suggested), interest_to_pay_list(suggested), monthly_payment_list])}
     """
 
-    # print "date right?", date
+
     interest_per_month = apr/date
-    # print "int rate", interest_per_month
     monthly_payment_suggestion = float(debt) / float((date + 1))
-    # print "This should be the right number!", monthly_payment_suggestion
     rounded_monthly_payment_suggestion = round(monthly_payment_suggestion, 2)
 
 
@@ -84,7 +80,7 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 
     
 
-# print "where is my interest", card.values()[0].values()[0][1]
+
     int_for_card = card.values()[0].values()[0][1]
 
     return card 
@@ -93,7 +89,7 @@ def suggested_plan(name, date, debt, apr, card, user_id):
 def calculations_int(query_results, budget):
 
     # make sure in html. budget is over {{total amount of sugg payments}}
-    # budget = 500  # USER MUST ENTER THIS IN!
+
     payment_info_list = []
     num_of_cards_orig = []
 
@@ -187,11 +183,6 @@ def calculations_int(query_results, budget):
                 else:
                     sugg_payment_total = sugg_payment_total - card.card_sugg
                     extra_budget =  budget - sugg_payment_total
-                    # i = num_of_cards.index(card)
-                    # num_of_cards[i].highest_apr == False
-                    # i += 1
-                    # num_of_cards[i].highest_apr == True
-                    # print "next card?", num_of_cards[i]
 
             elif card.card_debt > 0:
                 if card.highest_apr == True:
@@ -214,7 +205,6 @@ def calculations_int(query_results, budget):
                         card.current_debt = payment_result
                         decr_debt.append(card.card_debt)
                         payments.append(card.card_sugg)   
-        # print "is this one each month?", decr_debt
         total_decr_debt.append(decr_debt)
         total_payments.append(payments)
         decr_debt = []
@@ -224,6 +214,7 @@ def calculations_int(query_results, budget):
     # *************************************
     # QUESTION : how to make this scalable
     # and not specify right now how to unpack this
+    # KNOWN BUG!
     # *************************************
 
     card1d, card2d, card3d = zip(*total_decr_debt)
@@ -248,15 +239,12 @@ def calculations_int(query_results, budget):
         list_for_card_d = card_listd[counter]
         list_for_card_p = card_listp[counter]
         int_info_dict["Decreasing_Debt"] = list_for_card_d
-        # print "Dict", decr_debt_dict
         int_info_dict["Payments"] = list_for_card_p
-        # print "Dict", payments_dict
         info = list_for_card_d, list_for_card_p
         int_info_list.append(info)
 
 
 
-        # int_info = [decr_debt_dict, payments_dict]
         int_rate_dict[card.card_name] = int_info_dict
         counter += 1
 
@@ -266,9 +254,6 @@ def calculations_int(query_results, budget):
         debt_pay_point = zip(*card_all)
         num += 1
         points_for_cards.append(debt_pay_point)
-    # print "final (debt, payment) points for card", points_for_cards
-    # print "what is this", points_for_cards[0]
-    # print "dict:", int_rate_dict
 
     passed_data = [int_rate_dict, points_for_cards]
 
@@ -347,10 +332,8 @@ def user_cards_int(results_of_query, budget):
     for card in results_of_query:
         user_id = card.user_id
 
-    # budget = 500
 
     int_calcs = calculations_int(results_of_query, budget)
-    # user_dict_int = {user_id : [int_calcs]}
 
 
     return int_calcs
@@ -370,29 +353,24 @@ def total_sugg_payments(results_of_query):
     return sugg_payment_total
 
 def total_sugg_int_amt_paid(interest_to_pay_list):
-    """calculates the interest payments for one card. Used in server.py 
+    """calculates the suggested interest payments for one card. Used in server.py 
         dashboard function"""
 
     sugg_int_paid_total = []
-
     for interest in interest_to_pay_list:
         sugg_int_paid_total.append(interest)
-    # print "total", sugg_int_paid_total
-
     sugg_int_paid_total = sum(sugg_int_paid_total)
-    # print "total summed", sugg_int_paid_total
 
     return sugg_int_paid_total
 
 def total_min_int_paid(interest_to_pay_list):
-    min_int_paid_total = []
+    """calculates the minimum interest payments for one card. Used in server.py 
+        dashboard function"""
 
+    min_int_paid_total = []
     for interest in interest_to_pay_list:
         min_int_paid_total.append(interest)
-    # print "total", min_int_paid_total
-
     min_int_paid_total = sum(min_int_paid_total)
-    # print "total min summed", min_int_paid_total
 
     return min_int_paid_total 
 

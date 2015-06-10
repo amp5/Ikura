@@ -215,22 +215,11 @@ def update_dashboard():
 
 @app.route('/remove_card', methods=['POST'])
 def remove_card():
-    # user_id = session.get("user_id")
-    # card_id = request.form.getlist("card_id")
+ 
 
     card_id = request.form["remove_card"]
-    # card_id = request.form['card_id']
-    # request.form['username']
-
-    # print "what is this? CARD_ID??", card_id
     results_of_query = Card.query.filter_by(card_id=card_id).one()
-    # print "am I results_of_query", results_of_query
-    print "what is my user_id", results_of_query.user_id
-    print "selector?", results_of_query.user_id
     results_of_query.user_id = 3
-    print "how about now...", results_of_query.user_id
-    # or user_id = 3 <- dump@gmail.com
-    # db.session.merge(results_of_query)
     db.session.commit()
 
 
