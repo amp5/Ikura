@@ -129,12 +129,15 @@
 		  		<div class="col-md-9" id="main">
 		  			<div class="col-xs-12 col-md-12 col-lg-12 box" id="visualization">
 						<div id="viz2">
+							
+
+
 							<script>
 								
 
 								var margin = {top: 20, right: 80, bottom: 30, left: 50},
-								    width = 760 - margin.left - margin.right,
-								    height = 300 - margin.top - margin.bottom;
+								    width = 860 - margin.left - margin.right,
+								    height = 400 - margin.top - margin.bottom;
 
 								// var parseDate = d3.time.format("%Y%m%d").parse;
 								var format = d3.time.format("%Y-%m-%d");
@@ -160,8 +163,6 @@
 								    .x(function(d) { return x(d.date); })
 								    .y(function(d) { return y(d.amount); });
 
-								
-								
 
 								var svg = d3.select("#viz2").append("svg")
 								    .attr("width", width + margin.left + margin.right)
@@ -181,7 +182,7 @@
 								    d.date = format.parse(d.date);
 								 
 								  });
-								
+
 								var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
 
@@ -231,14 +232,14 @@
 								      .attr("d", function(d) { return line(d.values); })
 								      .style("stroke", function(d) { return color(d.payment_type); });
 
-								   var focus = svg.append("g")
+								   var focus1 = svg.append("g")
 								         .attr("class", "focus")
 								         .style("display", "none");
 
-								     focus.append("circle")
+								     focus1.append("circle")
 								         .attr("r", 4.5);
 
-								     focus.append("text")
+								     focus1.append("text")
 								         .attr("x", 9)
 								         .attr("dy", ".35em");
 
@@ -247,8 +248,8 @@
 								         .attr("class", "overlay")
 								         .attr("width", width)
 								         .attr("height", height)
-								         .on("mouseover", function() { focus.style("display", null); })
-								         .on("mouseout", function() { focus.style("display", "none"); })
+								         .on("mouseover", function() { focus1.style("display", null); })
+								         .on("mouseout", function() { focus1.style("display", "none"); })
 								         .on("mousemove", mousemove);
 
 								     function mousemove() {
@@ -257,10 +258,46 @@
 								           d0 = json_data[i - 1],
 								           d1 = json_data[i],
 								           d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-								       focus.attr("transform", "translate(" + x(d.date) + "," + y(d.amount) + ")");
-								       focus.select("text").text(d.amount);
+								       focus1.attr("transform", "translate(" + x(d.date) + "," + y(d.Suggested) + ")");
+								       focus1.select("text").text(d.Suggested);
+								       // focus2.attr("transform", "translate(" + x(d.date) + "," + y(d.Minimum) + ")");
+								       // focus2.select("text").text(d.Minimum);
+									      };
+
+
+
+								   //  var focus2 = svg.append("g")
+								   //       .attr("class", "focus")
+								   //       .style("display", "none");
+
+								   //   focus2.append("circle")
+								   //       .attr("r", 4.5);
+
+								   //   focus2.append("text")
+								   //       .attr("x", 9)
+								   //       .attr("dy", ".35em");
+
+
+								   // svg.append("rect")
+								   //       .attr("class", "overlay")
+								   //       .attr("width", width)
+								   //       .attr("height", height)
+								   //       .on("mouseover", function() { focus2.style("display", null); })
+								   //       .on("mouseout", function() { focus2.style("display", "none"); })
+								   //       .on("mousemove2", mousemove2);
+
+								   //   function mousemove2() {
+								   //     var x0 = x.invert(d3.mouse(this)[0]),
+								   //         i = bisectDate(json_data, x0, 1),
+								   //         d0 = json_data[i - 1],
+								   //         d1 = json_data[i],
+								   //         d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+								   //     focus2.attr("transform", "translate(" + x(d.date) + "," + y(d.Minimum) + ")");
+								   //     focus2.select("text").text(d.Minimum);
 								     
-								   };
+								   // };
+
+
 
 								//   type.append("text")
 								//       .datum(function(d) { return {name: d.payment_type, values: d.amount[d.amount.length - 1]}; })
@@ -352,7 +389,7 @@
 						<!--     	Create a budget for your credit card debt
 						    	
 						    	(your budget must be larger than your suggested monthly payments in the previous tab): -->
-					<div class="col-md-4">
+					<div class="col-md-9 col-md-offset-2">
 					    <form action="/update_dashboard_int" method='POST' id="updated_dashboard_int" class="form-inline" align="center">
 					    	<p align="center">Create a budget for your credit card debt</p>
 					    	<div class="input-group">
@@ -441,7 +478,7 @@
 			       		<h3>It looks like you have one or more cards that are not currently 0% apr.</h3>
 			    		<p> <strong> Call </strong> your credit card providor to see if they have any 0% apr cards.
 			    		<strong> Research </strong> other credit cards that offer introductory 0% aprs.
-			    		<p class="alert alert-danger" role="alert"> <strong>Remember:</strong> Once your 0% apr introductory period ends your credit card will most likely charge you interest on the initial balance transfer! </p>
+			    		<p><strong>Remember:</strong> Once your 0% apr introductory period ends your credit card will most likely charge you interest on the initial balance transfer! </p>
 		    			<em>Check out these websites for more info on 0% apr cards</em>
 		    	 		<ul>
 		    	 			Nerdwallet
@@ -459,8 +496,9 @@
 			      	</h4>
 			    </div>
 			    <div id="collapse_action_Two" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_action_Two">
-			      	<div class="panel-body">
+			      	<div class="panel-body" align="left">
 				        Stop using your credit cards for purchases! Until you have paid off your debts or unless you can pay off your card in full every month on time stick to paying with a debit card or cash.
+				        <br>
 				        <br>
 				   		While paying off your credit cards is definitely a priority, saving money every month for an emergency fund will help circumvent any unplanned expenses that you might have. 
 			      	</div>
