@@ -310,6 +310,7 @@
 							</script>
 						</div>
 					</div>
+					<!-- Add tooltips to show the user that they can click on headers to show plan -->
 					<div class="col-xs-6 col-md-6 col-lg-6">
 						<div id="sugg_plan">
 							<div class="panel-group" id="accordion1" role="tablist" 
@@ -328,33 +329,40 @@
 							        		</a>
 							      		</h4>
 							    	</div>
-							    	<div id="collapseOne" class="panel-collapse collapse" 
-							    		role="tabpanel" aria-labelledby="headingOne">
-							      		<div class="panel-body">
-							        		<!-- make this something user sees right away.
-							        		Then they click on the payment plan panels -->
-							        		<h4 align="left">
-							        			Each month allocate the following:
-							        			<br>
-							        			<br>
-							        			{% for card in query_results%}
-							        				{{card.card_name}} : $ INSERT AMOUNT HERE
-							        				<br>
-							        			{% endfor %}
-							        			<br>
-							        			<strong>Total each month:</strong> INSERT TOTAL AMOUNT
-							        		</h4>
-							        		<h3 align="center">
+							    	<div class="panel-body">
+							    		<h3 align="center">
 								        		Total amount of interest spent: 
 												<br>
 												$	<font color="#B22222">
 													{{list_of_total_sugg_int_amt_paid_sum}}
 													</font>
 											</h3>
+											<br>
+							        		<h4 align="left">
+							        			Each month allocate the following:
+							        			<br>
+							        			<br>
+							        			{% set count = 0 %}
+							        			{% for card in query_results%}
+							        				{{card.card_name}} : $
+								        					{{cards_payment_list[count]}}
+								        			{% set count = count + 1 %}
+							        				<br>
+							        			{% endfor %}
+							        			<br>
+							        			<strong>Total each month:</strong> {{total_per_month}}
+
+							        		</h4>
+							    	<div id="collapseOne" class="panel-collapse collapse" 
+							    		role="tabpanel" aria-labelledby="headingOne">
+							      		<div class="panel-body">
+							        		<!-- make this something user sees right away.
+							        		Then they click on the payment plan panels -->
 							        		{{all_totals[1].to_html(classes="table 
 							        		table-striped") | safe }}
 							      		</div>
 							    	</div>
+							    </div>
 								</div>
 							</div>
 						</div>
@@ -370,18 +378,20 @@
 							        		</a>
 							      		</h4>
 							    	</div>
+							    	<div class="panel-body">
+							    		<h3 align="center">
+						        			Total amount of interest spent: 
+											<br>
+											$	<font color="#B22222">
+											{{list_of_total_min_int_amt_paid_sum}}
+											</font>
+										</h3>
 							    	<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 							      		<div class="panel-body">
-							      				<h3 align="center">
-							        			Total amount of interest spent: 
-												<br>
-												$	<font color="#B22222">
-												{{list_of_total_min_int_amt_paid_sum}}
-												</font>
-											</h3>
 							        		{{all_totals[0].to_html(classes="table table-striped") | safe}}
 							     		</div>
 							    	</div>
+							    </div>
 							  	</div>
 							</div>
 						</div>

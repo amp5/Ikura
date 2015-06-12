@@ -114,30 +114,34 @@ def dashboard():
         
         user_id = session.get("user_id")
         
-
         results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
         user_card_dict_py = user_cards(results_of_query)
 
         user = User.query.filter_by(user_id=user_id).one()
         email = user.email
      
-
-
-
-        # for calulating my summed int rates....#  <- SUGG
-        # the second index is where the cards are.... [0] is visa
-
         amt_of_cards = len(user_card_dict_py.values()[0])
         list_of_total_sugg_int_amt_paid = []
         
         for item in range(amt_of_cards):
-            card_thing = user_card_dict_py.values()[0][item]
-            interest_thing = card_thing.values()[0].values()[0][1]
-            all_interest_thing = total_sugg_int_amt_paid(interest_thing)
-            list_of_total_sugg_int_amt_paid.append(all_interest_thing)
-
+            card = user_card_dict_py.values()[0][item]
+            interest = card.values()[0].values()[0][1]
+            all_interest = total_sugg_int_amt_paid(interest)
+            list_of_total_sugg_int_amt_paid.append(all_interest)
         list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
 
+
+        cards_payment_list = []
+        for item in range(amt_of_cards):
+            card = user_card_dict_py.values()[0][item]
+            payment = card.values()[0].values()[0][2]
+            payment = (sum(payment))/(len(payment))
+            cards_payment_list.append(payment)
+
+        
+        total_per_month = sum(cards_payment_list)
+
+        # zipped = (* )
 
 
     # for calulating my summed int rates....# <- MIN
@@ -172,7 +176,9 @@ def dashboard():
                                                 total_sugg_payment_amt =total_sugg_payment_amt,
                                                 list_of_total_sugg_int_amt_paid_sum=list_of_total_sugg_int_amt_paid_sum, 
                                                 list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum, 
-                                                email = email)
+                                                email = email, 
+                                                cards_payment_list=cards_payment_list, 
+                                                total_per_month=total_per_month)
     
 
 @app.route('/update_dashboard', methods=['POST'])
