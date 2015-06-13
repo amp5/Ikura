@@ -308,6 +308,62 @@
 								// });
 
 							</script>
+						<div id="container" style="width:100%; height:400px;"></div>
+							<script>
+
+							// Focus on dates later!
+							// var dates = highcharts_dates_json|tojson|safe;   < ---- JINJA format
+							//     dates = JSON.parse(dates);
+							//     console.log(dates);
+
+
+
+							$(function () {
+							    $('#container').highcharts({
+
+							        chart: {
+							            type: 'column'
+							        },
+
+							        title: {
+							            text: 'Monthly Credit Card Debt Payment by Card'
+							        },
+
+							        subtitle: {
+							                    text: 'Suggested Payments vs. Minimum Payments'
+							        },
+							        // TODO: DISPLAY THE TRUNCATED MONTH AND LAST 2 DIGITS OF YEAR INSTEAD
+							        xAxis: {
+							                	categories: {{highcharts_dates_str | safe}}, 
+							                	crosshair: true
+							        },
+
+							        yAxis: {
+							            allowDecimals: false,
+							            min: 0,
+							            title: {
+						                     text: 'Monthly Payments ($)'
+							            }
+							        },
+
+							        tooltip: {
+							            formatter: function () {
+							                return '<b>' + this.x + '</b><br/>' +
+							                    this.series.name + ': ' + this.y + '<br/>' +
+							                    'Total: ' + this.point.stackTotal;
+							            }
+							        },
+
+							        plotOptions: {
+							            column: {
+							                stacking: 'normal'
+							            }
+							        },
+
+							        series: {{highcharts_points | safe}}
+							    });
+							});
+							</script>
 						</div>
 					</div>
 					<!-- Add tooltips to show the user that they can click on headers to show plan -->

@@ -9,6 +9,7 @@ from organize_calcs import organization, organization_int
 from calculations import total_sugg_payments, total_sugg_int_amt_paid, total_min_int_paid
 import json
 import csv
+from datetime import datetime
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -158,8 +159,25 @@ def dashboard():
 
 
         all_totals = organization(user_card_dict_py)
+        
+
+        highcharts_dates = all_totals[3]
+        highcharts_dates_str = []
+        for date in highcharts_dates:
+            date_conv = datetime.strptime(date, "%Y/%m/%d" )
+            date_conv = date_conv.strftime("%Y/%m/%d")
+            highcharts_dates_str.append(date_conv)
+
+        print "list?", highcharts_dates_str
+        # print type(highcharts_dates_str[0])
+        # highcharts_dates_json = json.dumps(highcharts_dates)
+        # print "JSON", highcharts_dates_json
+
+
+        highcharts_points = all_totals[4]
         data_points = all_totals[2]
         d3_points_list_json = json.dumps(all_totals[2])
+        # print "JSON format!", d3_points_list_json
 
 
       
@@ -167,6 +185,8 @@ def dashboard():
         all_totals_int = organization_int(user_card_dict_py_int)
         
         total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
+
+        listt = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
        
         return render_template('/dashboard.html', query_results=results_of_query, 
@@ -178,7 +198,10 @@ def dashboard():
                                                 list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum, 
                                                 email = email, 
                                                 cards_payment_list=cards_payment_list, 
-                                                total_per_month=total_per_month)
+                                                total_per_month=total_per_month, 
+                                                listt=listt, 
+                                                highcharts_points=highcharts_points, 
+                                                highcharts_dates_str=highcharts_dates_str)
     
 
 @app.route('/update_dashboard', methods=['POST'])
@@ -249,6 +272,12 @@ def update_dashboard_int():
 # def d3():
 #     """practice for d3"""
 #     return render_template('d3_study.html')
+
+
+# @app.route('/highcharts')
+# def highcharts():
+#     """practice for highcharts"""
+#     return render_template('highcharts.html')
 
 
 

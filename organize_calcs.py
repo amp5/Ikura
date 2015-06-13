@@ -18,6 +18,101 @@ def organization(user_card_dict_py):
     """This is rearranging my data to display on html page and for D3"""
 
     values = user_card_dict_py.values()
+    # print "what is values[0]", values[0][0].keys()
+# GOAL:
+    # {
+    # name: 'Master',
+    # data: [6000.0, 5939.969999999999, 5879.9400000000005, 5819.91, 5759.88, 5699.849999999999],
+    # stack: 'Minimum'
+    # }
+
+# SUGG
+    sugg_card_dict_list = []
+    for i in range(len(values[0])):
+
+        card = values[0][i]
+        card_name = card.keys()
+        suggested_card_name = str(card_name)
+       
+
+        dict_of_payments_per_card_hc = card.values()[0]
+        data_info = dict_of_payments_per_card_hc["Suggested"]
+        suggested_card_amount = data_info[0]
+    
+
+        point_dict_hc = {"name":suggested_card_name, "data":suggested_card_amount, "stack": "Suggested"}
+        sugg_card_dict_list.append(point_dict_hc)
+    
+    
+    # point_dict_hc = {"name":suggested_card_names, "data":suggested_card_amounts, "stack": "Minimum"}
+
+    # print "sugg list of lists for all cards", suggested_card_amounts
+    print '*'* 50
+    print "sugg_card_dict_list THINGS!!", sugg_card_dict_list
+    print '*'* 50
+
+
+# MIN
+    min_card_dict_list = []
+    for i in range(len(values[0])):
+        card = values[0][i]
+        card_name = card.keys()
+        minimum_card_name = str(card_name)
+        # TODO: fix the unicode part of this
+       
+        dict_of_payments_per_card_hc = card.values()[0]
+        data_info = dict_of_payments_per_card_hc["Minimum"]
+        minimum_card_amount = data_info[0]
+       
+        point_dict_hc = {"name":minimum_card_name, "data":minimum_card_amount, "stack": "Minimum"}
+        min_card_dict_list.append(point_dict_hc)
+
+
+    print '*'* 50    
+    print "min_card_dict_list", min_card_dict_list
+    print '*'* 50
+
+
+    all_points = sugg_card_dict_list + min_card_dict_list
+    print "all_points", all_points
+
+
+
+
+    #     min_debt = min_payment_info[0]
+    #     min_debt_list_hc.append(min_debt)
+
+
+    #     min_int = min_payment_info[1]
+    #     min_int_list_hc.append(min_int)
+
+
+    #     min_payment = min_payment_info[2]
+    #     min_payment_list_hc.append(min_payment)
+
+    # # *************************************
+    #     # Suggested Payment Data # 
+    # # *************************************
+
+    #     sugg_debt = sugg_payment_info[0]
+    #     sugg_debt_list_hc.append(sugg_debt)
+
+    #     sugg_int = sugg_payment_info[1]
+    #     sugg_int_list_hc.append(sugg_int)
+
+    #     sugg_payment = sugg_payment_info[2]
+    #     sugg_payment_list_hc.append(sugg_payment)
+
+
+
+
+
+
+
+
+                                    
+
+
 
     min_debt_list = []
     min_int_list = []
@@ -31,8 +126,10 @@ def organization(user_card_dict_py):
     for i in range(len(values[0])):
         card = values[0][i]
         dict_of_payments_per_card = card.values()[0]
+        # print "dict_of_payments_per_card", dict_of_payments_per_card
         sugg_payment_info = dict_of_payments_per_card["Suggested"]
         min_payment_info = dict_of_payments_per_card["Minimum"]
+  
 
     # *************************************
         # Minimum Payment Data #
@@ -108,6 +205,7 @@ def organization(user_card_dict_py):
         for x in i:
             sum_of = sum_of + x
         total_calc_sugg_debt.append(sum_of)
+    # print "total_calc_sugg_debt", total_calc_sugg_debt
 
 
     total_calc_sugg_int = []
@@ -163,24 +261,26 @@ def organization(user_card_dict_py):
 
     # #********** This is the list of my data points (date: ##, Min: ##, Sugg: ##) that will be JSONified and passed to D3 **********#
     new_data_points = zip(*[dt_min_month.date, total_calc_min_debt, total_calc_sugg_debt])
-
     new_data_point_list = []
+    month_range = []
     for i in range(len(new_data_points)):
         point_dict = {"date":str(new_data_points[i][0]), "Minimum":new_data_points[i][1], "Suggested": new_data_points[i][2]}
+        date = new_data_points[i][0]
+        date_str = date.strftime('%Y/%m/%d')
+        month_range.append(date_str)
         new_data_point_list.append(point_dict)
 
 
-    df_total = [df_min, df_sugg, new_data_point_list]
-
-
+    df_total = [df_min, df_sugg, new_data_point_list, month_range, all_points]
     return df_total
+
 
 
 def organization_int(user_dict_int):
     """organizing this dict into correct format to display on webpage"""
 
     card_names = user_dict_int[0].keys()
-    print "am i here?", card_names
+    # print "am i here?", card_names
 
     now = datetime.now()
     point_lists = user_dict_int[1]
@@ -188,7 +288,7 @@ def organization_int(user_dict_int):
 
     points = len(point_lists[0])
     dt = pd.date_range(datetime.strftime(now, '%Y-%m-%d'), periods=points, freq='M')
-    print "date not time?", dt
+    # print "date not time?", dt
 
     card_counter = 0
     all_cards_points = []
@@ -204,7 +304,7 @@ def organization_int(user_dict_int):
                 # but other functions will display months 
                 # organized alphabetically
                 # date = date.strftime("%B")
-                print "date", date
+                # print "date", date
                 counter += 1 
                 point.append(date)
                 name = str(card_names[card_counter])
@@ -216,7 +316,7 @@ def organization_int(user_dict_int):
         all_cards_points.append(card_points)
 
 
-    print "This is all_cards_points", all_cards_points
+    # print "This is all_cards_points", all_cards_points
     
 
     all_together_cards_points = []
