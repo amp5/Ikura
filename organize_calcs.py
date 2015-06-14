@@ -40,7 +40,9 @@ def organization(user_card_dict_py):
         suggested_card_amount = data_info[0]
     
 
-        point_dict_hc = {"name":suggested_card_name, "data":suggested_card_amount, "stack": "Suggested"}
+        point_dict_hc = {"name":suggested_card_name, "data":suggested_card_amount, "stack": "Suggested", "color":'#3C896D' }
+
+
         sugg_card_dict_list.append(point_dict_hc)
     
     
@@ -64,7 +66,7 @@ def organization(user_card_dict_py):
         data_info = dict_of_payments_per_card_hc["Minimum"]
         minimum_card_amount = data_info[0]
        
-        point_dict_hc = {"name":minimum_card_name, "data":minimum_card_amount, "stack": "Minimum"}
+        point_dict_hc = {"name":minimum_card_name, "data":minimum_card_amount, "stack": "Minimum", "color":'#544E61'}
         min_card_dict_list.append(point_dict_hc)
 
 
@@ -75,44 +77,6 @@ def organization(user_card_dict_py):
 
     all_points = sugg_card_dict_list + min_card_dict_list
     print "all_points", all_points
-
-
-
-
-    #     min_debt = min_payment_info[0]
-    #     min_debt_list_hc.append(min_debt)
-
-
-    #     min_int = min_payment_info[1]
-    #     min_int_list_hc.append(min_int)
-
-
-    #     min_payment = min_payment_info[2]
-    #     min_payment_list_hc.append(min_payment)
-
-    # # *************************************
-    #     # Suggested Payment Data # 
-    # # *************************************
-
-    #     sugg_debt = sugg_payment_info[0]
-    #     sugg_debt_list_hc.append(sugg_debt)
-
-    #     sugg_int = sugg_payment_info[1]
-    #     sugg_int_list_hc.append(sugg_int)
-
-    #     sugg_payment = sugg_payment_info[2]
-    #     sugg_payment_list_hc.append(sugg_payment)
-
-
-
-
-
-
-
-
-                                    
-
-
 
     min_debt_list = []
     min_int_list = []

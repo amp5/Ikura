@@ -165,7 +165,7 @@ def dashboard():
         highcharts_dates_str = []
         for date in highcharts_dates:
             date_conv = datetime.strptime(date, "%Y/%m/%d" )
-            date_conv = date_conv.strftime("%Y/%m/%d")
+            date_conv = date_conv.strftime("%b-%y")
             highcharts_dates_str.append(date_conv)
 
         print "list?", highcharts_dates_str
