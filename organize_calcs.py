@@ -18,22 +18,15 @@ def organization(user_card_dict_py):
     """This is rearranging my data to display on html page and for D3"""
 
     values = user_card_dict_py.values()
-    # print "what is values[0]", values[0][0].keys()
-# GOAL:
-    # {
-    # name: 'Master',
-    # data: [6000.0, 5939.969999999999, 5879.9400000000005, 5819.91, 5759.88, 5699.849999999999],
-    # stack: 'Minimum'
-    # }
 
-# SUGG
+    # SUGG points for highchart
     sugg_card_dict_list = []
     for i in range(len(values[0])):
 
         card = values[0][i]
         card_name = card.keys()
-        suggested_card_name = str(card_name)
-       
+        suggested_card_name = str(card_name[0])
+
 
         dict_of_payments_per_card_hc = card.values()[0]
         data_info = dict_of_payments_per_card_hc["Suggested"]
@@ -41,25 +34,15 @@ def organization(user_card_dict_py):
     
 
         point_dict_hc = {"name":suggested_card_name, "data":suggested_card_amount, "stack": "Suggested", "color":'#3C896D' }
-
-
         sugg_card_dict_list.append(point_dict_hc)
-    
-    
-    # point_dict_hc = {"name":suggested_card_names, "data":suggested_card_amounts, "stack": "Minimum"}
 
-    # print "sugg list of lists for all cards", suggested_card_amounts
-    print '*'* 50
-    print "sugg_card_dict_list THINGS!!", sugg_card_dict_list
-    print '*'* 50
-
-
-# MIN
+    # MIN points for highchart
     min_card_dict_list = []
     for i in range(len(values[0])):
         card = values[0][i]
         card_name = card.keys()
-        minimum_card_name = str(card_name)
+        minimum_card_name = str(card_name[0])
+   
         # TODO: fix the unicode part of this
        
         dict_of_payments_per_card_hc = card.values()[0]
@@ -70,13 +53,7 @@ def organization(user_card_dict_py):
         min_card_dict_list.append(point_dict_hc)
 
 
-    print '*'* 50    
-    print "min_card_dict_list", min_card_dict_list
-    print '*'* 50
-
-
     all_points = sugg_card_dict_list + min_card_dict_list
-    print "all_points", all_points
 
     min_debt_list = []
     min_int_list = []

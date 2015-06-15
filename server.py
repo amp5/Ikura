@@ -168,7 +168,7 @@ def dashboard():
             date_conv = date_conv.strftime("%b-%y")
             highcharts_dates_str.append(date_conv)
 
-        print "list?", highcharts_dates_str
+        # print "list?", highcharts_dates_str
         # print type(highcharts_dates_str[0])
         # highcharts_dates_json = json.dumps(highcharts_dates)
         # print "JSON", highcharts_dates_json

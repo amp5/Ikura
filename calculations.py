@@ -142,22 +142,44 @@ def calculations_int(query_results, budget):
     # higest int card until paid off
     i = 0
 
+    
+    # KNOWN BUG: later calculations are not  adding up as they should. Check this futher!
+
+    remainder = 0
     for month in range(avg_num_of_months + 1):
         extra_budget = extra_budget
         for card in  num_of_cards:
             if card.current_debt > 0:
                 if card.highest_apr == True:
+                    print "what is extra_budget", extra_budget
                     payment_result = card.current_debt - card.card_sugg - extra_budget
                     if payment_result <= 0:
                         decr_debt.append(card.current_debt)
-                        payments.append(card.card_sugg + extra_budget)
+                        print '*' * 50
+                        print "this is payment", card.card_sugg + extra_budget
+                        if (card.card_sugg + extra_budget) > card.current_debt:
+                            print "current debt", card.current_debt
+                            remainder = (card.card_sugg + extra_budget) - card.current_debt 
+
+                            print "current debt remainder", remainder
+                            print "extra before", extra_budget
+                            extra_budget += remainder
+                            print "extra after", extra_budget
+                            payments.append(card.current_debt)
+                            # if card.current_debt == 523.07:
+                                # print "why you be like this!"
+                            # extra_budget += ((card.card_sugg + extra_budget) - card.current_debt)
+                        else:
+                            payments.append(card.card_sugg + extra_budget)
+                            # print "does it go here?"
                         card.current_debt = 0
                     else:
                         decr_debt.append(card.current_debt)
                         payments.append(card.card_sugg + extra_budget)
                         card.current_debt = payment_result
                 else:
-                    payment_result = card.current_debt - card.card_sugg
+                    payment_result = card.current_debt - card.card_sugg - remainder
+                    print "payment_result", payment_result
                     if payment_result <= 0:
                         decr_debt.append(card.current_debt)
                         payments.append(card.card_sugg)
@@ -217,16 +239,30 @@ def calculations_int(query_results, budget):
     # KNOWN BUG!
     # *************************************
 
-    card1d, card2d, card3d = zip(*total_decr_debt)
-    card1p, card2p, card3p = zip(*total_payments)
+    # card1d, card2d, card3d = zip(*total_decr_debt)
+    # card1p, card2p, card3p = zip(*total_payments)
 
-    # print "list1", card1d
-    # print "lsit 1 for payments", card1p
-    # print "list2", card2
-    # print "list3", card3
+    # print "what is this?", total_decr_debt
+    # # print "list1", card1d
+    # # print "lsit 1 for payments", card1p
+    # # print "list2", card2
+    # # print "list3", card3
 
-    card_listd = [card1d, card2d, card3d]
-    card_listp = [card1p, card2p, card3p]
+    # card_listd = [card1d, card2d, card3d]
+    # card_listp = [card1p, card2p, card3p]
+
+    # print "list of lists?", card_listd
+
+    card_listd = [list(l) for l in zip(*total_decr_debt)]
+    card_listp = [list(l) for l in zip(*total_payments)]
+
+
+
+    print card_listd
+    print card_listp
+
+    # for i in range(len(total_decr_debt[0])):
+    #     card[i]d = zip(*total_decr_debt)
 
     # ********************************************************************
 

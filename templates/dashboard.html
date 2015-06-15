@@ -117,6 +117,10 @@
                             $(function () {
                                 $('#container').highcharts({
 
+                                    rangeSelector: {
+                                               enabled: true
+                                           },
+
                                     chart: {
                                         type: 'column'
                                     },
@@ -139,7 +143,7 @@
                                         allowDecimals: false,
                                         min: 0,
                                         title: {
-                                             text: 'Monthly Payments ($)'
+                                             text: 'Debt ($)'
                                         }
                                     },
 
@@ -161,7 +165,9 @@
                                 });
                             });
                             </script>
-                            <!-- </div> -->
+                            
+
+
 
                         </div>
                         <!-- Add tooltips to show the user that they can click on headers to show plan -->
@@ -178,31 +184,35 @@
                                                 {{list_of_total_sugg_int_amt_paid_sum}}
                                                 </font>
                                             </h3>
-                                                <br>
-                                            <h4 align="left">
-                                                Each month allocate the following:
-                                                <br>
-                                                <br>
-                                                {% set count = 0 %}
-                                                {% for card in query_results%}
-                                                    {{card.card_name}} : $
-                                                            {{cards_payment_list[count]}}
-                                                    {% set count = count + 1 %}
-                                                    <br>
-                                                {% endfor %}
-                                                <br>
-                                                <strong>Total each month:</strong> {{total_per_month}}
-                                            </h4>
-                                            
-                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseSuggPayment" aria-expanded="false" aria-controls="collapseSuggPayment" align="center">
-                                              Payment Plan
-                                            </button>
-                                            <div class="collapse" id="collapseSuggPayment" align="center">
-                                                <div class="well">
-                                                    {{all_totals[1].to_html(classes="table 
-                                                            table-striped") | safe }}
-                                                </div>
-                                            </div> 
+                                            <br>
+                                            <div align="center">
+                                                <button class="btn btn-default sugg_plan_btn" type="button" data-toggle="collapse" data-target="#collapseSuggPayment" aria-expanded="false" aria-controls="collapseSuggPayment" align="center" >
+                                                  Payment Plan
+                                                </button>
+                                                
+                                                <div class="collapse" id="collapseSuggPayment" align="center">
+                                                      <div align="center" id="per-card-payment" class="form-group">
+                                                          <h4 align="left">
+                                                                 Each month allocate the following:
+                                                                 <br>
+                                                                 <br>
+                                                                 {% set count = 0 %}
+                                                                 {% for card in query_results%}
+                                                                     {{card.card_name}} : $
+                                                                             {{cards_payment_list[count]}}
+                                                                     {% set count = count + 1 %}
+                                                                     <br>
+                                                                 {% endfor %}
+                                                                 <br>
+                                                                 <strong>Total each month:</strong> {{total_per_month}}
+                                                            </h4>
+                                                    </div>
+                                                    <div class="well">
+                                                        {{all_totals[1].to_html(classes="table 
+                                                                table-striped") | safe }}
+                                                    </div>
+                                                </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -220,15 +230,19 @@
                                                 {{list_of_total_min_int_amt_paid_sum}}
                                                 </font>
                                             </h3>
-                                        </div>
-                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseMinPayment" aria-expanded="false" aria-controls="collapseMinPayment" align="center">
-                                                      Payment Plan
-                                        </button>
-                                        <div class="collapse" id="collapseMinPayment" align="center">
-                                            <div class="well">
-                                                {{all_totals[0].to_html(classes="table table-striped") | safe}}
+                                            <br>
+                                            <div align="center">
+                                                <button class="btn btn-default min_plan_btn" type="button" data-toggle="collapse" data-target="#collapseMinPayment" aria-expanded="false" aria-controls="collapseMinPayment" align="center">
+                                                              Payment Plan
+                                                </button>
+                                                <br>
+                                                <div class="collapse" id="collapseMinPayment" align="center">
+                                                    <div class="well">
+                                                        {{all_totals[0].to_html(classes="table table-striped") | safe}}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -261,6 +275,9 @@
                             </form>
                         </div>
                     </div>
+
+                    
+
                     <div id="payment-int">
                         <div id="new-table-type">
                             <table style="width:100%" class="table" align="center">
@@ -305,6 +322,58 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                <div class="col-xs-6 col-md-6 col-lg-6 ">
+                    <div id="int_container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+                    <script> $(function () {
+                            $('#int_container').highcharts({
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Efficiency Optimization by Branch'
+                                },
+                                xAxis: {
+                                    categories: {{highcharts_dates_str | safe}},
+                                    crosshair: true,
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        text: 'Debt ($)'
+                                    }
+                                },
+                                legend: {
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+                                plotOptions: {
+                                    column: {
+                                        grouping: false,
+                                        shadow: false,
+                                        borderWidth: 0
+                                    }
+                                },
+                                // want the totals here.
+                                series: [{
+                                    name: 'Suggested Plan',
+                                    color: '#3C896D',
+                                    data: [150, 73, 20],
+                                    pointPadding: 0.3,
+                                    pointPlacement: -0.2
+                                }, {
+                                    name: 'Suggested Plan with Budget',
+                                    color: "#ffe189",
+                                    data: [140, 90, 40],
+                                    pointPadding: 0.4,
+                                    pointPlacement: -0.2
+                                }]
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>
