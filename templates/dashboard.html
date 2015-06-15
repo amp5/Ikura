@@ -255,9 +255,13 @@
             </div>
         </div>
         <!-- </div> -->
+               
+
+
+
         <div role="tabpanel" class="tab-pane box explanation" id="payment_plan_int" align="center">
             <div class="row-fluid">
-                <div class="col-xs-6 col-md-6 col-lg-6 ">
+                 <div class="col-xs-6 col-md-6 col-lg-6 ">
                     <div id="explanation">
                         <h1 align="center">Pay off debt faster</h1>
                             <!--        Create a budget for your credit card debt
@@ -265,115 +269,125 @@
                                     (your budget must be larger than your suggested monthly payments in the previous tab): -->
                         <div class="col-md-9 col-md-offset-2">
                             <form action="/update_dashboard_int" method='POST' id="updated_dashboard_int" class="form-inline" align="center">
-                                <p align="center">Create a budget for your credit card debt</p>
-                                <p align="center"> Your buget must be more than your Suggested Payment Plan <br>($ {{total_sugg_payment_amt}})</p>
+                                <p align="center"> Your budget must be more than your Suggested Payment Plan <br> ($ {{total_sugg_payment_amt}})</p>
                                 <div class="input-group">
                                     <div class="input-group-addon">$</div>
                                     <input type="text" name="budget"  class="budget form-control form-group" min="{{total_sugg_payment_amt}} + 1" id="budget" required >
                                 </div>
                                 <input class="form-control form-group" type="submit" value="Submit">    
                             </form>
+                            <br>
+                            <h3>Your credit card budget = ${{BUDGET}} <h3>
                         </div>
-                    </div>
+                    <div id="int_container" style="min-width: 600px; height: 400px; margin: 0 auto"></div>
 
+                            <script> $(function () {
+                                    $('#int_container').highcharts({
+                                        rangeSelector: {
+                                               enabled: true
+                                           },
+                                        chart: {
+                                            type: 'column'
+                                        },
+                                        title: {
+                                            text: 'High Interest Payment Plan Comparison'
+                                        },
+                                        xAxis: {
+                                            categories: {{highcharts_dates_str | safe}},
+                                            crosshair: true,
+                                        },
+                                        yAxis: {
+                                            min: 0,
+                                            title: {
+                                                text: 'Debt ($)'
+                                            }
+                                        },
+                                        legend: {
+                                            shadow: false
+                                        },
+                                        tooltip: {
+                                            shared: true
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                grouping: false,
+                                                shadow: false,
+                                                borderWidth: 0
+                                            }
+                                        },
+                                        // want the totals here.
+                                        series: {{highcharts_points_int_total | safe}}
+                                    });
+                                });
+                            </script>
                     
-
+                    </div>
+                      </div>
+                      <div class="col-xs-6 col-md-6 col-lg-6 ">
                     <div id="payment-int">
-                        <div id="new-table-type">
-                            <table style="width:100%" class="table" align="center">
-                                
-                                <th>Card</th>
-                                <th>Debt</th>
-                                <th>Payments</th> 
-                                <th>Month</th>
-                          
-                                {% for card in all_totals_int %}
-                                    
+                    <div class="panel-group" id="accordion_int" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading high_int_plan" role="tab" id="headingOne_int">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion_int" href="#collapseOne_int" aria-expanded="false" aria-controls="collapseOne_int">
+                                            Highest Interest Payment Plan
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne_int" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne_int">
+                                    <div class="panel-body">
+                                        <div id="new-table-type">
+                                            <table style="width:100%" class="table" align="center">
+                                            
+                                            <th>Card</th>
+                                            <th>Debt</th>
+                                            <th>Payments</th> 
+                                            <th>Month</th>
+                                      
+                                            {% for card in all_totals_int %}
+                                                
 
-                                    <tr>
-                                        
-                                        {% if card[3] == "Visa" %}
-                                        <td bgcolor="#ffbf00">
+                                                <tr>
+                                                    
+                                                    {% if card[3] == "Visa" %}
+                                                    <td bgcolor="#ffbf00">
 
-                                        {% elif card[3] == "Master" %}
-                                        <td bgcolor ="#ffce3b">
+                                                    {% elif card[3] == "Master" %}
+                                                    <td bgcolor ="#ffce3b">
 
-                                        {% elif card[3] == "Discover" %}
-                                        <td bgcolor="#ffe189">
+                                                    {% elif card[3] == "Discover" %}
+                                                    <td bgcolor="#ffe189">
+
+                                                    {% else%}
+                                                    <td bgcolor="#6D9DC5">
 
 
-                                        {% endif %}
 
-                                            {{ card[3] }}
-                                        </td>
-                                        <td>
-                                            ${{ card[0] | round(2, 'floor')}}
-                                        </td>
-                                        <td>
-                                            ${{ card[1] | round(2, 'floor') }}
-                                        </td>
-                                        <td>
-                                            {{ card[2] }}
-                                        </td>
-                                    
-                                    </tr>
+                                                    {% endif %}
 
-                                {% endfor %}
-                            </table>
-                        </div>
+                                                        {{ card[3] }}
+                                                    </td>
+                                                    <td>
+                                                        ${{ card[0] | round(2, 'floor')}}
+                                                    </td>
+                                                    <td>
+                                                        ${{ card[1] | round(2, 'floor') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ card[2] }}
+                                                    </td>
+                                                
+                                                </tr>
+
+                                            {% endfor %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-6 col-lg-6 ">
-                    <div id="int_container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-
-                    <script> $(function () {
-                            $('#int_container').highcharts({
-                                chart: {
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'Efficiency Optimization by Branch'
-                                },
-                                xAxis: {
-                                    categories: {{highcharts_dates_str | safe}},
-                                    crosshair: true,
-                                },
-                                yAxis: {
-                                    min: 0,
-                                    title: {
-                                        text: 'Debt ($)'
-                                    }
-                                },
-                                legend: {
-                                    shadow: false
-                                },
-                                tooltip: {
-                                    shared: true
-                                },
-                                plotOptions: {
-                                    column: {
-                                        grouping: false,
-                                        shadow: false,
-                                        borderWidth: 0
-                                    }
-                                },
-                                // want the totals here.
-                                series: [{
-                                    name: 'Suggested Plan',
-                                    color: '#3C896D',
-                                    data: [150, 73, 20],
-                                    pointPadding: 0.3,
-                                    pointPlacement: -0.2
-                                }, {
-                                    name: 'Suggested Plan with Budget',
-                                    color: "#ffe189",
-                                    data: [140, 90, 40],
-                                    pointPadding: 0.4,
-                                    pointPlacement: -0.2
-                                }]
-                            });
-                        });
-                    </script>
+                    
                 </div>
             </div>
         </div>

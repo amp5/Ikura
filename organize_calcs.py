@@ -36,6 +36,33 @@ def organization(user_card_dict_py):
         point_dict_hc = {"name":suggested_card_name, "data":suggested_card_amount, "stack": "Suggested", "color":'#3C896D' }
         sugg_card_dict_list.append(point_dict_hc)
 
+
+    #  SUGG points for highchart (INTEREST RATE)
+    sugg_card_dict_list_int = []
+    for i in range(len(values[0])):
+        card = values[0][i]
+        dict_of_payments_per_card_hc = card.values()[0]
+        data_info = dict_of_payments_per_card_hc["Suggested"]
+        suggested_card_amount = data_info[0]
+        # print "are these my numbers?", suggested_card_amount
+        sugg_card_dict_list_int.append(suggested_card_amount)
+
+    for i in range(len(sugg_card_dict_list_int)):
+        print sum (sugg_card_dict_list_int[i])
+
+
+    card_listd = [list(l) for l in zip(*sugg_card_dict_list_int)]
+    # print "list of all points per month?", card_listd
+
+    sugg_payment_hc_int = []
+    for i in range(len(card_listd)):
+        num_sum =  round(sum(card_listd[i]),2)
+        sugg_payment_hc_int.append(num_sum)
+    point_dict_hc_int = {"name":"Suggested Plan", "data":sugg_payment_hc_int, "color":'#3C896D', "pointPadding": 0.2, "pointPlacement": -0.2 }
+
+
+
+
     # MIN points for highchart
     min_card_dict_list = []
     for i in range(len(values[0])):
@@ -212,7 +239,7 @@ def organization(user_card_dict_py):
         new_data_point_list.append(point_dict)
 
 
-    df_total = [df_min, df_sugg, new_data_point_list, month_range, all_points]
+    df_total = [df_min, df_sugg, new_data_point_list, month_range, all_points, point_dict_hc_int]
     return df_total
 
 
@@ -266,6 +293,7 @@ def organization_int(user_dict_int):
             all_together_cards_points.append(point)
 
     sorted_points =sorted(all_together_cards_points, key=to_be_sorted_by_date)
+    # print "what is? sorted_points", sorted_points
 
   
     return sorted_points

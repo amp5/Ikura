@@ -24,7 +24,7 @@ from calculations import user_cards, user_cards_int
 
 BUDGET = 500
 
-print "what is budget? - global", BUDGET
+# print "what is budget? - global", BUDGET
 
 @app.route('/')
 def homepage():
@@ -179,14 +179,21 @@ def dashboard():
         d3_points_list_json = json.dumps(all_totals[2])
         # print "JSON format!", d3_points_list_json
 
+        
+        # print "list of point?", highcharts_points_int_sugg
+
 
       
         user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
         all_totals_int = organization_int(user_card_dict_py_int)
-        
         total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
 
-        listt = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+        highcharts_points_int_sugg = all_totals[5]
+        highcharts_points_int_budget = user_card_dict_py_int[2]
+        highcharts_points_int_total = []
+        highcharts_points_int_total.append(highcharts_points_int_sugg)
+        highcharts_points_int_total.append(highcharts_points_int_budget)
 
        
         return render_template('/dashboard.html', query_results=results_of_query, 
@@ -199,9 +206,10 @@ def dashboard():
                                                 email = email, 
                                                 cards_payment_list=cards_payment_list, 
                                                 total_per_month=total_per_month, 
-                                                listt=listt, 
                                                 highcharts_points=highcharts_points, 
-                                                highcharts_dates_str=highcharts_dates_str)
+                                                highcharts_dates_str=highcharts_dates_str,
+                                                highcharts_points_int_total=highcharts_points_int_total, 
+                                                BUDGET=BUDGET)
     
 
 @app.route('/update_dashboard', methods=['POST'])
