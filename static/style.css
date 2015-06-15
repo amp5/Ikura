@@ -1,0 +1,213 @@
+            body {
+              font: 15px sans-serif;
+              background-color: lightgrey;
+              font-family: 'Roboto', sans-serif;
+            }
+
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px;
+                background-color: black;
+                margin-right: 2px;
+            }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+            .axis text {
+                font-family: 'Roboto', sans-serif;
+                font-size: 11px;
+            }
+
+            .browser text {
+              text-anchor: end;
+            }
+            
+            .x.axis path {
+              display: none;
+            }
+
+            .line {
+              fill: none;
+              stroke: steelblue;
+              stroke-width: 1.5px;
+            }
+
+            .overlay {
+              fill: none;
+              pointer-events: all;
+            }
+
+            .focus circle {
+              fill: none;
+              stroke: steelblue;
+            }
+
+            .box {
+                border-radius: 25px;
+                margin: 15px;            }
+
+            #card-summary {
+                border-radius: 25px;
+                /*border: 2px solid #3C896D;*/
+                padding: 15px;
+                width: 200px;
+            }
+
+
+            .navbar-static-top { 
+                background-color: #3C896D
+
+            }
+
+            .navbar-default .navbar-brand,
+            .navbar-default .navbar-text, 
+            .navbar-default .navbar-nav>li>a { 
+                color: white;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .panel-default>.sugg_plan {
+                color: #F4FAFF;
+                background-color: #3C896D;
+                border-color: #3C896D;
+
+            }
+
+            .panel-default>.min_plan {
+                color: #F4FAFF;
+                background-color: #544E61;
+                border-color: #544E61;
+
+            }
+
+            #headingOne.panel-heading {
+                color: #F4FAFF;
+                background-color: #3C896D;
+                border-color: #3C896D;
+            }
+          
+             #headingTwo.panel-heading {
+                color: #F4FAFF;
+                background-color: #544E61;
+                border-color: #544E61;
+            }
+
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+              color: #F4FAFF;
+              cursor: default;
+              background-color: #3C896D;
+              border: 1px solid #3C896D;
+              border-bottom-color: transparent;
+
+            }
+
+            a {
+              color: #F4FAFF;
+              text-decoration: none;
+            }
+
+            .nav-tabs>li>a { 
+                background-color: #85BAA1;
+                font-family: 'Roboto', sans-serif;
+            }
+          
+            #V {
+                background-color: #ffbf00;
+            }
+
+            #M {
+                background-color: #ffce3b;
+            }
+
+            #D {
+                background-color: #ffe189;
+            }
+
+            #title, 
+            #main-logo {
+                font-family: 'Comfortaa', cursive;
+                font-size: 30px;
+            }
+           /* #viz2 {
+                background-color: white;
+                border-radius: 25px;
+                padding: 10px;
+            }*/
+
+            .panel .panel-default {
+                border-radius: 25px;
+            }
+
+            #pull-phrase {
+                color: #545454;
+            }
+            #take_action.tab-pane.box.text-center.active{
+                width: 500px;
+            }
+            .tab-pane .box .explanation {
+                background-color: #F4FAFF;
+               /* text-align: center;
+                vertical-align: center;*/
+            }
+
+            .vcenter {
+                color:  #F4FAFF;
+                vertical-align: middle;
+                float: none;
+                padding: 150px;
+            }
+            #title-main {
+                font-family: 'Comfortaa', cursive;
+                font-size: 80px;
+            }
+            #start-button-lets-go {
+                border: 2px solid #F4FAFF;
+                background-color: Transparent;
+            }
+         /*   .text-center .vcenter #homepage {
+                background-image:url("../static/gold_coin.jpg")
+            }*/
+            .modal.fade {
+                color: #545454;
+            }
+
+            .nav-tabs {
+                border-bottom: none;
+            }
+
+            #sugg_plan.btn-default {
+                background-color: black;
+                color: purple;
+            }
+
+            .btn-default.sugg_plan_btn {
+                background-color: #3C896D;
+                color: #F4FAFF;
+            }
+
+            .btn-default.min_plan_btn {
+                background-color: #544E61;
+                color: #F4FAFF;
+            }
+
+            .panel-body {
+                padding: 15px;
+            }
+            .panel-default>.high_int_plan {
+                background-color: #ffbf00;
+/*                color: #F4FAFF;
+*/            }
+
+            /*.panel-default>.panel-heading*/
+/*
+            div #per-card-payment {
+                border-style: solid;
+                border-width: 2px;
+                border-radius: 25px;
+                padding: 15px;
+            }*/
