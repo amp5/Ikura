@@ -22,7 +22,8 @@ from calculations import user_cards, user_cards_int
 ###############################################################
 # View Routes #
 
-BUDGET = 500
+# TODO: FIX BUDGET AND HAVE IT UPDATE ACCORDING TO USER'S SUGG PAY PLAN
+BUDGET = 400
 
 # print "what is budget? - global", BUDGET
 
@@ -106,6 +107,7 @@ def card_submission():
 def dashboard():
     """Displays calculations and visualizations for credit cards"""
     
+    #  This checks to make sure user is logged in. If not they are redirected to login page
     if session == {}:
         flash("You are not logged in")
         return redirect('/login')
@@ -114,86 +116,96 @@ def dashboard():
         BUDGET = int(BUDGET)
         
         user_id = session.get("user_id")
-        
         results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
-        user_card_dict_py = user_cards(results_of_query)
-
-        user = User.query.filter_by(user_id=user_id).one()
-        email = user.email
-     
-        amt_of_cards = len(user_card_dict_py.values()[0])
-        list_of_total_sugg_int_amt_paid = []
         
-        for item in range(amt_of_cards):
-            card = user_card_dict_py.values()[0][item]
-            interest = card.values()[0].values()[0][1]
-            all_interest = total_sugg_int_amt_paid(interest)
-            list_of_total_sugg_int_amt_paid.append(all_interest)
-        list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
-
-
-        cards_payment_list = []
-        for item in range(amt_of_cards):
-            card = user_card_dict_py.values()[0][item]
-            payment = card.values()[0].values()[0][2]
-            payment = (sum(payment))/(len(payment))
-            cards_payment_list.append(payment)
-
         
-        total_per_month = sum(cards_payment_list)
-
-        # zipped = (* )
-
-
-    # for calulating my summed int rates....# <- MIN
-        # the second index is where the cards are.... [0] is visa
-        list_of_total_min_int_amt_paid = []
-        for item in range(amt_of_cards):
-            card_thing = user_card_dict_py.values()[0][item]
-
-            interest_thing = card_thing.values()[0].values()[1][1]
-            all_interest_thing = total_min_int_paid(interest_thing)
-            list_of_total_min_int_amt_paid.append(all_interest_thing)
-
-        list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
+        # This checks to make sure user has entered in card data.
+        if not results_of_query:
+            flash("Looks like you don't have any cards yet! Start by clicking the 'Let's get Started' button.")
+            return redirect('/')
 
 
-        all_totals = organization(user_card_dict_py)
-        
+        # If there is data, Ikura will calculate
+        else:
+            user_card_dict_py = user_cards(results_of_query)
 
-        highcharts_dates = all_totals[3]
-        highcharts_dates_str = []
-        for date in highcharts_dates:
-            date_conv = datetime.strptime(date, "%Y/%m/%d" )
-            date_conv = date_conv.strftime("%b-%y")
-            highcharts_dates_str.append(date_conv)
-
-        # print "list?", highcharts_dates_str
-        # print type(highcharts_dates_str[0])
-        # highcharts_dates_json = json.dumps(highcharts_dates)
-        # print "JSON", highcharts_dates_json
-
-
-        highcharts_points = all_totals[4]
-        data_points = all_totals[2]
-        d3_points_list_json = json.dumps(all_totals[2])
-        # print "JSON format!", d3_points_list_json
-
-        
-        # print "list of point?", highcharts_points_int_sugg
+            user = User.query.filter_by(user_id=user_id).one()
+            email = user.email
+         
+            amt_of_cards = len(user_card_dict_py.values()[0])
+            list_of_total_sugg_int_amt_paid = []
+            
+            for item in range(amt_of_cards):
+                card = user_card_dict_py.values()[0][item]
+                interest = card.values()[0].values()[0][1]
+                all_interest = total_sugg_int_amt_paid(interest)
+                list_of_total_sugg_int_amt_paid.append(all_interest)
+            list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
 
 
-      
-        user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
-        all_totals_int = organization_int(user_card_dict_py_int)
-        total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
+            cards_payment_list = []
+            for item in range(amt_of_cards):
+                card = user_card_dict_py.values()[0][item]
+                payment = card.values()[0].values()[0][2]
+                payment = (sum(payment))/(len(payment))
+                cards_payment_list.append(payment)
+
+            
+            total_per_month = sum(cards_payment_list)
 
 
-        highcharts_points_int_sugg = all_totals[5]
-        highcharts_points_int_budget = user_card_dict_py_int[2]
-        highcharts_points_int_total = []
-        highcharts_points_int_total.append(highcharts_points_int_sugg)
-        highcharts_points_int_total.append(highcharts_points_int_budget)
+
+        # for calulating my summed int rates....# <- MIN
+            # the second index is where the cards are.... [0] is visa
+            list_of_total_min_int_amt_paid = []
+            for item in range(amt_of_cards):
+                card_thing = user_card_dict_py.values()[0][item]
+
+                interest_thing = card_thing.values()[0].values()[1][1]
+                all_interest_thing = total_min_int_paid(interest_thing)
+                list_of_total_min_int_amt_paid.append(all_interest_thing)
+
+            list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
+
+
+            all_totals = organization(user_card_dict_py)
+            
+
+            highcharts_dates = all_totals[3]
+            highcharts_dates_str = []
+            for date in highcharts_dates:
+                date_conv = datetime.strptime(date, "%Y/%m/%d" )
+                date_conv = date_conv.strftime("%b-%y")
+                highcharts_dates_str.append(date_conv)
+
+            # print "list?", highcharts_dates_str
+            # print type(highcharts_dates_str[0])
+            # highcharts_dates_json = json.dumps(highcharts_dates)
+            # print "JSON", highcharts_dates_json
+
+
+            highcharts_points = all_totals[4]
+            data_points = all_totals[2]
+            d3_points_list_json = json.dumps(all_totals[2])
+            # print "JSON format!", d3_points_list_json
+
+            
+            # print "list of point?", highcharts_points_int_sugg
+
+
+          
+            user_card_dict_py_int = user_cards_int(results_of_query, BUDGET)
+            all_totals_int = organization_int(user_card_dict_py_int)
+            total_sugg_payment_amt = round(total_sugg_payments(results_of_query), 2)
+
+
+            highcharts_points_int_sugg = all_totals[5]
+            highcharts_points_int_budget = user_card_dict_py_int[2]
+            highcharts_points_int_total = []
+            highcharts_points_int_total.append(highcharts_points_int_sugg)
+            highcharts_points_int_total.append(highcharts_points_int_budget)
+
+            BUDGET = total_sugg_payment_amt
 
        
         return render_template('/dashboard.html', query_results=results_of_query, 
