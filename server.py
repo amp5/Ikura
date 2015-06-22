@@ -393,11 +393,21 @@ def logout():
  # http://getbootstrap.com/javascript/#alerts
 
 
+@app.route("/error")
+def error():
+    raise Exception("Error!")
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
     PORT = int(os.environ.get("PORT", 5000))
     # DEBUG = "NO_DEBUG" not in os.environ
+
+
+
+    DEBUG = "NO_DEBUG" not in os.environ
+
+
     
     # app.debug = False
     # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -408,7 +418,8 @@ if __name__ == "__main__":
     # DebugToolbarExtension(app)
 
     # app.run()
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
+    # app.run(debug=DEBUG)
 
 
 #***************** # Notes # ***********************
