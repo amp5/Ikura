@@ -1,6 +1,7 @@
 """Models and database functions for Ikura project"""
 
 from flask_sqlalchemy import SQLAlchemy
+import os
 db = SQLAlchemy()
 
 
