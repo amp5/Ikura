@@ -418,7 +418,7 @@ if __name__ == "__main__":
     # DebugToolbarExtension(app)
 
     # app.run()
-    app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
+    app.run(debug=DEBUG, host='*', port=PORT)
     # app.run(debug=DEBUG)
 
 
