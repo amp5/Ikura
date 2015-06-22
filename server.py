@@ -1,5 +1,6 @@
 """Ikura Server"""
 
+import os
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, url_for, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
@@ -395,6 +396,9 @@ def logout():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
+    PORT = int(os.environ.get("PORT", 5000))
+    DEBUG = "NO_DEBUG" not in os.environ
+    
     app.debug = True
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
@@ -403,7 +407,8 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
 
-    app.run()
+    # app.run()
+    app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
 
 
 #***************** # Notes # ***********************
