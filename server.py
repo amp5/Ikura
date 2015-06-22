@@ -23,7 +23,7 @@ from calculations import user_cards, user_cards_int
 # View Routes #
 
 # TODO: FIX BUDGET AND HAVE IT UPDATE ACCORDING TO USER'S SUGG PAY PLAN
-BUDGET = 400
+BUDGET = 500
 
 # print "what is budget? - global", BUDGET
 
@@ -113,7 +113,8 @@ def dashboard():
         return redirect('/login')
     else:
         global BUDGET
-        BUDGET = int(BUDGET)
+
+        BUDGET = BUDGET
         
         user_id = session.get("user_id")
         results_of_query = Card.query.filter_by(user_id=user_id).order_by(-Card.card_apr).all()
@@ -205,7 +206,7 @@ def dashboard():
             highcharts_points_int_total.append(highcharts_points_int_sugg)
             highcharts_points_int_total.append(highcharts_points_int_budget)
 
-            BUDGET = total_sugg_payment_amt
+            # BUDGET = total_sugg_payment_amt
 
        
         return render_template('/dashboard.html', query_results=results_of_query, 

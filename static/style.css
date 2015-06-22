@@ -110,7 +110,6 @@
               color: #F4FAFF;
               text-decoration: none;
             }
-
             .nav-tabs>li>a { 
                 background-color: #85BAA1;
                 font-family: 'Roboto', sans-serif;
@@ -169,9 +168,6 @@
                 border: 2px solid #F4FAFF;
                 background-color: Transparent;
             }
-         /*   .text-center .vcenter #homepage {
-                background-image:url("../static/gold_coin.jpg")
-            }*/
             .modal.fade {
                 color: #545454;
             }
@@ -200,14 +196,7 @@
             }
             .panel-default>.high_int_plan {
                 background-color: #ffbf00;
-/*                color: #F4FAFF;
-*/            }
+            }
 
-            /*.panel-default>.panel-heading*/
-/*
-            div #per-card-payment {
-                border-style: solid;
-                border-width: 2px;
-                border-radius: 25px;
-                padding: 15px;
-            }*/
+
+ 
