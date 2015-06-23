@@ -1,5 +1,5 @@
 $( document).ready(function(){
-        console.log("loaded forms.js")
+        // console.log("loaded forms.js")
 
   document.getElementById("new_card").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
