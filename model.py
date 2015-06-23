@@ -84,7 +84,7 @@ def connect_to_db(app):
     # Will this link to localhost change once I have this deployed? <- yes
     
     DATABASE_URL = os.environ.get("DATABASE_URL",
-                              "postgres://bqwvztcnsjidap:BGuvr0aMHtoietZtDTkcQb0OwE@ec2-54-227-247-161.compute-1.amazonaws.com:5432/da1s891cjcla9u")
+                              "postgres://ysfzwtluflmqaz:B0dltG2-mVLfPW49sFddSqixSx@ec2-54-83-205-164.compute-1.amazonaws.com:5432/d48gf1ds78n7na")
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ikura'
     db.app = app
     db.init_app(app)
