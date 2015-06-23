@@ -84,8 +84,8 @@ def connect_to_db(app):
     # Will this link to localhost change once I have this deployed? <- yes
 
     
-    DATABASE_URL = os.environ.get("DATABASE_URL",
-                              "postgres://ysfzwtluflmqaz:B0dltG2-mVLfPW49sFddSqixSx@ec2-54-83-205-164.compute-1.amazonaws.com:5432/d48gf1ds78n7na")
+    # DATABASE_URL = os.environ.get("DATABASE_URL",
+                              # "postgres://ysfzwtluflmqaz:B0dltG2-mVLfPW49sFddSqixSx@ec2-54-83-205-164.compute-1.amazonaws.com:5432/d48gf1ds78n7na")
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     db.app = app
     db.init_app(app)
