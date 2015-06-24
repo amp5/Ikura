@@ -419,6 +419,15 @@ if __name__ == "__main__":
 
     # app.run()
     app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
+
+
+    # will this work?
+    with app.app_context():
+        # Extensions like Flask-SQLAlchemy now know what the "current" app
+        # is while within this block. Therefore, you can now run........
+        db.create_all()
+    
+
     # app.run(debug=DEBUG)
 
 
