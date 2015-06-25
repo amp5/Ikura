@@ -87,7 +87,10 @@ def connect_to_db(app):
  
     
     # DATABASE_URL = os.environ.get("DATABASE_URL",
-    #                           "postgres://bqwvztcnsjidap:BGuvr0aMHtoietZtDTkcQb0OwE@ec2-54-227-247-161.compute-1.ama")
+                              # "postgres://bqwvztcnsjidap:BGuvr0aMHtoietZtDTkcQb0OwE@ec2-54-227-247-161.compute-1.ama")
+    
+    DATABASE_URL = os.environ.get("DATABASE_URL",
+                              "postgresql://localhost/ikura")
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ikura'
     db.app = app
