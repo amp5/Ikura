@@ -36,8 +36,10 @@
     <link href='http://fonts.googleapis.com/css?family=Comfortaa:700|Roboto:300' rel='stylesheet' type='text/css'>
   </head>
 
-  <body background="../static/cubes.png"
- class='with-3d-shadow with-transitions'>
+  <body background="../static/cubes.png" class='with-3d-shadow with-transitions'>
+    <div class="wrapper">
+
+    
      <nav class="navbar navbar-default navbar-static-top ">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -75,9 +77,17 @@
 
     {% block content %}
     {% endblock %}
+  </div>
 
+
+  <div id="footer">
+    <footer class="footer">
+      <p class="text-center"><small>Created by Alexandra Plassaras &middot; <a href="mailto:aplassaras@gmail.com" target="_blank">Contact</a> &middot; <a href="https://github.com/amp5/Ikura" target="_blank">Github</a></small></p>
+    </footer>
+  </div>
 
   </body>
+
 </html>
 
 

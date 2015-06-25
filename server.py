@@ -139,7 +139,7 @@ def dashboard():
             
             for item in range(amt_of_cards):
                 card = user_card_dict_py.values()[0][item]
-                print "what is card", card
+                # print "what is card", card
                 interest = card.values()[0].values()[0][1]
                 print "what is interest", interest
                 all_interest_sugg = total_sugg_int_amt_paid(interest)
@@ -299,16 +299,7 @@ def update_dashboard_int():
     
     return redirect('/dashboard')
 
-# @app.route('/d3')
-# def d3():
-#     """practice for d3"""
-#     return render_template('d3_study.html')
 
-
-# @app.route('/highcharts')
-# def highcharts():
-#     """practice for highcharts"""
-#     return render_template('highcharts.html')
 
 
 
