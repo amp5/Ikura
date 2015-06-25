@@ -83,8 +83,6 @@ def connect_to_db(app):
     # Configuring PostgreSQL 
     # Will this link to localhost change once I have this deployed? <- yes
 
-
- 
     
     # DATABASE_URL = os.environ.get("DATABASE_URL",
                               # "postgres://bqwvztcnsjidap:BGuvr0aMHtoietZtDTkcQb0OwE@ec2-54-227-247-161.compute-1.ama")
