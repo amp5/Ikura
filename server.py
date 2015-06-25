@@ -137,20 +137,24 @@ def dashboard():
             amt_of_cards = len(user_card_dict_py.values()[0])
             list_of_total_sugg_int_amt_paid = []
             
+
+            # On local hub line 144 reads interest = card.values()[0].values()[0][1] and shows correct info.
+            # Not on deployed version...
             for item in range(amt_of_cards):
                 card = user_card_dict_py.values()[0][item]
-                interest = card.values()[0].values()[0][1]
+                interest = card.values()[0].values()[0][2]
                 all_interest = total_sugg_int_amt_paid(interest)
                 list_of_total_sugg_int_amt_paid.append(all_interest)
             list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
 
             print "sugg sum", list_of_total_sugg_int_amt_paid_sum
 
-
+            # On local hub line 157 reads interest = card.values()[0].values()[0][2] and shows correct info.
+            # Not on deployed version...
             cards_payment_list = []
             for item in range(amt_of_cards):
                 card = user_card_dict_py.values()[0][item]
-                payment = card.values()[0].values()[0][2]
+                payment = card.values()[0].values()[0][1]
                 payment = (sum(payment))/(len(payment))
                 cards_payment_list.append(payment)
 
