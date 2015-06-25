@@ -144,6 +144,8 @@ def dashboard():
                 list_of_total_sugg_int_amt_paid.append(all_interest)
             list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
 
+            print "sugg sum", list_of_total_sugg_int_amt_paid_sum
+
 
             cards_payment_list = []
             for item in range(amt_of_cards):
