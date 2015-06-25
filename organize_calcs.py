@@ -47,8 +47,14 @@ def organization(user_card_dict_py):
         # print "are these my numbers?", suggested_card_amount
         sugg_card_dict_list_int.append(suggested_card_amount)
 
-    for i in range(len(sugg_card_dict_list_int)):
-        print sum (sugg_card_dict_list_int[i])
+    
+
+
+    # for i in range(len(sugg_card_dict_list_int)):
+    #     print sum (sugg_card_dict_list_int[i])
+
+
+
 
 
     card_listd = [list(l) for l in zip(*sugg_card_dict_list_int)]
@@ -57,7 +63,7 @@ def organization(user_card_dict_py):
     sugg_payment_hc_int = []
     for i in range(len(card_listd)):
         num_sum =  round(sum(card_listd[i]),2)
-        print "what is this num sum", num_sum
+        # print "what is this num sum", num_sum
         sugg_payment_hc_int.append(num_sum)
     point_dict_hc_int = {"name":"Suggested Plan", "data":sugg_payment_hc_int, "color":'#3C896D', "pointPadding": 0.2, "pointPlacement": -0.2 }
 

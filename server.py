@@ -34,17 +34,17 @@ def homepage():
 
     
     user_id = session.get("user_id")
-    print "This is session's user_id:", user_id
+    # print "This is session's user_id:", user_id
 
     if user_id:
         user = User.query.get(user_id)
-        print "This is the user_id from db:", user
+        # print "This is the user_id from db:", user
         user = User.query.filter_by(user_id=user_id).one()
         email = user.email
     else:
         user = 0
         email = "You are not logged in!"
-        print "This is the user_id from db:", user
+        # print "This is the user_id from db:", user
         flash("""Before you can get started, you'll
                 need to login or create a new account.""")
 
@@ -57,10 +57,10 @@ def card_submission():
        user inuptted info to dashboard"""
 
     if request.method == 'POST':
-        print "This is our request object", request.form
+        # print "This is our request object", request.form
         names = request.form.getlist("card1_name[]")
-        print "This is name", names
-        print names[0]
+        # print "This is name", names
+        # print names[0]
         debts = request.form.getlist("card1_debt[]")
         aprs = request.form.getlist("card1_apr[]")
         dates = request.form.getlist("card1_date[]")
@@ -68,22 +68,22 @@ def card_submission():
         user_id = session.get("user_id")
         min_payment = session.get("min_payment")
 
-        print "Name", names
-        print "Debt", debts
-        print "APR", aprs
-        print "Date", dates
-        print "Min Payment", min_payment
-        print "This is the session", session
-        print "user id", user_id
+        # print "Name", names
+        # print "Debt", debts
+        # print "APR", aprs
+        # print "Date", dates
+        # print "Min Payment", min_payment
+        # print "This is the session", session
+        # print "user id", user_id
 
         for i in range(len(names)):
-            print "Name", names[i]
-            print "Debt", debts[i]
-            print "APR", aprs[i]
-            print "Date", dates[i]
-            print "Min Payment", min_payment
-            print "This is the session", session
-            print "user id", user_id
+            # print "Name", names[i]
+            # print "Debt", debts[i]
+            # print "APR", aprs[i]
+            # print "Date", dates[i]
+            # print "Min Payment", min_payment
+            # print "This is the session", session
+            # print "user id", user_id
 
 
             card = Card.query.filter_by(user_id=user_id).all()
@@ -137,29 +137,29 @@ def dashboard():
             amt_of_cards = len(user_card_dict_py.values()[0])
             list_of_total_sugg_int_amt_paid = []
             
-
-            # On local hub line 144 reads interest = card.values()[0].values()[0][1] and shows correct info.
-            # Not on deployed version...
             for item in range(amt_of_cards):
                 card = user_card_dict_py.values()[0][item]
-                interest = card.values()[0].values()[0][2]
-                all_interest = total_sugg_int_amt_paid(interest)
-                list_of_total_sugg_int_amt_paid.append(all_interest)
-            list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
+                print "what is card", card
+                interest = card.values()[0].values()[0][1]
+                print "what is interest", interest
+                all_interest_sugg = total_sugg_int_amt_paid(interest)
+                print "what is all_interest", all_interest_sugg
+                # list_of_total_sugg_int_amt_paid.append(all_interest_sugg)
+                
+            # print "indiv nums in list", list_of_total_sugg_int_amt_paid
+            # list_of_total_sugg_int_amt_paid_sum = sum(list_of_total_sugg_int_amt_paid)
+            # print "sugg sum should be smaller", list_of_total_sugg_int_amt_paid_sum
 
-            print "sugg sum", list_of_total_sugg_int_amt_paid_sum
 
-            # On local hub line 157 reads interest = card.values()[0].values()[0][2] and shows correct info.
-            # Not on deployed version...
             cards_payment_list = []
             for item in range(amt_of_cards):
                 card = user_card_dict_py.values()[0][item]
-                payment = card.values()[0].values()[0][1]
+                payment = card.values()[0].values()[0][2]
                 payment = (sum(payment))/(len(payment))
-                cards_payment_list.append(payment)
-
-            
+                cards_payment_list.append(payment)            
             total_per_month = sum(cards_payment_list)
+
+
 
 
 
@@ -170,12 +170,15 @@ def dashboard():
                 card_thing = user_card_dict_py.values()[0][item]
 
                 interest_thing = card_thing.values()[0].values()[1][1]
-                all_interest_thing = total_min_int_paid(interest_thing)
-                list_of_total_min_int_amt_paid.append(all_interest_thing)
+                all_interest_min = total_min_int_paid(interest_thing)
+                # list_of_total_min_int_amt_paid.append(all_interest_thing)
 
-            list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
+            # list_of_total_min_int_amt_paid_sum = sum(list_of_total_min_int_amt_paid)
+
+            # print "min sum should be larger",  list_of_total_min_int_amt_paid_sum
 
 
+            print "all_interest_min", all_interest_min
             all_totals = organization(user_card_dict_py)
             
 
@@ -221,8 +224,8 @@ def dashboard():
                                                 d3_data = d3_points_list_json, 
                                                 all_totals_int = all_totals_int, 
                                                 total_sugg_payment_amt =total_sugg_payment_amt,
-                                                list_of_total_sugg_int_amt_paid_sum=list_of_total_sugg_int_amt_paid_sum, 
-                                                list_of_total_min_int_amt_paid_sum=list_of_total_min_int_amt_paid_sum, 
+                                                list_of_total_sugg_int_amt_paid_sum=all_interest_sugg, 
+                                                list_of_total_min_int_amt_paid_sum=all_interest_min, 
                                                 email = email, 
                                                 cards_payment_list=cards_payment_list, 
                                                 total_per_month=total_per_month, 
@@ -247,16 +250,16 @@ def update_dashboard():
     min_payment = session.get("min_payment")
 
     for index, card in enumerate(results_of_query):
-            print "what is this index?", index
-            print "names", names
+            # print "what is this index?", index
+            # print "names", names
 
-            print "Name", names[index]
-            print "Debt", debts[index]
-            print "APR", aprs[index]
-            print "Date", dates[index]
-            print "Min Payment", min_payment
-            print "This is the session", session
-            print "user id", user_id
+            # print "Name", names[index]
+            # print "Debt", debts[index]
+            # print "APR", aprs[index]
+            # print "Date", dates[index]
+            # print "Min Payment", min_payment
+            # print "This is the session", session
+            # print "user id", user_id
 
             card.card_name = names[index] 
             card.card_debt = debts[index]
@@ -322,9 +325,9 @@ def signup():
         password = request.form["password_input"]
         user = User.query.filter_by(email=email).first()
 
-        print "Email:", email
-        print "Password:", password
-        print "User:", user
+        # print "Email:", email
+        # print "Password:", password
+        # print "User:", user
 
         if user != None:
             flash("Sorry, that email is taken. Did you mean to log in instead?")
@@ -350,10 +353,10 @@ def login():
         password = request.form["password_input"]
         user = User.query.filter_by(email=email, password=password).first()
         
-        print "Email:", email
-        print "Password:", password
-        print "User:", user
-        print "Session:", session
+        # print "Email:", email
+        # print "Password:", password
+        # print "User:", user
+        # print "Session:", session
 
         if user == None:
             flash( """Hey there! That email and/or password is not in our database. 
@@ -363,18 +366,18 @@ def login():
         if 'user_id' in session:
             print "This is before login", session
             del session['user_id']
-            print "This is after del", session
+            # print "This is after del", session
 
             session['user_id'] = user.user_id
-            print "This is after login", session
+            # print "This is after login", session
             flash("You are already logged in!") 
         else:
             session['user_id'] = user.user_id
             flash("You have successfully logged in!")
-            print "Session:", session
+            # print "Session:", session
 
-        print "*"*30
-        print "This is our current session", session
+        # print "*"*30
+        # print "This is our current session", session
 
         return redirect('/')
     else:

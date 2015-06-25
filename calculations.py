@@ -27,7 +27,7 @@ def min_payment_plan(name, date, debt, apr, user_id):
         new_debt = round((debt + interest_to_pay - min_total_payment), 2)
         new_debt_list.append(new_debt)
         debt = new_debt
-    print "*"* 40   
+    # print "*"* 40   
     minimum = {"Minimum":[new_debt_list, interest_to_pay_list, min_total_payment_list]}
     card[name] = minimum
 
@@ -197,7 +197,7 @@ def calculations_int(query_results, budget):
                     i += 1
                     if i < len(num_of_cards):
                         num_of_cards[i].highest_apr = True
-                        print "next card?", num_of_cards[i]
+                        # print "next card?", num_of_cards[i]
                     else:
                         print "you outta line!"
                 else:
@@ -235,7 +235,7 @@ def calculations_int(query_results, budget):
     card_listp = [list(l) for l in zip(*total_payments)]
 
     
-    print "total_payments", total_payments
+    # print "total_payments", total_payments
     # print "summed total_payments", sum(total_payments)
 
 
@@ -244,7 +244,7 @@ def calculations_int(query_results, budget):
         sum_of_decr_debt = round(sum(total_decr_debt[i]), 2)
         sugg_decr_debt_hc_int_budget.append(sum_of_decr_debt)
     point_dict_hc_int_budget = {"name":"Suggested Plan with Budget", "data":sugg_decr_debt_hc_int_budget, "color":'#ffbf00', "pointPadding": 0.4, "pointPlacement": -0.2 }
-    print "is this what I want?", point_dict_hc_int_budget
+    # print "is this what I want?", point_dict_hc_int_budget
 
 
     int_rate_dict = {}
@@ -301,12 +301,12 @@ def user_cards(query_results):
         sugg_payment = card.card_sugg
         
 
-        print "Name", name
-        print "Debt", debt
-        print "APR", apr
-        print "Date", date
-        print "Min payment", min_payment
-        print "User", user_id
+        # print "Name", name
+        # print "Debt", debt
+        # print "APR", apr
+        # print "Date", date
+        # print "Min payment", min_payment
+        # print "User", user_id
 
         returned_dict = min_payment_plan(name, date, debt, apr, user_id)
         completed_card_dict = suggested_plan(name, date, debt, apr, returned_dict, user_id)
