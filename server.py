@@ -402,8 +402,8 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
     PORT = int(os.environ.get("PORT", 5000))
 
-    # DEBUG = "NO_DEBUG" not in os.environ
-    DEBUG = True
+    DEBUG = "NO_DEBUG" not in os.environ
+    # DEBUG = True
 
 
     
