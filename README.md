@@ -79,6 +79,12 @@ python server.py
 ```
 Navigate to `localhost:5000/` to start calculating your debt payments!
 
+
+**Two Years Later....**
+Below you'll see a quick GIF of what Ikura looks like in practice.
+![](https://cloud.githubusercontent.com/assets/5368361/22612652/03b87eda-ea40-11e6-88aa-7ca0bfd1b949.gif)
+
+
 ## What's Next
 
 Check out the [issues log for this project] (https://github.com/amp5/Ikura/issues) to see what's up next for Ikura.
